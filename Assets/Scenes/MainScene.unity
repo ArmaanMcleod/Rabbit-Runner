@@ -303,6 +303,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 64236185697547136, guid: b72b73df24fb36d4fbb693a7edddd7c4,
+        type: 2}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b72b73df24fb36d4fbb693a7edddd7c4, type: 2}
   m_IsPrefabParent: 0
@@ -437,5 +442,5 @@ MonoBehaviour:
   forwardSpeed: 20
   sideSpeed: 10
   rb: {fileID: 1076137285}
-  radius: 0
+  radius: 0.5
   jumpForce: 300
