@@ -14,6 +14,7 @@ public class SlopeGenerator : MonoBehaviour {
     }
 
     private void GenerateNewSlope () {
+
         float x = currentSlope.transform.position.x;
         float y = currentSlope.transform.position.y;
         float z = currentSlope.transform.position.z + slopeLength;
