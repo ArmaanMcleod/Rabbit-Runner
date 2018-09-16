@@ -258,7 +258,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1, z: 10}
+  m_LocalPosition: {x: 10, y: 1, z: 17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -427,6 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSlope: {fileID: 1602817685228010, guid: ad1032c08b032604cbe009b0a23fc130,
     type: 2}
+  slopeLength: 10
 --- !u!114 &1076137287
 MonoBehaviour:
   m_ObjectHideFlags: 0

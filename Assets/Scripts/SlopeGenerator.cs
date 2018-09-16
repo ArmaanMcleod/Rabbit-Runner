@@ -6,6 +6,8 @@ public class SlopeGenerator : MonoBehaviour {
 
     public GameObject currentSlope;
 
+    public float slopeLength;
+
     // Update is called once per frame
     private void Update () {
         GenerateNewSlope ();
@@ -14,7 +16,7 @@ public class SlopeGenerator : MonoBehaviour {
     private void GenerateNewSlope () {
         float x = currentSlope.transform.position.x;
         float y = currentSlope.transform.position.y;
-        float z = currentSlope.transform.position.z + 10;
+        float z = currentSlope.transform.position.z + slopeLength;
 
         Vector3 newPosition = new Vector3 (x, y, z);
         Quaternion newRotation = currentSlope.transform.rotation;
