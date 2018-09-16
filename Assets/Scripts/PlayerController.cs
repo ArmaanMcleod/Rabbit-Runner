@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update () {
-        Debug.Log (onGround);
         if (Input.GetKeyDown ("space") && onGround) {
             rb.AddForce (0.0f, jumpForce, 0.0f);
             onGround = false;
