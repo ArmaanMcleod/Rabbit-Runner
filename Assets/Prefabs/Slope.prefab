@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4795521514143834}
   - component: {fileID: 33286145471506436}
   - component: {fileID: 23752570342482284}
-  - component: {fileID: 64244558904577938}
+  - component: {fileID: 64215597544522160}
   m_Layer: 0
   m_Name: Slope
-  m_TagString: Untagged
+  m_TagString: Slope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1602817685228010}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &64244558904577938
+--- !u!64 &64215597544522160
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
