@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 
     public Rigidbody rb;
 
-    public int radius;
+    public float radius;
 
     public float jumpForce;
 
