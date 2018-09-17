@@ -305,7 +305,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1605880472151992, guid: b72b73df24fb36d4fbb693a7edddd7c4, type: 2}
       propertyPath: m_TagString
-      value: Slope
+      value: InitialSlope
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b72b73df24fb36d4fbb693a7edddd7c4, type: 2}
@@ -424,8 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb19a69bc953a50478056ef6cef1cdc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSlope: {fileID: 1605880472151992, guid: b72b73df24fb36d4fbb693a7edddd7c4,
-    type: 2}
+  prefab: {fileID: 1605880472151992, guid: b72b73df24fb36d4fbb693a7edddd7c4, type: 2}
   slopeLength: 10
   threshold: 0.2
 --- !u!114 &1076137287

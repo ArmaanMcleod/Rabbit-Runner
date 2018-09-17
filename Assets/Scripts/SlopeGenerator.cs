@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class SlopeGenerator : MonoBehaviour {
 
-    public GameObject currentSlope;
+    public GameObject prefab;
+
+    private GameObject currentSlope;
 
     public float slopeLength;
 
@@ -13,10 +15,12 @@ public class SlopeGenerator : MonoBehaviour {
 
     private float TimeCounter = 0.0f;
 
-    private List<GameObject> previous = new List<GameObject> ();
+    private List<GameObject> previousSlopes = new List<GameObject> ();
 
     private void Start () {
-        previous.Add (GameObject.FindGameObjectWithTag ("Slope"));
+        previousSlopes.Add (GameObject.FindGameObjectWithTag ("InitialSlope"));
+        currentSlope = Instantiate (prefab) as GameObject;
+        previousSlopes.Add (currentSlope);
     }
 
     // Update is called once per frame
@@ -29,10 +33,10 @@ public class SlopeGenerator : MonoBehaviour {
     }
 
     private void RemoveSlopes () {
-        foreach (GameObject slope in previous.ToList ()) {
+        foreach (GameObject slope in previousSlopes.ToList ()) {
             if (slope.transform.position.z < transform.position.z) {
                 Destroy (slope);
-                previous.Remove (slope);
+                previousSlopes.Remove (slope);
             }
         }
     }
@@ -45,10 +49,8 @@ public class SlopeGenerator : MonoBehaviour {
         Vector3 newPosition = new Vector3 (x, y, z);
         Quaternion newRotation = currentSlope.transform.rotation;
 
-        GameObject nextSlope = Instantiate (currentSlope, newPosition, newRotation) as GameObject;
+        currentSlope = Instantiate (prefab, newPosition, newRotation) as GameObject;
 
-        currentSlope = nextSlope;
-
-        previous.Add (nextSlope);
+        previousSlopes.Add (currentSlope);
     }
 }
