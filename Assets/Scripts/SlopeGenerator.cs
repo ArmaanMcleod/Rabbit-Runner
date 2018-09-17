@@ -19,6 +19,7 @@ public class SlopeGenerator : MonoBehaviour {
 
     private void Start () {
         previousSlopes.Add (GameObject.FindGameObjectWithTag ("InitialSlope"));
+
         currentSlope = Instantiate (prefab) as GameObject;
         previousSlopes.Add (currentSlope);
     }
