@@ -36,8 +36,8 @@ public class SlopeGenerator : MonoBehaviour {
     private void RemoveSlopes () {
         foreach (GameObject slope in previousSlopes.ToList ()) {
             if (slope.transform.position.z < transform.position.z) {
-                Destroy (slope);
                 previousSlopes.Remove (slope);
+                Destroy (slope);
             }
         }
     }
