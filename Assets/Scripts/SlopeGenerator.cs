@@ -29,17 +29,11 @@ public class SlopeGenerator : MonoBehaviour {
     }
 
     private void RemoveSlope () {
-        List<GameObject> toRemove = new List<GameObject> ();
-
-        foreach (GameObject slope in previous) {
+        foreach (GameObject slope in previous.ToList ()) {
             if (slope.transform.position.z < this.transform.position.z) {
-                toRemove.Add (slope);
+                Destroy (slope);
+                previous.Remove (slope);
             }
-        }
-
-        foreach (GameObject slope in toRemove) {
-            Destroy (slope);
-            previous.Remove (slope);
         }
     }
 
