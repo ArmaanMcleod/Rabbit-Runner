@@ -427,7 +427,7 @@ MonoBehaviour:
   currentSlope: {fileID: 1605880472151992, guid: b72b73df24fb36d4fbb693a7edddd7c4,
     type: 2}
   slopeLength: 10
-  threshold: 0.5
+  threshold: 0.2
 --- !u!114 &1076137287
 MonoBehaviour:
   m_ObjectHideFlags: 0

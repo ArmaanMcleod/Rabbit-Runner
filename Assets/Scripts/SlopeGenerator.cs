@@ -24,13 +24,13 @@ public class SlopeGenerator : MonoBehaviour {
         if (Time.time - TimeCounter > threshold) {
             GenerateNewSlope ();
             TimeCounter = Time.time;
-            RemoveSlope ();
+            RemoveSlopes ();
         }
     }
 
-    private void RemoveSlope () {
+    private void RemoveSlopes () {
         foreach (GameObject slope in previous.ToList ()) {
-            if (slope.transform.position.z < this.transform.position.z) {
+            if (slope.transform.position.z < transform.position.z) {
                 Destroy (slope);
                 previous.Remove (slope);
             }
