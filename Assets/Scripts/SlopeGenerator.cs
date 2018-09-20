@@ -71,7 +71,6 @@ public class SlopeGenerator : MonoBehaviour {
 
             slopes.Enqueue (slope);
         }
-
     }
 
     /// <summary>
@@ -166,5 +165,4 @@ public class SlopeGenerator : MonoBehaviour {
 
         return index;
     }
-
 }
