@@ -4,31 +4,34 @@ using System.Linq;
 using UnityEngine;
 
 public class SlopeGenerator : MonoBehaviour {
+    // Slope prefab attached to player
+    public GameObject slopePrefab;
 
-    // Slope prefab passed in
-    public GameObject prefab;
-
-    // Length of slope
+    // Slope length of each prefab
     public float slopeLength;
 
-    // Timer variables
-    public float threshold;
-    private float TimeCounter = 0.0f;
+    // Number of active slopes in the scene
+    public int activeSlopes;
 
-    // All previous slopes inserted here
-    private IList<GameObject> previousSlopes = new List<GameObject> ();
+    // Number of slopes queued
+    public int numberOfSlopes;
+
+    // Distance ratio allowed before generating new slope
+    public float distanceRatio;
+
+    // LIFO queue of slopes
+    private Queue<GameObject> slopes;
+
+    // Current slope state variables
+    private GameObject currentSlope;
+    private int currentSlopeIndex;
+    private float currentSlopePosition = 0.0f;
 
     /// <summary>
     /// Use this for initialization
     /// </summary>
     private void Start () {
-        // Insert initial slope into previous slopes
-        GameObject intialSlope = GameObject.FindGameObjectWithTag ("InitialSlope");
-        previousSlopes.Add (intialSlope);
-
-        // Instantiate and copy current slope with the prefab
-        GameObject firstSlope = Instantiate (prefab) as GameObject;
-        previousSlopes.Add (firstSlope);
+        InitializeSlopes ();
     }
 
     /// <summary>
@@ -36,48 +39,122 @@ public class SlopeGenerator : MonoBehaviour {
     /// </summary>
     private void Update () {
 
-        // If timer expires, generate a new slope
-        if (Time.time - TimeCounter > threshold) {
-            GenerateNewSlope ();
-            TimeCounter = Time.time;
+        // Destroy starting slope if it exists
+        Destroy (GameObject.FindGameObjectWithTag ("InitialSlope"));
 
-            // Remove any slopes that we have passed
-            RemoveSlopes ();
-        }
-    }
+        // Update current slope and index
+        currentSlope = GetCurrentSlope ();
+        currentSlopeIndex = GetCurrentSlopeIndex ();
 
-    /// <summary>
-    /// Removes previous slopes that we've passed.
-    /// </summary>
-    private void RemoveSlopes () {
-        foreach (GameObject slope in previousSlopes.ToList ()) {
+        // Activate new slopes
+        ActiveSlopes ();
 
-            // If player distance greater than slope, destroy slope
-            if (slope.transform.position.z < transform.position.z) {
-                Destroy (slope.gameObject);
-                previousSlopes.Remove (slope);
+        // Sweep aside previous slopes were finished with
+        if (currentSlopeIndex > 0) {
+            Vector3 previousPosition = slopes.ElementAt (currentSlopeIndex - 1).transform.position;
+            float distance = Vector3.Distance (transform.position, previousPosition);
+
+            // If distance is greater, were done with this slope
+            if (distance > (slopeLength * distanceRatio)) {
+                SweepPreviousSlope ();
             }
         }
 
     }
 
     /// <summary>
-    /// Attaches new slope to infinite plane. 
+    /// Initialise slope queue.
     /// </summary>
-    private void GenerateNewSlope () {
-        GameObject currentSlope = previousSlopes.Last ();
+    private void InitializeSlopes () {
+        slopes = new Queue<GameObject> ();
 
-        // Update coordinates
-        float x = currentSlope.transform.position.x;
-        float y = currentSlope.transform.position.y;
-        float z = currentSlope.transform.position.z + slopeLength;
+        for (int i = 0; i < numberOfSlopes; i++) {
+            GameObject slope = Instantiate (slopePrefab) as GameObject;
+            slope.transform.position = CalculateNextSlopePosition ();
 
-        // Update new position and rotation
-        Vector3 newPosition = new Vector3 (x, y, z);
-        Quaternion newRotation = currentSlope.transform.rotation;
+            if (i != 0) {
+                slope.SetActive (false);
+            }
 
-        // Instantiate a new prefab slope
-        GameObject nextSlope = Instantiate (prefab, newPosition, newRotation) as GameObject;
-        previousSlopes.Add (nextSlope);
+            slopes.Enqueue (slope);
+        }
+
     }
+
+    /// <summary>
+    /// Activate slopes left in hierachy
+    /// </summary>
+    private void ActiveSlopes () {
+        int threshold = currentSlopeIndex + activeSlopes;
+
+        for (int i = currentSlopeIndex; i < threshold; i++) {
+            int minimumIndex = Mathf.Clamp (i, 0, slopes.Count - 1);
+            GameObject slope = slopes.ElementAt (minimumIndex);
+
+            // If not activiated in hierachy, activate it
+            if (!slope.activeInHierarchy) {
+                slope.SetActive (true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Calculates next slope position.
+    /// </summary>
+    /// <returns>New slope position in world</returns>
+    private Vector3 CalculateNextSlopePosition () {
+        Vector3 newPosition = slopePrefab.transform.position;
+        newPosition.z = currentSlopePosition;
+        currentSlopePosition += slopeLength;
+        return newPosition;
+    }
+
+    /// <summary>
+    /// Sweeps aside slopes we have passed.
+    /// </summary>
+    private void SweepPreviousSlope () {
+        GameObject slope = slopes.Dequeue ();
+        slope.SetActive (false);
+        slope.transform.position = CalculateNextSlopePosition ();
+        slopes.Enqueue (slope);
+    }
+
+    /// <summary>
+    /// Gets current slope game object player is on in world.
+    /// </summary>
+    /// <returns></returns>
+    private GameObject GetCurrentSlope () {
+        GameObject newCurrentSlope = null;
+
+        foreach (GameObject slope in slopes) {
+
+            // If we are at the midpoint of slope, were on this slope
+            if (Vector3.Distance (transform.position, slope.transform.position) <= (slopeLength / 2)) {
+                newCurrentSlope = slope;
+                break;
+            }
+        }
+
+        return newCurrentSlope;
+    }
+
+    /// <summary>
+    /// Gets index of current slope in world
+    /// </summary>
+    /// <returns>The index of the current slope</returns>
+    private int GetCurrentSlopeIndex () {
+        int index = -1;
+
+        for (int i = 0; i < slopes.Count; i++) {
+
+            // If object is the same, this is the current slope
+            if (slopes.ElementAt (i).Equals (currentSlope)) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
 }
