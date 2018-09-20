@@ -20,7 +20,7 @@ public class SlopeGenerator : MonoBehaviour {
 
     // All previous slopes inserted here
     // TODO: Find a better way to handle this
-    private List<GameObject> previousSlopes = new List<GameObject> ();
+    private IList<GameObject> previousSlopes = new List<GameObject> ();
 
     /// <summary>
     /// Use this for initialization
@@ -46,6 +46,7 @@ public class SlopeGenerator : MonoBehaviour {
 
             // Remove any slopes that we have passed
             RemoveSlopes ();
+
         }
     }
 
