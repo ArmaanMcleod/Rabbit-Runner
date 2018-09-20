@@ -47,19 +47,10 @@ public class SlopeGenerator : MonoBehaviour {
         currentSlopeIndex = GetCurrentSlopeIndex ();
 
         // Activate new slopes
-        ActiveSlopes ();
+        ActivateSlopes ();
 
-        // Sweep aside previous slopes were finished with
-        if (currentSlopeIndex > 0) {
-            Vector3 previousPosition = slopes.ElementAt (currentSlopeIndex - 1).transform.position;
-            float distance = Vector3.Distance (transform.position, previousPosition);
-
-            // If distance is greater, were done with this slope
-            if (distance > (slopeLength * distanceRatio)) {
-                SweepPreviousSlope ();
-            }
-        }
-
+        // Delete previous slopes
+        SweepPreviousSlope ();
     }
 
     /// <summary>
@@ -72,6 +63,7 @@ public class SlopeGenerator : MonoBehaviour {
             GameObject slope = Instantiate (slopePrefab) as GameObject;
             slope.transform.position = CalculateNextSlopePosition ();
 
+            // All slopes except first are activated
             if (i != 0) {
                 slope.SetActive (false);
             }
@@ -84,7 +76,7 @@ public class SlopeGenerator : MonoBehaviour {
     /// <summary>
     /// Activate slopes left in hierachy
     /// </summary>
-    private void ActiveSlopes () {
+    private void ActivateSlopes () {
         int threshold = currentSlopeIndex + activeSlopes;
 
         for (int i = currentSlopeIndex; i < threshold; i++) {
@@ -113,10 +105,19 @@ public class SlopeGenerator : MonoBehaviour {
     /// Sweeps aside slopes we have passed.
     /// </summary>
     private void SweepPreviousSlope () {
-        GameObject slope = slopes.Dequeue ();
-        slope.SetActive (false);
-        slope.transform.position = CalculateNextSlopePosition ();
-        slopes.Enqueue (slope);
+        // Sweep aside previous slopes were finished with
+        if (currentSlopeIndex > 0) {
+            Vector3 previousPosition = slopes.ElementAt (currentSlopeIndex - 1).transform.position;
+            float distance = Vector3.Distance (transform.position, previousPosition);
+
+            // If distance is greater, were done with this slope
+            if (distance > (slopeLength * distanceRatio)) {
+                GameObject slope = slopes.Dequeue ();
+                slope.SetActive (false);
+                slope.transform.position = CalculateNextSlopePosition ();
+                slopes.Enqueue (slope);
+            }
+        }
     }
 
     /// <summary>
