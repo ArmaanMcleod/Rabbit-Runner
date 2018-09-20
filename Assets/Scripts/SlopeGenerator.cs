@@ -23,10 +23,12 @@ public class SlopeGenerator : MonoBehaviour {
     /// </summary>
     private void Start () {
         // Insert initial slope into previous slopes
-        previousSlopes.Add (GameObject.FindGameObjectWithTag ("InitialSlope"));
+        GameObject intialSlope = GameObject.FindGameObjectWithTag ("InitialSlope");
+        previousSlopes.Add (intialSlope);
 
         // Instantiate and copy current slope with the prefab
-        previousSlopes.Add (Instantiate (prefab) as GameObject);
+        GameObject firstSlope = Instantiate (prefab) as GameObject;
+        previousSlopes.Add (firstSlope);
     }
 
     /// <summary>
