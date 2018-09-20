@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class SlopeGenerator : MonoBehaviour {
+
     // Slope prefab attached to player
     public GameObject slopePrefab;
 
@@ -110,14 +111,21 @@ public class SlopeGenerator : MonoBehaviour {
             Vector3 previousPosition = slopes.ElementAt (currentSlopeIndex - 1).transform.position;
             float distance = Vector3.Distance (transform.position, previousPosition);
 
-            // If distance is greater, were done with this slope
+            // If distance is greater, recycle slope
             if (distance > (slopeLength * distanceRatio)) {
-                GameObject slope = slopes.Dequeue ();
-                slope.SetActive (false);
-                slope.transform.position = CalculateNextSlopePosition ();
-                slopes.Enqueue (slope);
+                RecycleSlope ();
             }
         }
+    }
+
+    /// <summary>
+    /// Recycle slope to be used again.
+    /// </summary>
+    private void RecycleSlope () {
+        GameObject slope = slopes.Dequeue ();
+        slope.SetActive (false);
+        slope.transform.position = CalculateNextSlopePosition ();
+        slopes.Enqueue (slope);
     }
 
     /// <summary>
@@ -144,12 +152,13 @@ public class SlopeGenerator : MonoBehaviour {
     /// </summary>
     /// <returns>The index of the current slope</returns>
     private int GetCurrentSlopeIndex () {
-        int index = -1;
+        int index = 0;
 
         for (int i = 0; i < slopes.Count; i++) {
+            GameObject slope = slopes.ElementAt (i);
 
             // If object is the same, this is the current slope
-            if (slopes.ElementAt (i).Equals (currentSlope)) {
+            if (slope.Equals (currentSlope)) {
                 index = i;
                 break;
             }
