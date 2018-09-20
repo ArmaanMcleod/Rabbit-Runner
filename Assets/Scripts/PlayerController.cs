@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour {
     /// Called on Rigid body collsion
     /// </summary>
     private void FixedUpdate () {
-
         // Apply force forward and move left and right
         float horizontalMovement = Input.GetAxis ("Horizontal") * sideSpeed;
         Vector3 movement = new Vector3 (horizontalMovement, 0.0f, forwardSpeed);

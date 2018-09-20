@@ -8,9 +8,6 @@ public class SlopeGenerator : MonoBehaviour {
     // Slope prefab passed in
     public GameObject prefab;
 
-    // The current slope being created
-    private GameObject currentSlope;
-
     // Length of slope
     public float slopeLength;
 
@@ -19,7 +16,6 @@ public class SlopeGenerator : MonoBehaviour {
     private float TimeCounter = 0.0f;
 
     // All previous slopes inserted here
-    // TODO: Find a better way to handle this
     private IList<GameObject> previousSlopes = new List<GameObject> ();
 
     /// <summary>
@@ -29,9 +25,8 @@ public class SlopeGenerator : MonoBehaviour {
         // Insert initial slope into previous slopes
         previousSlopes.Add (GameObject.FindGameObjectWithTag ("InitialSlope"));
 
-        // Instantiate a copy current slope with the prefab
-        currentSlope = Instantiate (prefab) as GameObject;
-        previousSlopes.Add (currentSlope);
+        // Instantiate and copy current slope with the prefab
+        previousSlopes.Add (Instantiate (prefab) as GameObject);
     }
 
     /// <summary>
@@ -46,7 +41,6 @@ public class SlopeGenerator : MonoBehaviour {
 
             // Remove any slopes that we have passed
             RemoveSlopes ();
-
         }
     }
 
@@ -58,16 +52,18 @@ public class SlopeGenerator : MonoBehaviour {
 
             // If player distance greater than slope, destroy slope
             if (slope.transform.position.z < transform.position.z) {
+                Destroy (slope.gameObject);
                 previousSlopes.Remove (slope);
-                Destroy (slope);
             }
         }
+
     }
 
     /// <summary>
     /// Attaches new slope to infinite plane. 
     /// </summary>
     private void GenerateNewSlope () {
+        GameObject currentSlope = previousSlopes.Last ();
 
         // Update coordinates
         float x = currentSlope.transform.position.x;
@@ -79,7 +75,7 @@ public class SlopeGenerator : MonoBehaviour {
         Quaternion newRotation = currentSlope.transform.rotation;
 
         // Instantiate a new prefab slope
-        currentSlope = Instantiate (prefab, newPosition, newRotation) as GameObject;
-        previousSlopes.Add (currentSlope);
+        GameObject nextSlope = Instantiate (prefab, newPosition, newRotation) as GameObject;
+        previousSlopes.Add (nextSlope);
     }
 }
