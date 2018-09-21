@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 959e5e21ad39e994383c2c6292e92071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGameScene: SampleScene
+  mainGameScene: MainScene
   instructionsScene: InstructionScene
 --- !u!4 &602464591
 Transform:
