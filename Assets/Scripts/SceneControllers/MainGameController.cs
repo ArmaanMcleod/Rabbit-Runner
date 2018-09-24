@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour {
+public class MainGameController : MonoBehaviour {
 	public GameObject pauseCanvas;
+
+	public string mainGameScene;
+
+	public string mainMenuScene;
 
 	// Use this for initialization
 	void Start () {
+		Time.timeScale=1;
 		
 	}
 	
@@ -32,5 +38,13 @@ public class GameController : MonoBehaviour {
 	public void UnPauseGame(){
 		Time.timeScale=1;
 		pauseCanvas.SetActive(false);
+	}
+
+	public void RestartScene(){
+		SceneManager.LoadScene(mainGameScene);
+	}
+
+	public void ExitToMenu(){
+		SceneManager.LoadScene(mainMenuScene);
 	}
 }
