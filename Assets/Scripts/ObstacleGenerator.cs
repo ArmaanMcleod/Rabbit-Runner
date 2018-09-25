@@ -18,12 +18,19 @@ public class ObstacleGenerator : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!alreadyUpdated && gameObject.activeInHierarchy) {
+        if (!alreadyUpdated && SlopeActive()) {
             Debug.Log("Updating obstacle locations");
             obstacleSection.UpdateCoordinates(gameObject.transform.position);
             alreadyUpdated = true;
         }
 
-        alreadyUpdated &= gameObject.activeInHierarchy;
+        if (alreadyUpdated && !SlopeActive()) {
+            Debug.Log("Preparing for next update");
+            alreadyUpdated = false;
+        }
+    }
+
+    private bool SlopeActive() {
+        return gameObject.GetComponent<ActiveScript>().GetActive();
     }
 }

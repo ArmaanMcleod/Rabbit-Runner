@@ -51,9 +51,6 @@ public class ObstacleSection {
         this.xLen = xLen;
         this.zLen = zLen;
 
-        Debug.Log("xLen: " + xLen);
-        Debug.Log("zLen: " + zLen);
-
         InstantiateObstacles(cylinders, CYLINDER_PREFAB);
         InstantiateObstacles(cubes, CUBE_PREFAB);
 
@@ -66,7 +63,6 @@ public class ObstacleSection {
     /// <param name="position">The new position for this section of obstacles.</param>
     public void UpdateCoordinates(Vector3 position) {
         this.position = position;
-        Debug.Log("Updating for position: " + position);
         RandomiseObstacles();
     }
 
@@ -99,13 +95,19 @@ public class ObstacleSection {
 
         // Activate the new set of obstacles and randomise their positions
         currentObstacles.ForEach(obj => {
-            Debug.Log("old obj position: " + obj.transform.position);
             RandomisePosition(obj, maxZPos, minZPos, maxXPos, minXPos);
-            Debug.Log("new obj position: " + obj.transform.position);
             obj.SetActive(true);
         });
     }
 
+    /// <summary>
+    /// Randomises the position of an obstacle.
+    /// </summary>
+    /// <param name="obstacle">The obstacle whose position will be randomised.</param>
+    /// <param name="maxZPos">The upper limit of the Z axis for the random position to be in.</param>
+    /// <param name="minZPos">The lower limit of the Z axis for the random position to be in.</param>
+    /// <param name="maxXPos">The upper limit of the X axis for the random position to be in.</param>
+    /// <param name="minXPos">The lower limit of the X axis for the random position to be in.</param>
     private void RandomisePosition(GameObject obstacle,
                                   float maxZPos,
                                   float minZPos,
