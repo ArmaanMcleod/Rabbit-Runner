@@ -91,16 +91,19 @@ public class MainGameController : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Sets and displays the Game Over Canvas and high scores
+	/// </summary>
 	public void setGameOverScreen(){
 		gameOverCanvas.SetActive(true);
-
-		
-
 		int score = scoreManager.getScore();
-		endScoreText.text = "Score: " + score.ToString();
 
+		// Check and update new high score
 		scoreManager.updateHighScore();
 		int highscore = scoreManager.getHighScore();
+
+		// Render the scores
+		endScoreText.text = "Score: " + score.ToString();
 		endHighScoreText.text = "High Score: " + highscore.ToString();
 
 	}
