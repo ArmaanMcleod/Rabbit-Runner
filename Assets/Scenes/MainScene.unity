@@ -349,7 +349,8 @@ Prefab:
       propertyPath: m_TagString
       value: InitialSlope
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114318443570457314, guid: b72b73df24fb36d4fbb693a7edddd7c4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b72b73df24fb36d4fbb693a7edddd7c4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &678255153 stripped
