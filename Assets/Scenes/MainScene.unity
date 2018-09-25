@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 908616223}
   - component: {fileID: 908616222}
   - component: {fileID: 908616224}
+  - component: {fileID: 908616225}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1265,8 +1266,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2375c5f387b5c145843ac415d4da5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreMultiplier: 600
   scoreText: {fileID: 2037264836}
+--- !u!114 &908616225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 908616221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e0955a2d7e2ed44930e2d4f30ae30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scorePerSecond: 100
 --- !u!1 &909650669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,8 +2117,8 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
+    m_Alignment: 1
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0

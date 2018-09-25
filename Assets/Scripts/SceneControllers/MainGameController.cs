@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainGameController : MonoBehaviour {
 	// Score data
-	private ScoreManager scoreManager;
+	private ScoreData scoreData;
 
 	// Canvas which displays the pause menu
 	public GameObject pauseCanvas;
@@ -38,7 +38,7 @@ public class MainGameController : MonoBehaviour {
 		gameOver = false;
 		paused = false;
 
-		scoreManager = gameObject.GetComponent<ScoreManager>();
+		scoreData = gameObject.GetComponent<ScoreData>();
 	}
 	
 	/// <summary>
@@ -96,11 +96,11 @@ public class MainGameController : MonoBehaviour {
 	/// </summary>
 	public void setGameOverScreen(){
 		gameOverCanvas.SetActive(true);
-		int score = scoreManager.getScore();
+		int score = scoreData.getScore();
 
 		// Check and update new high score
-		scoreManager.updateHighScore();
-		int highscore = scoreManager.getHighScore();
+		scoreData.updateHighScore();
+		int highscore = scoreData.getHighScore();
 
 		// Render the scores
 		endScoreText.text = "Score: " + score.ToString();
