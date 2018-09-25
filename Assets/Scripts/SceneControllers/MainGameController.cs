@@ -5,12 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainGameController : MonoBehaviour {
+	// Score data
+	private ScoreManager scoreManager;
 
 	// Canvas which displays the pause menu
 	public GameObject pauseCanvas;
 
 	// Canvas which displays the game over screen
 	public GameObject gameOverCanvas;
+	
+	// Text which displays the final score on the game over screen
+	public Text endScoreText;
+
+	// Text which displays the high score on the game over screen
+	public Text endHighScoreText;
 	
 	// String name of the main game scene
 	public string mainGameScene;
@@ -29,6 +37,8 @@ public class MainGameController : MonoBehaviour {
 		Time.timeScale=1;
 		gameOver = false;
 		paused = false;
+
+		scoreManager = gameObject.GetComponent<ScoreManager>();
 	}
 	
 	/// <summary>
@@ -77,8 +87,22 @@ public class MainGameController : MonoBehaviour {
 		if(currentHealth<=0){
 			gameOver = true;
 			Time.timeScale=0;
-			gameOverCanvas.SetActive(true);
+			setGameOverScreen();
 		}
+	}
+
+	public void setGameOverScreen(){
+		gameOverCanvas.SetActive(true);
+
+		
+
+		int score = scoreManager.getScore();
+		endScoreText.text = "Score: " + score.ToString();
+
+		scoreManager.updateHighScore();
+		int highscore = scoreManager.getHighScore();
+		endHighScoreText.text = "High Score: " + highscore.ToString();
+
 	}
 
 	/// <summary>

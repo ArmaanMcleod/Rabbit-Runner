@@ -56,13 +56,13 @@ public class PlayerHealth : MonoBehaviour {
 		UpdateHealthSlider();
 	}
 
-	// void Update(){
-	// 	if(gameController.isPaused()){
-	// 		return;
-	// 	}
-	// 	UpdateHealth(1);
+	void Update(){
+		if(gameController.isPaused()){
+			return;
+		}
+		UpdateHealth(1);
 		
-	// }
+	}
 
 	/// <summary>
 	/// Updates the health bar based on the player's current health
