@@ -7,7 +7,9 @@ public class InstructionsController : MonoBehaviour {
 
 	public string mainMenuScene; //The string name for the main menu scene
 
-	//Goes back to the main menu
+	/// <summary>
+	/// Switches to main menu scene
+	/// </summary>
 	public void GoBack(){
 		SceneManager.LoadScene(mainMenuScene);
 	}

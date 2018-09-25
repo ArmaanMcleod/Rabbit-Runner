@@ -8,13 +8,17 @@ public class MenuController : MonoBehaviour {
 	public string mainGameScene;  //The string name of the main game scene
 	public string instructionsScene; //The string name of the instructions scene
 
-
-	//Switches to the main game scene to start a new game
+	/// <summary>
+	/// Switches to the main game scene to start a new game
+	/// </summary>
 	public void StartNewGame () {
 		SceneManager.LoadScene(mainGameScene);
 	}
 
-	//Switches to the instructions scene
+
+	/// <summary>
+	/// Switches to the instructions scene
+	/// </summary>
 	public void OpenInstructions(){
 		SceneManager.LoadScene(instructionsScene);
 	}
