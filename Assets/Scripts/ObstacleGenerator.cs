@@ -21,6 +21,7 @@ public class ObstacleGenerator : MonoBehaviour {
         if (!alreadyUpdated && gameObject.activeInHierarchy) {
             Debug.Log("Updating obstacle locations");
             obstacleSection.UpdateCoordinates(gameObject.transform.position);
+            alreadyUpdated = true;
         }
 
         alreadyUpdated &= gameObject.activeInHierarchy;

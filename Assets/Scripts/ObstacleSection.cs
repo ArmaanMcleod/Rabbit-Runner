@@ -6,6 +6,11 @@ using UnityEngine;
 public class ObstacleSection {
 
     /// <summary>
+    /// Number of obstacles per section.
+    /// </summary>
+    private readonly int NUM_PER_SECTION = 10;
+
+    /// <summary>
     /// Number of each obstacle type held by this object
     /// </summary>
     private readonly int NUM_EACH_TYPE = 10;
@@ -39,18 +44,18 @@ public class ObstacleSection {
     private List<GameObject> cylinders = new List<GameObject>();
     private List<GameObject> cubes = new List<GameObject>();
 
-    private List<GameObject> currentGameObjects = new List<GameObject>();
+    private List<GameObject> currentObstacles = new List<GameObject>();
 
     public ObstacleSection(Vector3 position, float xLen, float zLen) {
         this.position = position;
         this.xLen = xLen;
         this.zLen = zLen;
 
+        Debug.Log("xLen: " + xLen);
+        Debug.Log("zLen: " + zLen);
+
         InstantiateObstacles(cylinders, CYLINDER_PREFAB);
         InstantiateObstacles(cubes, CUBE_PREFAB);
-
-        // TODO temp testing of cylinder prefab
-        cylinders[0].SetActive(true);
 
         RandomiseObstacles();
     }
@@ -61,21 +66,56 @@ public class ObstacleSection {
     /// <param name="position">The new position for this section of obstacles.</param>
     public void UpdateCoordinates(Vector3 position) {
         this.position = position;
+        Debug.Log("Updating for position: " + position);
         RandomiseObstacles();
     }
 
-    // TODO 
     /// <summary>
     /// Randomises the obstacles locations and make-up of 
     /// </summary>
     private void RandomiseObstacles() {
-        cylinders[0].transform.position = position;
-        Debug.Log("cylinder location: " + position.ToString());
+        float maxZPos = position.z + (zLen / 2);
+        float minZPos = position.z - (zLen / 2);
+        float maxXPos = position.x + (xLen / 2);
+        float minXPos = position.x - (xLen / 2);
+
+        // Clear the last set of obstacles
+        currentObstacles.ForEach(obj => obj.SetActive(false));
+        currentObstacles = new List<GameObject>();
+
+        // Pick some random obstacles
+        int cubeIndex = 0;
+        int cylinderIndex = 0;
+        for (int i = 0; i < NUM_PER_SECTION; i++) {
+            float randomValue = UnityEngine.Random.value;
+            if (randomValue < 0.5) {
+                currentObstacles.Add(cylinders[cylinderIndex]);
+                cylinderIndex++;
+            } else {
+                currentObstacles.Add(cubes[cubeIndex]);
+                cubeIndex++;
+            }
+        }
+
+        // Activate the new set of obstacles and randomise their positions
+        currentObstacles.ForEach(obj => {
+            Debug.Log("old obj position: " + obj.transform.position);
+            RandomisePosition(obj, maxZPos, minZPos, maxXPos, minXPos);
+            Debug.Log("new obj position: " + obj.transform.position);
+            obj.SetActive(true);
+        });
     }
 
-    
+    private void RandomisePosition(GameObject obstacle,
+                                  float maxZPos,
+                                  float minZPos,
+                                  float maxXPos,
+                                  float minXPos) {
+        float newX = UnityEngine.Random.Range(minXPos, maxXPos);
+        float newZ = UnityEngine.Random.Range(minZPos, maxZPos);
+        obstacle.transform.position = new Vector3(newX, 0, newZ);
+    }
 
-    // TODO create obstacle prefabs and use those instead here
     /// <summary>
     /// Instantiates the obstacles.
     /// </summary>
