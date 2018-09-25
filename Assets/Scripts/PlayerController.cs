@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+   // The main game controller
+	public GameObject gameControllerObj;
+	private MainGameController gameController;
 
     // Player speeds
     public float forwardSpeed;
@@ -31,6 +34,9 @@ public class PlayerController : MonoBehaviour {
         collider.radius = radius;
 
         onGround = true;
+
+        // Set game controller
+        gameController = gameControllerObj.GetComponent<MainGameController>();
     }
 
     /// <summary>
@@ -47,6 +53,10 @@ public class PlayerController : MonoBehaviour {
     /// Update is called once per frame
     /// </summary>
     private void Update () {
+        // Stops updating if game is paused or if game is over
+        if(gameController.isGameOver()||gameController.isPaused()){
+            return;
+        }
 
         // Handle jumping
         if (Input.GetKeyDown ("space") && onGround) {

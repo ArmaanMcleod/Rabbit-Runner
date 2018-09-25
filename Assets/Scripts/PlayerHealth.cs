@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
 	// The main game controller
-	public GameObject gameController;
+	public GameObject gameControllerObj;
+	private MainGameController gameController;
 
 	// Slider Health Bar
 	public Slider healthSlider;
@@ -36,6 +37,9 @@ public class PlayerHealth : MonoBehaviour {
 		
 		mediumHealth = maxHealth/2;
 		lowHealth = mediumHealth/2;
+
+		// Set game controller
+		gameController = gameControllerObj.GetComponent<MainGameController>();
 	}
 
 	/// <summary>
@@ -46,19 +50,19 @@ public class PlayerHealth : MonoBehaviour {
 		currentHealth-=damage;
 
 		// Check if player has lost the game
-		gameController.GetComponent<MainGameController>().CheckGameOver(currentHealth);
+		gameController.CheckGameOver(currentHealth);
 
 		// Update the health bar
 		UpdateHealthSlider();
 	}
 
-	void Update(){
-		if(gameController.GetComponent<MainGameController>().isPaused()){
-			return;
-		}
-		UpdateHealth(1);
+	// void Update(){
+	// 	if(gameController.isPaused()){
+	// 		return;
+	// 	}
+	// 	UpdateHealth(1);
 		
-	}
+	// }
 
 	/// <summary>
 	/// Updates the health bar based on the player's current health
