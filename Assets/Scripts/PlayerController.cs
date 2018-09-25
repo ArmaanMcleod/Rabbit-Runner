@@ -23,11 +23,11 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    private void Start () {
-        rb = this.gameObject.GetComponent<Rigidbody> ();
+    private void Start() {
+        rb = this.gameObject.GetComponent<Rigidbody>();
 
         // Update sphere collider radius
-        SphereCollider collider = this.gameObject.GetComponent<SphereCollider> ();
+        SphereCollider collider = this.gameObject.GetComponent<SphereCollider>();
         collider.radius = radius;
 
         onGround = true;
@@ -36,21 +36,21 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Called on Rigid body collsion
     /// </summary>
-    private void FixedUpdate () {
+    private void FixedUpdate() {
         // Apply force forward and move left and right
-        float horizontalMovement = Input.GetAxis ("Horizontal") * sideSpeed;
-        Vector3 movement = new Vector3 (horizontalMovement, 0.0f, forwardSpeed);
-        rb.AddForce (movement);
+        float horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
+        Vector3 movement = new Vector3(horizontalMovement, 0.0f, forwardSpeed);
+        rb.AddForce(movement);
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    private void Update () {
+    private void Update() {
 
         // Handle jumping
-        if (Input.GetKeyDown ("space") && onGround) {
-            rb.AddForce (0.0f, jumpForce, 0.0f);
+        if (Input.GetKeyDown("space") && onGround) {
+            rb.AddForce(0.0f, jumpForce, 0.0f);
             onGround = false;
         }
     }
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
     /// Collision detection if the player has already left ground
     /// </summary>
     /// <param name="other"></param>
-    private void OnCollisionEnter (Collision other) {
+    private void OnCollisionEnter(Collision other) {
         if (!onGround) {
             onGround = true;
         }
