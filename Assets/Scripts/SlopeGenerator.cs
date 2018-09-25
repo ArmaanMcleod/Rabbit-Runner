@@ -32,16 +32,17 @@ public class SlopeGenerator : MonoBehaviour {
     /// Use this for initialization
     /// </summary>
     private void Start () {
+        // Create slope queue 
         InitializeSlopes ();
+
+        // Destroy starting platform slope
+        Destroy (GameObject.FindGameObjectWithTag ("InitialSlope"));
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
     private void Update () {
-
-        // Destroy starting slope if it exists
-        Destroy (GameObject.FindGameObjectWithTag ("InitialSlope"));
 
         // Update current slope and index
         currentSlope = GetCurrentSlope ();
