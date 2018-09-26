@@ -396,7 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainGameScene: MainScene
   instructionsScene: InstructionScene
-  highScore: {fileID: 817865033}
+  highScoreText: {fileID: 817865033}
 --- !u!4 &602464591
 Transform:
   m_ObjectHideFlags: 0
