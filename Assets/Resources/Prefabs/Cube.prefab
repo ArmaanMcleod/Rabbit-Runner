@@ -108,5 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles: {fileID: 1063316251345814, guid: 03e4ad1ddd1ac1e4c84f420076644ef4, type: 2}
+  particles: {fileID: 1745464471188008, guid: bd5b739133566ca44ba0fbf71411ad48, type: 2}
   burstTime: 1
