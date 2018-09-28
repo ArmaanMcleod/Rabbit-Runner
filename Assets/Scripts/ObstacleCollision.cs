@@ -18,7 +18,7 @@ public class ObstacleCollision : MonoBehaviour {
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.tag == "Player") {
             Explode ();
-            Destroy (this.gameObject);
+            this.gameObject.SetActive (false);
         }
     }
 
