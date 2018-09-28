@@ -67,7 +67,7 @@ public class SlopeGenerator : MonoBehaviour {
 
             // All slopes except first are activated
             if (i != 0) {
-                slope.GetComponent<ActiveScript>().SetActive(false);
+                slope.SetActive(false);
             }
 
             slopes.Enqueue(slope);
@@ -86,7 +86,7 @@ public class SlopeGenerator : MonoBehaviour {
 
             // If not activiated in hierachy, activate it
             if (!slope.activeInHierarchy) {
-                slope.GetComponent<ActiveScript>().SetActive(true);
+                slope.SetActive(true);
             }
         }
     }
@@ -123,15 +123,16 @@ public class SlopeGenerator : MonoBehaviour {
     /// </summary>
     private void RecycleSlope() {
         GameObject slope = slopes.Dequeue();
-        slope.GetComponent<ActiveScript>().SetActive(false);
         slope.transform.position = CalculateNextSlopePosition();
+        slope.GetComponent<ObstacleGenerator>().UpdateObstacles();
+        slope.SetActive(false);
         slopes.Enqueue(slope);
     }
 
     /// <summary>
     /// Gets current slope game object player is on in world.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The slope player is on.</returns>
     private GameObject GetCurrentSlope() {
         GameObject newCurrentSlope = null;
 
