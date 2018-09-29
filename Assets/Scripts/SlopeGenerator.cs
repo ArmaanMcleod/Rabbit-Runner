@@ -4,6 +4,10 @@ using System.Linq;
 using UnityEngine;
 
 public class SlopeGenerator : MonoBehaviour {
+    
+    // Main game controller to check game state
+    private MainGameController gameController;
+    public GameObject gameControllerObj;
 
     // Slope prefab attached to player
     public GameObject slopePrefab;
@@ -37,12 +41,19 @@ public class SlopeGenerator : MonoBehaviour {
 
         // Destroy starting platform slope
         Destroy(GameObject.FindGameObjectWithTag("InitialSlope"));
+
+        // Set the game controller
+        gameController = gameControllerObj.GetComponent<MainGameController>();
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
     private void Update() {
+        // Do not update if game is paused or over
+        if(gameController.isGameOver()||gameController.isPaused()){
+            return;
+        }
 
         // Update current slope and index
         currentSlope = GetCurrentSlope();
