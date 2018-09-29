@@ -29,7 +29,6 @@ public class PlayerHealth : MonoBehaviour {
 	/// <summary>
 	/// Initialise player health values and the health bar
 	/// </summary>
-
 	void Start () {
 		currentHealth = maxHealth;
 		healthSlider.maxValue = maxHealth;
@@ -45,7 +44,7 @@ public class PlayerHealth : MonoBehaviour {
 	/// <summary>
 	/// Updates the health of the player based on the damage received
 	/// </summary>
-	/// <param name="damage"></param>
+	/// <param name="damage">amount of damage the player receives</param>
 	public void UpdateHealth (int damage){
 		currentHealth-=damage;
 
@@ -54,14 +53,6 @@ public class PlayerHealth : MonoBehaviour {
 
 		// Update the health bar
 		UpdateHealthSlider();
-	}
-
-	void Update(){
-		if(gameController.isPaused()){
-			return;
-		}
-		UpdateHealth(1);
-		
 	}
 
 	/// <summary>
