@@ -6,10 +6,16 @@ using UnityEngine.UI;
 
 
 public class MenuController : MonoBehaviour {
-	public string mainGameScene;  //The string name of the main game scene
-	public string instructionsScene; //The string name of the instructions scene
+	//The string name of the main game scene
+	public string mainGameScene;  
+	
+	//The string name of the instructions scene
+	public string instructionsScene; 
 
+	// Player's score data
 	private ScoreData scoreData;
+
+	// Text object which renders the high score on the canvas
 	public Text highScoreText;
 
 
