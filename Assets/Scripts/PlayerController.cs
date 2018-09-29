@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour {
         rb = this.gameObject.GetComponent<Rigidbody> ();
 
         // Update sphere collider radius
-        SphereCollider collider = this.gameObject.GetComponent<SphereCollider> ();
-        collider.radius = radius;
+        SphereCollider sphereCollider = this.gameObject.GetComponent<SphereCollider> ();
+        sphereCollider.radius = radius;
 
         onGround = true;
 
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Collision detection if the player has already left ground
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="other">The other object being collided with</param>
     private void OnCollisionEnter (Collision other) {
         if (!onGround) {
             onGround = true;

@@ -12,19 +12,19 @@ public class CameraController : MonoBehaviour {
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    private void Start () {
+    private void Start() {
         offset = transform.position.z - playerController.transform.position.z;
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    private void Update () {
+    private void Update() {
         float x = transform.position.x;
         float y = transform.position.y;
         float z = playerController.transform.position.z + offset;
 
         // Update camera position
-        transform.position = new Vector3 (x, y, z);
+        transform.position = new Vector3(x, y, z);
     }
 }
