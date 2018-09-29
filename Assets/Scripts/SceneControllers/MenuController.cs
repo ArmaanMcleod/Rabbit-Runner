@@ -20,6 +20,9 @@ public class MenuController : MonoBehaviour {
 		SceneManager.LoadScene(mainGameScene);
 	}
 
+	/// <summary>
+	/// Initialises the menu
+	/// </summary>
 	public void Start(){
 		scoreData = gameObject.GetComponent<ScoreData>();
 
@@ -33,5 +36,13 @@ public class MenuController : MonoBehaviour {
 	/// </summary>
 	public void OpenInstructions(){
 		SceneManager.LoadScene(instructionsScene);
+	}
+
+	
+	/// <summary>
+	/// Exits the application
+	/// </summary>
+	public void Exit(){
+		Application.Quit();
 	}
 }
