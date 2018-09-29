@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class ObstacleGenerator : MonoBehaviour {
 
+    // The obstacle section to generate obstacles
     private ObstacleSection obstacleSection;
 
-    // Use this for initialization
-    void Start () {
+    /// <summary>
+    /// Use this for initialization.
+    /// </summary>
+    private void Start () {
         Vector3 position = gameObject.transform.position;
         Vector3 size = gameObject.GetComponent<Renderer> ().bounds.size;
 
