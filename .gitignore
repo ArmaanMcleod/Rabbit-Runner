@@ -35,7 +35,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-
-# Standard Assets
-Assets/Standard Assets.meta
-Assets/Standard Assets/
