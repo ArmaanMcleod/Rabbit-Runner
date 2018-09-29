@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class ObstacleCollision : MonoBehaviour {
 
-    // Particle system prefab attached
-    public GameObject particles;
+    // Particle system explosion prefab attached
+    private GameObject explosionPrefab;
 
     // Time in seconds of burst time
     public int burstTime;
+
+    /// <summary>
+    /// Awake is used to initialize any variables or game state before the game starts.
+    /// </summary>
+    private void Awake () {
+        // Load in the explosion prefab from resources.
+        explosionPrefab = Resources.Load<GameObject> ("Prefabs/Explosion");
+    }
 
     /// <summary>
     /// OnCollisionEnter is called when this collider/rigidbody has begun
@@ -23,10 +31,10 @@ public class ObstacleCollision : MonoBehaviour {
     }
 
     /// <summary>
-    /// Apply explosion to obstacle
+    /// Explode is called when a particle system explosion needs to played on the scene.
     /// </summary>
     private void Explode () {
-        GameObject explosion = Instantiate (particles, transform.position, Quaternion.identity);
+        GameObject explosion = Instantiate (explosionPrefab, transform.position, Quaternion.identity);
         ParticleSystem particleSystem = explosion.GetComponent<ParticleSystem> ();
         particleSystem.Play ();
         Destroy (explosion, burstTime);

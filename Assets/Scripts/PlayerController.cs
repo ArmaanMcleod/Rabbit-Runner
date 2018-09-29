@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-   // The main game controller
-	public GameObject gameControllerObj;
-	private MainGameController gameController;
+    // The main game controller
+    public GameObject gameControllerObj;
+    private MainGameController gameController;
 
     // Player speeds
     public float forwardSpeed;
     public float sideSpeed;
 
     // Rigid body to detect collision
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     // Radius of rigid body
     public float radius;
@@ -24,9 +24,9 @@ public class PlayerController : MonoBehaviour {
     private bool onGround;
 
     /// <summary>
-    /// Use this for initialization
+    /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
-    private void Start () {
+    private void Awake () {
         rb = this.gameObject.GetComponent<Rigidbody> ();
 
         // Update sphere collider radius
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
         onGround = true;
 
         // Set game controller
-        gameController = gameControllerObj.GetComponent<MainGameController>();
+        gameController = gameControllerObj.GetComponent<MainGameController> ();
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Update () {
         // Stops updating if game is paused or if game is over
-        if(gameController.isGameOver()||gameController.isPaused()){
+        if (gameController.isGameOver () || gameController.isPaused ()) {
             return;
         }
 
@@ -74,5 +74,4 @@ public class PlayerController : MonoBehaviour {
             onGround = true;
         }
     }
-
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1740,8 +1740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameControllerObj: {fileID: 446878795}
-  slopePrefab: {fileID: 1605880472151992, guid: b72b73df24fb36d4fbb693a7edddd7c4,
-    type: 2}
   slopeLength: 20
   activeSlopes: 5
   numberOfSlopes: 7
@@ -1760,7 +1758,6 @@ MonoBehaviour:
   gameControllerObj: {fileID: 446878795}
   forwardSpeed: 50
   sideSpeed: 15
-  rb: {fileID: 1076137285}
   radius: 0.5
   jumpForce: 1500
 --- !u!114 &1076137288
