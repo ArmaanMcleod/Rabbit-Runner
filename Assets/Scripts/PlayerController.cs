@@ -26,41 +26,41 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
-    private void Awake () {
-        rb = this.gameObject.GetComponent<Rigidbody> ();
+    private void Awake() {
+        rb = this.gameObject.GetComponent<Rigidbody>();
 
         // Update sphere collider radius
-        SphereCollider sphereCollider = this.gameObject.GetComponent<SphereCollider> ();
+        SphereCollider sphereCollider = this.gameObject.GetComponent<SphereCollider>();
         sphereCollider.radius = radius;
 
         onGround = true;
 
         // Set game controller
-        gameController = gameControllerObj.GetComponent<MainGameController> ();
+        gameController = gameControllerObj.GetComponent<MainGameController>();
     }
 
     /// <summary>
     /// Called on Rigid body collsion
     /// </summary>
-    private void FixedUpdate () {
+    private void FixedUpdate() {
         // Apply force forward and move left and right
-        float horizontalMovement = Input.GetAxis ("Horizontal") * sideSpeed;
-        Vector3 movement = new Vector3 (horizontalMovement, 0.0f, forwardSpeed);
-        rb.AddForce (movement);
+        float horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
+        Vector3 movement = new Vector3(horizontalMovement, 0.0f, forwardSpeed);
+        rb.AddForce(movement);
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    private void Update () {
+    private void Update() {
         // Stops updating if game is paused or if game is over
-        if (gameController.isGameOver () || gameController.isPaused ()) {
+        if (gameController.isGameOver() || gameController.isPaused()) {
             return;
         }
 
         // Handle jumping
-        if (Input.GetKeyDown ("space") && onGround) {
-            rb.AddForce (0.0f, jumpForce, 0.0f);
+        if (Input.GetKeyDown("space") && onGround) {
+            rb.AddForce(0.0f, jumpForce, 0.0f);
             onGround = false;
         }
     }
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour {
     /// Collision detection if the player has already left ground
     /// </summary>
     /// <param name="other">The other object being collided with</param>
-    private void OnCollisionEnter (Collision other) {
+    private void OnCollisionEnter(Collision other) {
         if (!onGround) {
             onGround = true;
         }
