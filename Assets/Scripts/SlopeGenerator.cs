@@ -133,7 +133,11 @@ public class SlopeGenerator : MonoBehaviour {
     private void RecycleSlope () {
         GameObject slope = slopes.Dequeue ();
         slope.transform.position = CalculateNextSlopePosition ();
-        slope.GetComponent<ObstacleGenerator> ().UpdateObstacles ();
+
+        if (slope.tag == "Slope") {
+            slope.GetComponent<ObstacleGenerator> ().UpdateObstacles ();
+        }
+
         slope.SetActive (false);
         slopes.Enqueue (slope);
     }
