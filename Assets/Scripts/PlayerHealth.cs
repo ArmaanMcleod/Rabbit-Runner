@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour {
     /// <summary>
     /// Initialise player health values and the health bar
     /// </summary>
-    private void Start () {
+    private void Start() {
         currentHealth = maxHealth;
         healthSlider.maxValue = maxHealth;
         healthSlider.value = maxHealth;
@@ -36,27 +36,27 @@ public class PlayerHealth : MonoBehaviour {
         lowHealth = mediumHealth / 2;
 
         // Set game controller
-        gameController = gameControllerObj.GetComponent<MainGameController> ();
+        gameController = gameControllerObj.GetComponent<MainGameController>();
     }
 
     /// <summary>
     /// Updates the health of the player based on the damage received
     /// </summary>
     /// <param name="damage">amount of damage the player receives</param>
-    public void UpdateHealth (int damage) {
+    public void UpdateHealth(int damage) {
         currentHealth -= damage;
 
         // Check if player has lost the game
-        gameController.CheckGameOver (currentHealth);
+        gameController.CheckGameOver(currentHealth);
 
         // Update the health bar
-        UpdateHealthSlider ();
+        UpdateHealthSlider();
     }
 
     /// <summary>
     /// Updates the health bar based on the player's current health
     /// </summary>
-    private void UpdateHealthSlider () {
+    private void UpdateHealthSlider() {
         healthSlider.value = currentHealth;
 
         // Change colour of health bar based on how much health is left

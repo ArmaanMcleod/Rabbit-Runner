@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4761474429234946}
   - component: {fileID: 33104463457751266}
   - component: {fileID: 23712349661373516}
+  - component: {fileID: 114256908908987434}
   - component: {fileID: 64912043498830814}
   m_Layer: 0
   m_Name: Tree_Generic_Spring_01 1
@@ -128,3 +129,16 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300002, guid: 3ff881c8022019043aeedda36c66d4be, type: 3}
+--- !u!114 &114256908908987434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1454365668873724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burstTime: 1
+  defaultDamage: 10

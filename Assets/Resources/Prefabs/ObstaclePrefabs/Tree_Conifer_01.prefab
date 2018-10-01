@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4276572245661294}
   - component: {fileID: 33381959358406666}
   - component: {fileID: 23584479886488456}
+  - component: {fileID: 114186829211435248}
   - component: {fileID: 64469448916908582}
   m_Layer: 0
   m_Name: Tree_Conifer_01 1
@@ -128,3 +129,16 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300002, guid: d0b282bb7af77994f87537a877585083, type: 3}
+--- !u!114 &114186829211435248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1505412015078884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burstTime: 1
+  defaultDamage: 10
