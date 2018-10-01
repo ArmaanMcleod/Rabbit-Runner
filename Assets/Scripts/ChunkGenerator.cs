@@ -61,7 +61,7 @@ public class ChunkGenerator : MonoBehaviour {
         ActivateChunks ();
 
         // Delete previous chunks
-        SweepPreviousSlope ();
+        SweepPreviousChunks ();
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class ChunkGenerator : MonoBehaviour {
 
         for (int i = 0; i < numberOfChunks; i++) {
             GameObject chunk = Instantiate (chunkPrefab) as GameObject;
-            chunk.transform.position = CalculateNextSlopePosition ();
+            chunk.transform.position = CalculateNextChunkPosition ();
 
             // All chunks except first are activated
             if (i != 0) {
@@ -104,7 +104,7 @@ public class ChunkGenerator : MonoBehaviour {
     /// Calculates next chunk position.
     /// </summary>
     /// <returns>New chunk position in world</returns>
-    private Vector3 CalculateNextSlopePosition () {
+    private Vector3 CalculateNextChunkPosition () {
         Vector3 newPosition = chunkPrefab.transform.position;
         newPosition.z = currentChunkPosition;
         currentChunkPosition += chunkLength;
@@ -114,7 +114,7 @@ public class ChunkGenerator : MonoBehaviour {
     /// <summary>
     /// Sweeps aside chunks we have passed.
     /// </summary>
-    private void SweepPreviousSlope () {
+    private void SweepPreviousChunks () {
         // Sweep aside previous chunks were finished with
         if (currentChunkIndex > 0) {
             Vector3 previousPosition = chunks.ElementAt (currentChunkIndex - 1).transform.position;
@@ -132,7 +132,7 @@ public class ChunkGenerator : MonoBehaviour {
     /// </summary>
     private void RecycleChunk () {
         GameObject chunk = chunks.Dequeue ();
-        chunk.transform.position = CalculateNextSlopePosition ();
+        chunk.transform.position = CalculateNextChunkPosition ();
 
         // Only generate chunks for slopes
         if (chunk.tag == "Slope") {
