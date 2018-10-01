@@ -134,6 +134,7 @@ public class ChunkGenerator : MonoBehaviour {
         GameObject chunk = chunks.Dequeue ();
         chunk.transform.position = CalculateNextSlopePosition ();
 
+        // Only generate chunks for slopes
         if (chunk.tag == "Slope") {
             chunk.GetComponent<ObstacleGenerator> ().UpdateObstacles ();
         }
