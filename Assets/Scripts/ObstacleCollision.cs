@@ -8,7 +8,7 @@ public class ObstacleCollision : MonoBehaviour {
     private GameObject explosionPrefab;
 
     // Time in seconds of burst time
-    public int burstTime;
+    public int burstTime = 1;
 
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.

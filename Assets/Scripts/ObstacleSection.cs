@@ -18,8 +18,8 @@ public class ObstacleSection {
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
-    private readonly GameObject CUBE_PREFAB = Resources.Load<GameObject> ("Prefabs/Cube");
-    private readonly GameObject CYLINDER_PREFAB = Resources.Load<GameObject> ("Prefabs/Cylinder");
+    private readonly GameObject CUBE_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
+    private readonly GameObject CYLINDER_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Generic_Spring_01");
 
     /// <summary>
     /// Position of this section's slope.
