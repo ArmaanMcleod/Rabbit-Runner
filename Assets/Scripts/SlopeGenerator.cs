@@ -10,7 +10,7 @@ public class SlopeGenerator : MonoBehaviour {
     public GameObject gameControllerObj;
 
     // Slope prefab attached to player
-    private GameObject slopePrefab;
+    public GameObject slopePrefab;
 
     // Slope length of each prefab
     public float slopeLength;
@@ -36,14 +36,9 @@ public class SlopeGenerator : MonoBehaviour {
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
     private void Awake () {
-        // Load in slope prefab
-        slopePrefab = Resources.Load<GameObject> ("Prefabs/Slope");
 
         // Create slope queue 
         InitializeSlopes ();
-
-        // Destroy starting platform slope
-        Destroy (GameObject.FindGameObjectWithTag ("InitialSlope"));
 
         // Set the game controller
         gameController = gameControllerObj.GetComponent<MainGameController> ();

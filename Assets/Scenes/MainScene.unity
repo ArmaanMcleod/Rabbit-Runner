@@ -1740,6 +1740,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameControllerObj: {fileID: 446878795}
+  slopePrefab: {fileID: 1605880472151992, guid: b72b73df24fb36d4fbb693a7edddd7c4,
+    type: 2}
   slopeLength: 20
   activeSlopes: 5
   numberOfSlopes: 7
