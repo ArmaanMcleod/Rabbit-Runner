@@ -13,9 +13,9 @@ public class ObstacleCollision : MonoBehaviour {
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
-    private void Awake () {
+    private void Awake() {
         // Load in the explosion prefab from resources.
-        explosionPrefab = Resources.Load<GameObject> ("Prefabs/Explosion");
+        explosionPrefab = Resources.Load<GameObject>("Prefabs/Explosion");
     }
 
     /// <summary>
@@ -23,20 +23,20 @@ public class ObstacleCollision : MonoBehaviour {
     /// touching another rigidbody/collider.
     /// </summary>
     /// <param name="other">The Collision data associated with this collision.</param>
-    private void OnCollisionEnter (Collision other) {
+    private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Player") {
-            Explode ();
-            this.gameObject.SetActive (false);
+            Explode();
+            this.gameObject.SetActive(false);
         }
     }
 
     /// <summary>
     /// Explode is called when a particle system explosion needs to played on the scene.
     /// </summary>
-    private void Explode () {
-        GameObject explosion = Instantiate (explosionPrefab, transform.position, Quaternion.identity);
-        ParticleSystem particleSystem = explosion.GetComponent<ParticleSystem> ();
-        particleSystem.Play ();
-        Destroy (explosion, burstTime);
+    private void Explode() {
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        ParticleSystem particleSystem = explosion.GetComponent<ParticleSystem>();
+        particleSystem.Play();
+        Destroy(explosion, burstTime);
     }
 }

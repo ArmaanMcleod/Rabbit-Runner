@@ -19,22 +19,22 @@ public class ScoreManager : MonoBehaviour {
     /// <summary>
     /// Initialisation
     /// </summary>
-    private void Start () {
-        scoreData = gameObject.GetComponent<ScoreData> ();
-        gameController = gameObject.GetComponent<MainGameController> ();
+    private void Start() {
+        scoreData = gameObject.GetComponent<ScoreData>();
+        gameController = gameObject.GetComponent<MainGameController>();
     }
 
     /// <summary>
     /// Update is called once per frame to update the player's score
     /// </summary>
-    private void Update () {
+    private void Update() {
         // Don't update if game is over
-        if (gameController.isGameOver () || gameController.isPaused ()) {
+        if (gameController.isGameOver() || gameController.isPaused()) {
             return;
         }
 
-        scoreData.updateScore ();
-        scoreText.text = scoreData.getScore ().ToString ();
+        scoreData.updateScore();
+        scoreText.text = scoreData.getScore().ToString();
     }
 
 }
