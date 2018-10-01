@@ -10,6 +10,8 @@ public class ObstacleCollision : MonoBehaviour {
     // Time in seconds of burst time
     public int burstTime;
 
+    public int defaultDamage = 10;
+
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
@@ -21,11 +23,15 @@ public class ObstacleCollision : MonoBehaviour {
     /// <summary>
     /// OnCollisionEnter is called when this collider/rigidbody has begun
     /// touching another rigidbody/collider.
+    /// 
+    /// If the other rigidbody is the player, this object explodes and applies
+    /// damage to the player.
     /// </summary>
     /// <param name="other">The Collision data associated with this collision.</param>
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Player") {
             Explode();
+            other.gameObject.GetComponent<PlayerHealth>().UpdateHealth(defaultDamage);
             this.gameObject.SetActive(false);
         }
     }
