@@ -33,6 +33,9 @@ public class ObstacleCollision : MonoBehaviour {
             Explode();
             other.gameObject.GetComponent<PlayerHealth>().UpdateHealth(defaultDamage);
             this.gameObject.SetActive(false);
+        } else if(other.gameObject.tag == "MainCamera"){
+            // Debug.Log("hi").
+            // this.gameObject.SetActive(false);
         }
     }
 
