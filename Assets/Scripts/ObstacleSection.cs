@@ -13,13 +13,15 @@ public class ObstacleSection {
     /// Number of each obstacle type held by this object
     /// </summary>
     private readonly int NUM_EACH_TYPE = 10;
+    private readonly int NUM_CONIFERS = 5;
+    private readonly int NUM_ROCKS = 10;
 
     // TODO replace with 'real' obstacles.
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
-    private readonly GameObject CUBE_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
-    private readonly GameObject CYLINDER_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
+    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
+    private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
 
     /// <summary>
     /// Position of this section's slope.
@@ -40,8 +42,8 @@ public class ObstacleSection {
     /// These two fields hold references to the obstacles so that they can be
     /// recycled.
     /// </summary>
-    private List<GameObject> cylinders = new List<GameObject> ();
-    private List<GameObject> cubes = new List<GameObject> ();
+    private List<GameObject> rocks = new List<GameObject> ();
+    private List<GameObject> conifers = new List<GameObject> ();
 
     private List<GameObject> currentObstacles = new List<GameObject> ();
 
@@ -50,8 +52,8 @@ public class ObstacleSection {
         this.xLen = xLen;
         this.zLen = zLen;
 
-        InstantiateObstacles (cylinders, CYLINDER_PREFAB);
-        InstantiateObstacles (cubes, CUBE_PREFAB);
+        InstantiateObstacles (rocks, ROCK_PREFAB, NUM_ROCKS);
+        InstantiateObstacles (conifers, CONIFER_PREFAB, NUM_CONIFERS);
 
         RandomiseObstacles ();
     }
@@ -79,17 +81,23 @@ public class ObstacleSection {
         currentObstacles = new List<GameObject> ();
 
         // Pick some random obstacles
-        int cubeIndex = 0;
-        int cylinderIndex = 0;
-        for (int i = 0; i < NUM_PER_SECTION; i++) {
+        int rockIndex = 0;
+        int coniferIndex = 0;
+        int i = 0;
+        while (i < NUM_PER_SECTION) {
             float randomValue = UnityEngine.Random.value;
+
             if (randomValue < 0.5) {
-                currentObstacles.Add (cylinders[cylinderIndex]);
-                cylinderIndex++;
+                if(coniferIndex>=NUM_CONIFERS) continue;
+                currentObstacles.Add (conifers[coniferIndex]);
+                coniferIndex++;
             } else {
-                currentObstacles.Add (cubes[cubeIndex]);
-                cubeIndex++;
+                if(coniferIndex>=NUM_CONIFERS) continue;
+                currentObstacles.Add (rocks[rockIndex]);
+                rockIndex++;
             }
+
+            i++;
         }
 
         // Activate the new set of obstacles and randomise their positions
@@ -122,8 +130,9 @@ public class ObstacleSection {
     /// </summary>
     /// <param name="obstacleList">The obstacles container to populate.</param>
     /// <param name="prefab">The obstacle prefab to instantiate from.</param>
-    private void InstantiateObstacles (List<GameObject> obstacleList, GameObject prefab) {
-        for (int i = 0; i < NUM_EACH_TYPE; i++) {
+    /// <param name="num">The number of prefabs to instantiate.</param>
+    private void InstantiateObstacles (List<GameObject> obstacleList, GameObject prefab, int num) {
+        for (int i = 0; i < num; i++) {
             GameObject gameObject = UnityEngine.Object.Instantiate (prefab);
             gameObject.SetActive (false);
             obstacleList.Add (gameObject);
