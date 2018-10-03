@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64224339016727278}
   m_Layer: 0
   m_Name: LeftCliff
-  m_TagString: Cliff
+  m_TagString: LeftCliff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
