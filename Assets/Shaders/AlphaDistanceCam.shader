@@ -6,8 +6,8 @@ Shader "Custom/AlphaDependingDistance"
     Properties
     {
         _Color ("Main Color", Color) = (1,1,1,1)
-        _Radius ("Radius", Range(0.001, 500)) = 4
-		_DistTransparent("Disappears at", float) = 0.1
+		_DistTransparent("Disappears at", float) = 2
+        _DistStartTransparent("Starts disappearing at", float) = 8
     }
     SubShader
     {
@@ -35,18 +35,16 @@ Shader "Custom/AlphaDependingDistance"
                 return o;
             }
  
-            float _Radius;
 			float _DistTransparent;
 			fixed4 _Color;
+            float _DistStartTransparent;
  
             fixed4 frag(v2f i) : SV_Target {
                 fixed4 col = _Color;
                 float dist = distance(i.worldPos, _WorldSpaceCameraPos);
-				if(dist < _DistTransparent){
-					col.a=0;
-					return col;
-				}
-                col.a = saturate(dist / _Radius);
+				
+                float alpha = (dist - _DistTransparent) / (_DistStartTransparent - _DistTransparent);
+                col.a = saturate(alpha);
                 return col;
             }
  

@@ -7,7 +7,7 @@ public class ObstacleSection {
     /// <summary>
     /// Number of obstacles per section.
     /// </summary>
-    private readonly int NUM_PER_SECTION = 10;
+    private readonly int NUM_PER_SECTION = 6;
 
     /// <summary>
     /// Number of each obstacle type held by this object
