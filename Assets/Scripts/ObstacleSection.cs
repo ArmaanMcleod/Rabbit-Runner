@@ -12,7 +12,7 @@ public class ObstacleSection {
     /// <summary>
     /// Number of each obstacle type held by this object
     /// </summary>
-    private readonly int NUM_BIRDS = 2;
+    private readonly int NUM_BIRDS = 1;
     private readonly int NUM_CONIFERS = 3;
     private readonly int NUM_ROCKS = 10;
     private readonly int NUM_HARES = 2;
@@ -90,11 +90,11 @@ public class ObstacleSection {
         int coniferIndex = 0;
         int hareIndex = 0;
         int birdIndex = 0;
-        int i = 0;
-        while (i < NUM_PER_SECTION) {
+        
+        for(int i = 0; i < NUM_PER_SECTION; i++) {
             float randomValue = UnityEngine.Random.value;
             
-            if(randomValue < 0.07 && birdIndex<NUM_BIRDS){
+            if(randomValue < 0.05 && birdIndex<NUM_BIRDS){
                 ActivateObstacle(birds[birdIndex], 10);
                 birdIndex++;
             } else if (randomValue < 0.1 && hareIndex<NUM_HARES) {
@@ -107,28 +107,27 @@ public class ObstacleSection {
                 ActivateObstacle(rocks[rockIndex], 0);
                 rockIndex++;
             }
-
-            i++;
         }
     }
 
+    /// <summary>
+    /// Adds obstacle to the current obstacle list and activates it in the game in a random position
+    /// </summary>
+    /// <param name="obstacle">The obstacle to be activated.</param>
+    /// <param name="maxZPos">The obstacle's position on the y=axis</param>
     private void ActivateObstacle(GameObject obj, float yPos){
         currentObstacles.Add(obj);
         RandomisePosition(obj, yPos);
         obj.SetActive(true);
-        
     }
 
     /// <summary>
     /// Randomises the position of an obstacle.
     /// </summary>
     /// <param name="obstacle">The obstacle whose position will be randomised.</param>
-    /// <param name="maxZPos">The upper limit of the Z axis for the random position to be in.</param>
-    /// <param name="minZPos">The lower limit of the Z axis for the random position to be in.</param>
-    /// <param name="maxXPos">The upper limit of the X axis for the random position to be in.</param>
-    /// <param name="minXPos">The lower limit of the X axis for the random position to be in.</param>
+    /// <param name="maxZPos">The obstacle's position on the y=axis</param>
     private void RandomisePosition (GameObject obstacle, float yPos) {
-
+        // The maximum and minimum possible X and Z positions of the obstacle
         float maxZPos = position.z + (zLen / 2);
         float minZPos = position.z - (zLen / 2);
         float maxXPos = position.x + (xLen / 2);
