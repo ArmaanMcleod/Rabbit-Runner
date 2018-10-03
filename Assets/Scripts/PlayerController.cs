@@ -78,15 +78,5 @@ public class PlayerController : MonoBehaviour {
         if (!onGround && other.transform.tag == "Slope") {
             onGround = true;
         }
-
-        // If we've hit a right wall, rebound left
-        if (other.transform.tag == "RightCliff") {
-            rb.AddForce (-reboundForce, 0.0f, 0.0f);
-        }
-
-        // If we've hit a left wall, rebound right
-        if (other.transform.tag == "LeftCliff") {
-            rb.AddForce (reboundForce, 0.0f, 0.0f);
-        }
     }
 }
