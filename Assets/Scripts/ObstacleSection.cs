@@ -16,12 +16,15 @@ public class ObstacleSection {
     private readonly int NUM_CONIFERS = 3;
     private readonly int NUM_ROCKS = 10;
 
+    private readonly int NUM_HARES = 2;
+
     // TODO replace with 'real' obstacles.
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
     private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
     private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
+    private readonly GameObject HARE_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
 
     /// <summary>
     /// Position of this section's slope.
@@ -44,6 +47,7 @@ public class ObstacleSection {
     /// </summary>
     private List<GameObject> rocks = new List<GameObject> ();
     private List<GameObject> conifers = new List<GameObject> ();
+    private List<GameObject> hares = new List<GameObject> ();
 
     private List<GameObject> currentObstacles = new List<GameObject> ();
 
@@ -54,6 +58,7 @@ public class ObstacleSection {
 
         InstantiateObstacles (rocks, ROCK_PREFAB, NUM_ROCKS);
         InstantiateObstacles (conifers, CONIFER_PREFAB, NUM_CONIFERS);
+        InstantiateObstacles (hares, HARE_PREFAB, NUM_HARES);
 
         RandomiseObstacles ();
     }
@@ -83,11 +88,15 @@ public class ObstacleSection {
         // Pick some random obstacles
         int rockIndex = 0;
         int coniferIndex = 0;
+        int hareIndex = 0;
         int i = 0;
         while (i < NUM_PER_SECTION) {
             float randomValue = UnityEngine.Random.value;
 
-            if (randomValue < 0.5 && coniferIndex<NUM_CONIFERS) {
+            if (randomValue < 0.1 && hareIndex<NUM_HARES) {
+                currentObstacles.Add(hares[hareIndex]);
+                hareIndex ++;
+            } else if (randomValue < 0.3 && coniferIndex<NUM_CONIFERS) {
                 currentObstacles.Add (conifers[coniferIndex]);
                 coniferIndex++;
             } else {
