@@ -8,6 +8,8 @@ TagManager:
   - InitialSlope
   - Fire
   - Cliff
+  - LeftCliff
+  - RightCliff
   layers:
   - Default
   - TransparentFX
