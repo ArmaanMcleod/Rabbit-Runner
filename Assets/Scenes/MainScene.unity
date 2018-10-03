@@ -1866,7 +1866,6 @@ MonoBehaviour:
   sideSpeed: 15
   radius: 0.5
   jumpForce: 1500
-  reboundForce: 1000
 --- !u!114 &1076137288
 MonoBehaviour:
   m_ObjectHideFlags: 0

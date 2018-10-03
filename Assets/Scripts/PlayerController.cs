@@ -17,11 +17,8 @@ public class PlayerController : MonoBehaviour {
     // Radius of rigid body
     public float radius;
 
-    // Force of jump
+    // The force applied to the player jump
     public float jumpForce;
-
-    // Rebound force for cliff collisions
-    public float reboundForce;
 
     // Detects if player is grounded
     private bool onGround;
