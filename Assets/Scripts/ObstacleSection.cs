@@ -12,19 +12,18 @@ public class ObstacleSection {
     /// <summary>
     /// Number of each obstacle type held by this object
     /// </summary>
-    private readonly int NUM_EACH_TYPE = 10;
+    private readonly int NUM_BIRDS = 2;
     private readonly int NUM_CONIFERS = 3;
     private readonly int NUM_ROCKS = 10;
-
     private readonly int NUM_HARES = 2;
 
-    // TODO replace with 'real' obstacles.
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
     private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
     private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
     private readonly GameObject HARE_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
+    private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
 
     /// <summary>
     /// Position of this section's slope.
@@ -48,6 +47,8 @@ public class ObstacleSection {
     private List<GameObject> rocks = new List<GameObject> ();
     private List<GameObject> conifers = new List<GameObject> ();
     private List<GameObject> hares = new List<GameObject> ();
+    private List<GameObject> birds = new List<GameObject> ();
+
 
     private List<GameObject> currentObstacles = new List<GameObject> ();
 
@@ -59,6 +60,8 @@ public class ObstacleSection {
         InstantiateObstacles (rocks, ROCK_PREFAB, NUM_ROCKS);
         InstantiateObstacles (conifers, CONIFER_PREFAB, NUM_CONIFERS);
         InstantiateObstacles (hares, HARE_PREFAB, NUM_HARES);
+        InstantiateObstacles (birds, BIRD_PREFAB, NUM_BIRDS);
+
 
         RandomiseObstacles ();
     }
@@ -76,10 +79,7 @@ public class ObstacleSection {
     /// Randomises the obstacles locations and make-up of 
     /// </summary>
     private void RandomiseObstacles () {
-        float maxZPos = position.z + (zLen / 2);
-        float minZPos = position.z - (zLen / 2);
-        float maxXPos = position.x + (xLen / 2);
-        float minXPos = position.x - (xLen / 2);
+        
 
         // Clear the last set of obstacles
         currentObstacles.ForEach (obj => obj.SetActive (false));
@@ -89,29 +89,34 @@ public class ObstacleSection {
         int rockIndex = 0;
         int coniferIndex = 0;
         int hareIndex = 0;
+        int birdIndex = 0;
         int i = 0;
         while (i < NUM_PER_SECTION) {
             float randomValue = UnityEngine.Random.value;
-
-            if (randomValue < 0.1 && hareIndex<NUM_HARES) {
-                currentObstacles.Add(hares[hareIndex]);
-                hareIndex ++;
+            
+            if(randomValue < 0.07 && birdIndex<NUM_BIRDS){
+                ActivateObstacle(birds[birdIndex], 10);
+                birdIndex++;
+            } else if (randomValue < 0.1 && hareIndex<NUM_HARES) {
+                ActivateObstacle(hares[hareIndex], 0);
+                hareIndex++;
             } else if (randomValue < 0.3 && coniferIndex<NUM_CONIFERS) {
-                currentObstacles.Add (conifers[coniferIndex]);
+                ActivateObstacle(conifers[coniferIndex], 0);
                 coniferIndex++;
             } else {
-                currentObstacles.Add (rocks[rockIndex]);
+                ActivateObstacle(rocks[rockIndex], 0);
                 rockIndex++;
             }
 
             i++;
         }
+    }
 
-        // Activate the new set of obstacles and randomise their positions
-        currentObstacles.ForEach (obj => {
-            RandomisePosition (obj, maxZPos, minZPos, maxXPos, minXPos);
-            obj.SetActive (true);
-        });
+    private void ActivateObstacle(GameObject obj, float yPos){
+        currentObstacles.Add(obj);
+        RandomisePosition(obj, yPos);
+        obj.SetActive(true);
+        
     }
 
     /// <summary>
@@ -122,14 +127,16 @@ public class ObstacleSection {
     /// <param name="minZPos">The lower limit of the Z axis for the random position to be in.</param>
     /// <param name="maxXPos">The upper limit of the X axis for the random position to be in.</param>
     /// <param name="minXPos">The lower limit of the X axis for the random position to be in.</param>
-    private void RandomisePosition (GameObject obstacle,
-        float maxZPos,
-        float minZPos,
-        float maxXPos,
-        float minXPos) {
+    private void RandomisePosition (GameObject obstacle, float yPos) {
+
+        float maxZPos = position.z + (zLen / 2);
+        float minZPos = position.z - (zLen / 2);
+        float maxXPos = position.x + (xLen / 2);
+        float minXPos = position.x - (xLen / 2);
+
         float newX = UnityEngine.Random.Range (minXPos, maxXPos);
         float newZ = UnityEngine.Random.Range (minZPos, maxZPos);
-        obstacle.transform.position = new Vector3 (newX, 0, newZ);
+        obstacle.transform.position = new Vector3 (newX, yPos, newZ);
     }
 
     /// <summary>
