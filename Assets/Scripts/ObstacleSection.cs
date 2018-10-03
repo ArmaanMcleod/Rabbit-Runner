@@ -13,7 +13,7 @@ public class ObstacleSection {
     /// Number of each obstacle type held by this object
     /// </summary>
     private readonly int NUM_EACH_TYPE = 10;
-    private readonly int NUM_CONIFERS = 5;
+    private readonly int NUM_CONIFERS = 3;
     private readonly int NUM_ROCKS = 10;
 
     // TODO replace with 'real' obstacles.
@@ -87,12 +87,10 @@ public class ObstacleSection {
         while (i < NUM_PER_SECTION) {
             float randomValue = UnityEngine.Random.value;
 
-            if (randomValue < 0.5) {
-                if(coniferIndex>=NUM_CONIFERS) continue;
+            if (randomValue < 0.5 && coniferIndex<NUM_CONIFERS) {
                 currentObstacles.Add (conifers[coniferIndex]);
                 coniferIndex++;
             } else {
-                if(coniferIndex>=NUM_CONIFERS) continue;
                 currentObstacles.Add (rocks[rockIndex]);
                 rockIndex++;
             }
