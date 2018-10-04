@@ -15,7 +15,7 @@ public class ObstacleSection {
     private readonly int NUM_BIRDS = 1;
     private readonly int NUM_CONIFERS = 3;
     private readonly int NUM_ROCKS = 10;
-    private readonly int NUM_HARES = 2;
+    private readonly int NUM_TURTLES = 2;
 
     /// <summary>
     /// References to the cube and cylinder prefabs.
@@ -58,7 +58,7 @@ public class ObstacleSection {
 
         InstantiateObstacles(rocks, ROCK_PREFAB, NUM_ROCKS);
         InstantiateObstacles(conifers, CONIFER_PREFAB, NUM_CONIFERS);
-        InstantiateObstacles(turtles, TURTLE_PREFAB, NUM_HARES);
+        InstantiateObstacles(turtles, TURTLE_PREFAB, NUM_TURTLES);
         InstantiateObstacles(birds, BIRD_PREFAB, NUM_BIRDS);
     }
 
@@ -67,6 +67,7 @@ public class ObstacleSection {
     /// </summary>
     /// <param name="position">The new position for this section of obstacles.</param>
     public void UpdateCoordinates(Vector3 position) {
+        Debug.Log("Updating coordinates");
         this.position = position;
         RandomiseObstacles();
     }
@@ -91,7 +92,7 @@ public class ObstacleSection {
             if (randomValue < 0.05 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle(birds[birdIndex], 10);
                 birdIndex++;
-            } else if (randomValue < 0.1 && turtleIndex < NUM_HARES) {
+            } else if (randomValue < 0.1 && turtleIndex < NUM_TURTLES) {
                 ActivateObstacle(turtles[turtleIndex], 0);
                 turtleIndex++;
             } else if (randomValue < 0.3 && coniferIndex < NUM_CONIFERS) {

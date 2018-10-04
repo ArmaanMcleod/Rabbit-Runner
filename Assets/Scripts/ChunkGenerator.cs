@@ -32,6 +32,9 @@ public class ChunkGenerator : MonoBehaviour {
     private int currentChunkIndex;
     private float currentChunkPosition = 0.0f;
 
+    private bool firstChunk = true;
+    private bool secondChunk = true;
+
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
@@ -73,9 +76,9 @@ public class ChunkGenerator : MonoBehaviour {
         for (int i = 0; i < numberOfChunks; i++) {
             GameObject chunk = Instantiate(chunkPrefab) as GameObject;
             chunk.transform.position = CalculateNextChunkPosition();
-            if (chunk.tag == "Slope" && i != 0) {
-                chunk.GetComponent<ObstacleGenerator>().UpdateObstacles();
-            }
+            //if (chunk.tag == "Slope" && i != 0) {
+            //    chunk.GetComponent<ObstacleGenerator>().UpdateObstacles();
+            //}
 
             // All chunks except first are activated
             if (i != 0) {
@@ -101,11 +104,17 @@ public class ChunkGenerator : MonoBehaviour {
                 chunk.SetActive(true);
 
                 // Only add obstacles on slopes
-                if (chunk.tag == "Slope") {
+                // Don't put any obstacles on the first or second slopes
+                if (chunk.tag == "Slope" && !(firstChunk || secondChunk)) {
                     chunk.GetComponent<ObstacleGenerator>().UpdateObstacles();
                 }
+
+                // Change the status of the first and second chunks
+                secondChunk &= firstChunk;
+                firstChunk = false;
             }
         }
+
     }
 
     /// <summary>
