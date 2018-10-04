@@ -96,6 +96,11 @@ public class ChunkGenerator : MonoBehaviour {
             // If not activiated in hierachy, activate it
             if (!chunk.activeInHierarchy) {
                 chunk.SetActive (true);
+
+                // Only add obstacles on slopes
+                if (chunk.tag == "Slope") {
+                    chunk.GetComponent<ObstacleGenerator> ().UpdateObstacles ();
+                }
             }
         }
     }
@@ -133,11 +138,6 @@ public class ChunkGenerator : MonoBehaviour {
     private void RecycleChunk () {
         GameObject chunk = chunks.Dequeue ();
         chunk.transform.position = CalculateNextChunkPosition ();
-
-        // Only generate chunks for slopes
-        if (chunk.tag == "Slope") {
-            chunk.GetComponent<ObstacleGenerator> ().UpdateObstacles ();
-        }
 
         chunk.SetActive (false);
         chunks.Enqueue (chunk);
