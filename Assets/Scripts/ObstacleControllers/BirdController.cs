@@ -13,9 +13,14 @@ public class BirdController : MonoBehaviour {
     // Game controller
     private MainGameController gameController;
 
-    // Is the aim of the enemy set
+    /// <summary>
+    /// Is the aim of the bird set.
+    /// </summary>
     private bool locked = false;
 
+    /// <summary>
+    /// Whether the bird is moving towards the player.
+    /// </summary>
     private bool moving = false;
 
     // The distance (away from the player) the enemy starts moving and tracking the player
@@ -72,7 +77,6 @@ public class BirdController : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
         string collisionTag = collision.gameObject.tag;
         if (collisionTag.Equals("Player") || collisionTag.Equals("Slope")) {
-            Debug.Log("I hit something");
             locked = false;
             moving = false;
         }
