@@ -76,9 +76,6 @@ public class ChunkGenerator : MonoBehaviour {
         for (int i = 0; i < numberOfChunks; i++) {
             GameObject chunk = Instantiate(chunkPrefab) as GameObject;
             chunk.transform.position = CalculateNextChunkPosition();
-            //if (chunk.tag == "Slope" && i != 0) {
-            //    chunk.GetComponent<ObstacleGenerator>().UpdateObstacles();
-            //}
 
             // All chunks except first are activated
             if (i != 0) {
