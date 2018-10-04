@@ -7,7 +7,7 @@ public class ObstacleSection {
     /// <summary>
     /// Number of obstacles per section.
     /// </summary>
-    private readonly int NUM_PER_SECTION = 6;
+    private readonly int NUM_PER_SECTION = 8;
 
     /// <summary>
     /// Number of each obstacle type held by this object
@@ -48,7 +48,6 @@ public class ObstacleSection {
     private List<GameObject> conifers = new List<GameObject> ();
     private List<GameObject> hares = new List<GameObject> ();
     private List<GameObject> birds = new List<GameObject> ();
-
 
     private List<GameObject> currentObstacles = new List<GameObject> ();
 
@@ -122,7 +121,7 @@ public class ObstacleSection {
     }
 
     /// <summary>
-    /// Randomises the position of an obstacle.
+    /// Randomises the position and rotation of an obstacle.
     /// </summary>
     /// <param name="obstacle">The obstacle whose position will be randomised.</param>
     /// <param name="maxZPos">The obstacle's position on the y=axis</param>
@@ -135,7 +134,9 @@ public class ObstacleSection {
 
         float newX = UnityEngine.Random.Range (minXPos, maxXPos);
         float newZ = UnityEngine.Random.Range (minZPos, maxZPos);
+        float newYRot = UnityEngine.Random.Range (0, 360);
         obstacle.transform.position = new Vector3 (newX, yPos, newZ);
+        obstacle.transform.rotation = Quaternion.Euler(new Vector3(0, newYRot, 0));
     }
 
     /// <summary>

@@ -4,42 +4,55 @@ using UnityEngine;
 
 public class TargetPlayer : MonoBehaviour {
 
+	// Player gameobject
 	private GameObject player;
 
-	private Vector3 playerPos;
+	// Game controller
+	private MainGameController gameController;
 
-	private float distanceZPlayer;
-
+	// Is the aim of the enemy set
 	private bool locked = false; 
 
+	// The distance (away from the player) the enemy starts moving and tracking the player
 	public int distanceStartAttack;
 
+	// The distance from the player the enemy sets its aim
 	public int distanceLockAttack;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
-		
+		GameObject gameControllerObj = GameObject.FindGameObjectWithTag("GameController");
+		gameController = gameControllerObj.GetComponent<MainGameController>();
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// Update is called once per frame
+	/// </summary>
 	void Update () {
-		if(locked){
+		if(locked || gameController.isGameOver() || gameController.isPaused()){
 			return;
 		}
 
-		distanceZPlayer = gameObject.transform.position.z - player.transform.position.z;
+		// Calculate the distance from the player in the z-axis
+		float distanceZPlayer = gameObject.transform.position.z - player.transform.position.z;
 		if(distanceZPlayer < distanceStartAttack && distanceZPlayer > 0){
-			playerPos = player.transform.position;
-			AttackPlayer();
+			Vector3 playerPos = player.transform.position;
+			
+			TrackPlayer(playerPos);
+			
 			if(distanceZPlayer < distanceLockAttack){
 				locked = true;
 			}
 		}
 	}
 
-	void AttackPlayer(){
-		transform.LookAt(playerPos);
+	/// <summary>
+	/// Tracks the position of the player and moves towards it
+	/// <param name="pos">The position of the player </param>
+	/// </summary>
+	void TrackPlayer(Vector3 pos){
+		transform.LookAt(pos);
 		gameObject.GetComponent<MoveForward>().enabled = true;
 	}
 }
