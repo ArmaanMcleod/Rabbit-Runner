@@ -86,7 +86,7 @@ public class MainGameController : MonoBehaviour {
 	public void CheckGameOver(int currentHealth){
 		if(currentHealth<=0){
 			gameOver = true;
-			//Time.timeScale=0;
+			Time.timeScale=0;
 			setGameOverScreen();
 		}
 	}
