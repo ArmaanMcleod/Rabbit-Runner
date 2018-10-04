@@ -1096,7 +1096,7 @@ Prefab:
     - target: {fileID: 54477501281828922, guid: d2d67fda15fa26342932fffde03aeb05,
         type: 2}
       propertyPath: m_Constraints
-      value: 116
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 1580388819070796, guid: d2d67fda15fa26342932fffde03aeb05, type: 2}
       propertyPath: m_IsActive
