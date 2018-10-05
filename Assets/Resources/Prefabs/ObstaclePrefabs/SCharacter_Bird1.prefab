@@ -309,8 +309,7 @@ GameObject:
   - component: {fileID: 114659404776803416}
   - component: {fileID: 64004326156869796}
   - component: {fileID: 54252127682724624}
-  - component: {fileID: 114898887474311368}
-  - component: {fileID: 114429618224581838}
+  - component: {fileID: 114899091175353756}
   m_Layer: 0
   m_Name: SCharacter_Bird1
   m_TagString: Untagged
@@ -704,19 +703,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114429618224581838
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1844827636381818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1aecf6ca8f83584494f6c6faa185788, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceStartAttack: 30
-  distanceLockAttack: 4
 --- !u!114 &114659404776803416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -730,18 +716,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burstTime: 1
   defaultDamage: 10
---- !u!114 &114898887474311368
+--- !u!114 &114899091175353756
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1844827636381818}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 757e4d8268f70554c9d115d23936de44, type: 3}
+  m_Script: {fileID: 11500000, guid: d1aecf6ca8f83584494f6c6faa185788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  distanceStartAttack: 30
+  distanceLockAttack: 4
 --- !u!137 &137001747131351174
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
