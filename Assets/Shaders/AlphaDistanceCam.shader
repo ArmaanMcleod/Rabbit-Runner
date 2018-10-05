@@ -1,5 +1,5 @@
 ﻿// Adpated from Shaders Laboratory Demo 48
-// Original Souce Code: http://www.shaderslab.com/demo-48---alpha-depending-distance-camera.html
+// Original Source Code: http://www.shaderslab.com/demo-48---alpha-depending-distance-camera.html
 
 Shader "Custom/AlphaDependingDistance"
 {
@@ -50,7 +50,7 @@ Shader "Custom/AlphaDependingDistance"
                 float dist = distance(i.worldPos, _WorldSpaceCameraPos);
                 float alpha = (dist - _DistTransparent) / (_DistStartTransparent - _DistTransparent);
                 
-                // Clamps the alpha value to 0 or 1
+                // Clamps the alpha value between 0 and 1
                 col.a = saturate(alpha);
                 return col;
             }
