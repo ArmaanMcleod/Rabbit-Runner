@@ -8,7 +8,7 @@
 // Code for transparency effect adapted from Shaders Laboratory Demo 48
 // Original Source Code: http://www.shaderslab.com/demo-48---alpha-depending-distance-camera.html
 
-Shader "Custom/AlphaDependingDistance"
+Shader "Unlit/AlphaDistanceCam"
 {
     Properties
     {
@@ -57,7 +57,7 @@ Shader "Custom/AlphaDependingDistance"
 			{
 				float4 pos : SV_POSITION;
 				float3 normal : TEXCOORD0;
-                float4 worldPos : TEXCOORD1;
+                float4 worldPos : TEXCOORD2;
 				SHADOW_COORDS(1)
 			};
 

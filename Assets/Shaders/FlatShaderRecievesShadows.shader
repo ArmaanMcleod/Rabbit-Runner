@@ -3,9 +3,7 @@
 // Code for geometry shader adapted from Catlike Coding 
 // Original Source: https://catlikecoding.com/unity/tutorials/advanced-rendering/flat-and-wireframe-shading/
 
-
-
-Shader "Unlit/FlatShader"
+Shader "Unlit/FlatShaderReceivesShadows"
 {
 	Properties
 	{
