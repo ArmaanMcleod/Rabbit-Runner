@@ -70,6 +70,7 @@ Shader "Unlit/FlatShader"
 				// Calculate the normal of the triangle created by the vertices 
 				float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
 
+				// Set the normal of all three vertices to the triangle normal
 				g2f o;
 				o.normal = triangleNormal;
 
@@ -88,7 +89,6 @@ Shader "Unlit/FlatShader"
 				// Calculate ambient lighting
 				fixed4 ambient = _BaseColor * UNITY_LIGHTMODEL_AMBIENT;
 
-
 				// Calculate diffuse lighting
 				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
 				float LdotN = max(0.0, dot(LightDir, v.normal));
@@ -100,5 +100,8 @@ Shader "Unlit/FlatShader"
 			}
 			ENDCG
 		}
+
+		// Implement Shadow casting using built in shader
+		UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
 	}
 }
