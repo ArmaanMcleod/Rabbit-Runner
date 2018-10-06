@@ -22,11 +22,15 @@ Shader "Unlit/FlatShader"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma geometry geom
+			#pragma multi_compile_fwdbase
 			
-			uniform fixed4 _BaseColor;
 			
 			#include "UnityCG.cginc"
 			#include "Lighting.cginc"
+			#include "AutoLight.cginc"
+
+
+			uniform fixed4 _BaseColor;
 
 			struct vertIn
 			{
@@ -35,14 +39,17 @@ Shader "Unlit/FlatShader"
 
 			struct v2g
 			{
-				float4 vertex : SV_POSITION;
+				float4 pos : SV_POSITION;
 				float4 worldVertex : TEXCOORD0;
+				//SHADOW_COORDS(1)
+
 			};
 
 			struct g2f
 			{
-				float4 vertex : SV_POSITION;
+				float4 pos : SV_POSITION;
 				float3 normal : TEXCOORD0;
+				SHADOW_COORDS(1)
 			};
 
 			
@@ -52,20 +59,22 @@ Shader "Unlit/FlatShader"
 				v2g o;
 
 				// Transform the vertex position into camera coordinates
-				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 
 				// Transform the vertex position into world coordinates
 				o.worldVertex = mul(unity_ObjectToWorld, v.vertex);
+
+				
 				
 				return o;
 			}
 
 			[maxvertexcount(3)] 
-			void geom (triangle v2g i[3], inout TriangleStream<g2f> stream) {
+			void geom (triangle v2g input[3], inout TriangleStream<g2f> stream) {
 				// Get the positions of the vertices
-				float3 p0 = i[0].worldVertex.xyz;
-				float3 p1 = i[1].worldVertex.xyz;
-				float3 p2 = i[2].worldVertex.xyz;
+				float3 p0 = input[0].worldVertex.xyz;
+				float3 p1 = input[1].worldVertex.xyz;
+				float3 p2 = input[2].worldVertex.xyz;
 
 				// Calculate the normal of the triangle created by the vertices 
 				float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
@@ -74,14 +83,11 @@ Shader "Unlit/FlatShader"
 				g2f o;
 				o.normal = triangleNormal;
 
-				o.vertex = i[0].vertex;
-				stream.Append(o);
-
-				o.vertex = i[1].vertex;
-				stream.Append(o);
-
-				o.vertex = i[2].vertex;
-				stream.Append(o);
+				for(int i = 0; i < 3; i++){
+					o.pos = input[i].pos;
+					TRANSFER_SHADOW(o)
+					stream.Append(o);
+				}
 			}
 			
 			fixed4 frag(g2f v) : SV_Target
@@ -93,9 +99,12 @@ Shader "Unlit/FlatShader"
 				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
 				float LdotN = max(0.0, dot(LightDir, v.normal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
+
+				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
+                fixed shadow = SHADOW_ATTENUATION(v);
 				
 				// Apply ambient and diffuse lighting
-				fixed4 col = diffuse + ambient;
+				fixed4 col = diffuse * shadow + ambient;
 				return col;
 			}
 			ENDCG
