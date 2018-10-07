@@ -43,13 +43,24 @@ public class PlayerHealth : MonoBehaviour {
     /// Updates the health of the player based on the damage received
     /// </summary>
     /// <param name="damage">amount of damage the player receives</param>
-    public void UpdateHealth(int damage) {
+    public void TakeDamage(int damage) {
         currentHealth -= damage;
 
         // Check if player has lost the game
         gameController.CheckGameOver(currentHealth);
 
         // Update the health bar
+        UpdateHealthSlider();
+    }
+
+    public void ReceiveHealing(int healing) {
+        currentHealth += healing;
+
+        // Make sure the player doesn't overheal
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
+        }
+
         UpdateHealthSlider();
     }
 
@@ -63,11 +74,12 @@ public class PlayerHealth : MonoBehaviour {
         // Low Health
         if (currentHealth <= lowHealth) {
             healthSliderImage.color = Color.red;
-        }
-        // Medium Health
-        else if (currentHealth <= mediumHealth) {
+        } else if (currentHealth <= mediumHealth) {
+            // Medium Health
             healthSliderImage.color = Color.yellow;
+        } else {
+            // High health
+            healthSliderImage.color = Color.green;
         }
-
     }
 }

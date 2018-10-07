@@ -25,6 +25,8 @@ public class ObstacleSection {
     private readonly GameObject TURTLE_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
     private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
 
+    private readonly GameObject HEALTH_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/HealthItem");
+
     /// <summary>
     /// Position of this section's slope.
     /// </summary>
@@ -49,7 +51,10 @@ public class ObstacleSection {
     private List<GameObject> turtles = new List<GameObject>();
     private List<GameObject> birds = new List<GameObject>();
 
+    private GameObject healthItem;
+
     private List<GameObject> currentObstacles = new List<GameObject>();
+    private GameObject currentItem;
 
     public ObstacleSection(Vector3 position, float xLen, float zLen) {
         this.position = position;
@@ -60,6 +65,8 @@ public class ObstacleSection {
         InstantiateObstacles(conifers, CONIFER_PREFAB, NUM_CONIFERS);
         InstantiateObstacles(turtles, TURTLE_PREFAB, NUM_TURTLES);
         InstantiateObstacles(birds, BIRD_PREFAB, NUM_BIRDS);
+
+        InstantiateItems();
     }
 
     /// <summary>
@@ -70,6 +77,7 @@ public class ObstacleSection {
         Debug.Log("Updating coordinates");
         this.position = position;
         RandomiseObstacles();
+        RandomiseItem();
     }
 
     /// <summary>
@@ -105,6 +113,16 @@ public class ObstacleSection {
         }
     }
 
+    private void RandomiseItem() {
+        if (currentItem != null) {
+            currentItem.SetActive(false);
+        }
+
+        currentItem = healthItem;
+        RandomisePosition(currentItem, 0);
+        currentItem.SetActive(true);
+    }
+
     /// <summary>
     /// Adds obstacle to the current obstacle list and activates it in the game in a random position
     /// </summary>
@@ -133,6 +151,11 @@ public class ObstacleSection {
         float newYRot = UnityEngine.Random.Range(0, 360);
         obstacle.transform.position = new Vector3(newX, yPos, newZ);
         obstacle.transform.rotation = Quaternion.Euler(new Vector3(0, newYRot, 0));
+    }
+
+    private void InstantiateItems() {
+        healthItem = UnityEngine.Object.Instantiate(HEALTH_ITEM_PREFAB);
+        healthItem.SetActive(false);
     }
 
     /// <summary>
