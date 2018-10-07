@@ -1,10 +1,9 @@
 ﻿// Flat shader which works for a single directional light source
-// Shadows are cast but not received
+// Shadows are received and cast
 // Code for geometry shader adapted from Catlike Coding 
 // Original Source: https://catlikecoding.com/unity/tutorials/advanced-rendering/flat-and-wireframe-shading/
 
-
-Shader "Unlit/FlatShader"
+Shader "Unlit/FlatShaderReceivesShadows"
 {
 	Properties
 	{
@@ -21,10 +20,13 @@ Shader "Unlit/FlatShader"
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma geometry geom			
+			#pragma geometry geom
+			#pragma multi_compile_fwdbase
+			
 			
 			#include "UnityCG.cginc"
 			#include "Lighting.cginc"
+			#include "AutoLight.cginc"
 
 
 			uniform fixed4 _BaseColor;
@@ -44,6 +46,7 @@ Shader "Unlit/FlatShader"
 			{
 				float4 pos : SV_POSITION;
 				float3 normal : TEXCOORD0;
+				SHADOW_COORDS(1)
 			};
 
 			
@@ -58,8 +61,6 @@ Shader "Unlit/FlatShader"
 				// Transform the vertex position into world coordinates
 				o.worldVertex = mul(unity_ObjectToWorld, v.vertex);
 
-				
-				
 				return o;
 			}
 
@@ -79,6 +80,7 @@ Shader "Unlit/FlatShader"
 
 				for(int i = 0; i < 3; i++){
 					o.pos = input[i].pos;
+					TRANSFER_SHADOW(o)
 					stream.Append(o);
 				}
 			}
@@ -92,9 +94,12 @@ Shader "Unlit/FlatShader"
 				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
 				float LdotN = max(0.0, dot(LightDir, v.normal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
+
+				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
+                fixed shadow = SHADOW_ATTENUATION(v);
 				
 				// Apply ambient and diffuse lighting
-				fixed4 col = diffuse + ambient;
+				fixed4 col = diffuse * shadow + ambient;
 				return col;
 			}
 			ENDCG
