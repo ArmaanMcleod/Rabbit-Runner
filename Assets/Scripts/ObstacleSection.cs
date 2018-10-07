@@ -97,7 +97,7 @@ public class ObstacleSection {
         for (int i = 0; i < NUM_PER_SECTION; i++) {
             float randomValue = UnityEngine.Random.Range(0, 1);
 
-            if (randomValue < 0.05 && birdIndex < NUM_BIRDS) {
+            if (randomValue < 0.01 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle(birds[birdIndex], 10);
                 birdIndex++;
             } else if (randomValue < 0.1 && turtleIndex < NUM_TURTLES) {
@@ -119,7 +119,7 @@ public class ObstacleSection {
         }
 
         currentItem = healthItem;
-        RandomisePosition(currentItem, 0);
+        RandomisePosition(currentItem, UnityEngine.Random.Range(0, 2.5f));
         currentItem.SetActive(true);
     }
 
