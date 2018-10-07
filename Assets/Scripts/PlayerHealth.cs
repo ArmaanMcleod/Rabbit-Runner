@@ -21,8 +21,12 @@ public class PlayerHealth : MonoBehaviour {
     private int currentHealth;
 
     private int mediumHealth;
-
     private int lowHealth;
+
+    /// <summary>
+    /// Whether the player is invincible.
+    /// </summary>
+    private bool invincible = false;
 
     /// <summary>
     /// Initialise player health values and the health bar
@@ -44,6 +48,11 @@ public class PlayerHealth : MonoBehaviour {
     /// </summary>
     /// <param name="damage">amount of damage the player receives</param>
     public void TakeDamage(int damage) {
+        // Don't take damage if the player is currently invincible
+        if (invincible) {
+            return;
+        }
+
         currentHealth -= damage;
 
         // Check if player has lost the game
@@ -81,5 +90,13 @@ public class PlayerHealth : MonoBehaviour {
             // High health
             healthSliderImage.color = Color.green;
         }
+    }
+
+    public bool GetInvincible() {
+        return invincible;
+    }
+
+    public void SetInvincible(bool invincible) {
+        this.invincible = invincible;
     }
 }

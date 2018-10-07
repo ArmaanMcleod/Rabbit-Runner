@@ -102,7 +102,7 @@ public class ChunkGenerator : MonoBehaviour {
 
                 // Only add obstacles on slopes
                 // Don't put any obstacles on the first or second slopes
-                if (chunk.tag == "Slope" && !(firstChunk || secondChunk)) {
+                if (chunk.tag.Equals("Slope") && !(firstChunk || secondChunk)) {
                     chunk.GetComponent<ObstacleGenerator>().UpdateObstacles();
                 }
 

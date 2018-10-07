@@ -26,6 +26,7 @@ public class ObstacleSection {
     private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
 
     private readonly GameObject HEALTH_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/HealthItem");
+    private readonly GameObject INVINCIBILITY_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/InvincibilityItem");
 
     /// <summary>
     /// Position of this section's slope.
@@ -52,6 +53,8 @@ public class ObstacleSection {
     private List<GameObject> birds = new List<GameObject>();
 
     private GameObject healthItem;
+    private GameObject invincibilityItem;
+
 
     private List<GameObject> currentObstacles = new List<GameObject>();
     private GameObject currentItem;
@@ -95,15 +98,15 @@ public class ObstacleSection {
         int birdIndex = 0;
 
         for (int i = 0; i < NUM_PER_SECTION; i++) {
-            float randomValue = UnityEngine.Random.Range(0, 1);
+            float randomValue = UnityEngine.Random.Range(1, 100);
 
-            if (randomValue < 0.01 && birdIndex < NUM_BIRDS) {
+            if (randomValue < 5 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle(birds[birdIndex], 10);
                 birdIndex++;
-            } else if (randomValue < 0.1 && turtleIndex < NUM_TURTLES) {
+            } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {
                 ActivateObstacle(turtles[turtleIndex], 0);
                 turtleIndex++;
-            } else if (randomValue < 0.3 && coniferIndex < NUM_CONIFERS) {
+            } else if (randomValue < 40 && coniferIndex < NUM_CONIFERS) {
                 ActivateObstacle(conifers[coniferIndex], 0);
                 coniferIndex++;
             } else {
@@ -118,9 +121,14 @@ public class ObstacleSection {
             currentItem.SetActive(false);
         }
 
-        currentItem = healthItem;
-        RandomisePosition(currentItem, UnityEngine.Random.Range(0, 2.5f));
-        currentItem.SetActive(true);
+        UnityEngine.Random.InitState(DateTime.Now.Millisecond);
+        bool willSpawnItem = UnityEngine.Random.Range(1, 10) > 5;
+        if (willSpawnItem) {
+            float val = UnityEngine.Random.Range(1, 10);
+            currentItem = val < 5 ? invincibilityItem : healthItem;
+            RandomisePosition(currentItem, UnityEngine.Random.Range(0, 2.5f));
+            currentItem.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -154,6 +162,9 @@ public class ObstacleSection {
     }
 
     private void InstantiateItems() {
+        invincibilityItem = UnityEngine.Object.Instantiate(INVINCIBILITY_ITEM_PREFAB);
+        invincibilityItem.SetActive(false);
+
         healthItem = UnityEngine.Object.Instantiate(HEALTH_ITEM_PREFAB);
         healthItem.SetActive(false);
     }
