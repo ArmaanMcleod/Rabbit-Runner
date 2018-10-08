@@ -24,10 +24,10 @@ public class BirdController : MonoBehaviour {
     private bool moving = false;
 
     // The distance (away from the player) the enemy starts moving and tracking the player
-    public int distanceStartAttack;
+    public float distanceStartAttack;
 
     // The distance from the player the enemy sets its aim
-    public int distanceLockAttack;
+    public float distanceLockAttack;
 
     // Use this for initialization
     void Start() {
