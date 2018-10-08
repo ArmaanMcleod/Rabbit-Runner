@@ -7,7 +7,7 @@ public class ObstacleSection {
     /// <summary>
     /// Number of obstacles per section.
     /// </summary>
-    private readonly int NUM_PER_SECTION = 8;
+    private readonly int NUM_PER_SECTION = 10;
 
     /// <summary>
     /// Number of each obstacle type held by this object
@@ -122,7 +122,7 @@ public class ObstacleSection {
         }
 
         UnityEngine.Random.InitState(DateTime.Now.Millisecond);
-        bool willSpawnItem = UnityEngine.Random.Range(1, 10) > 5;
+        bool willSpawnItem = UnityEngine.Random.Range(1, 10) > 7.5;
         if (willSpawnItem) {
             float val = UnityEngine.Random.Range(1, 10);
             currentItem = val < 5 ? invincibilityItem : healthItem;
@@ -151,8 +151,8 @@ public class ObstacleSection {
         // The maximum and minimum possible X and Z positions of the obstacle
         float maxZPos = position.z + (zLen / 2);
         float minZPos = position.z - (zLen / 2);
-        float maxXPos = position.x + (xLen / 2) - 1;
-        float minXPos = position.x - (xLen / 2) + 1;
+        float maxXPos = position.x + (xLen / 2) - 5;
+        float minXPos = position.x - (xLen / 2) + 5;
 
         float newX = UnityEngine.Random.Range(minXPos, maxXPos);
         float newZ = UnityEngine.Random.Range(minZPos, maxZPos);
