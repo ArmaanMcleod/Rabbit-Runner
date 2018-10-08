@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour {
         rb = this.gameObject.GetComponent<Rigidbody>();
 
         // Update sphere collider radius
-        SphereCollider sphereCollider = this.gameObject.GetComponent<SphereCollider>();
-        sphereCollider.radius = radius;
+        //SphereCollider sphereCollider = this.gameObject.GetComponent<SphereCollider>();
+        //sphereCollider.radius = radius;
 
         onGround = true;
 
