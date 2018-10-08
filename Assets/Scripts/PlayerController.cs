@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    private Animator animator;
+
     // The main game controller
     public GameObject gameControllerObj;
     private MainGameController gameController;
@@ -37,6 +39,8 @@ public class PlayerController : MonoBehaviour {
 
         // Set game controller
         gameController = gameControllerObj.GetComponent<MainGameController>();
+
+        animator = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -62,6 +66,8 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown("space") && onGround) {
             rb.AddForce(0.0f, jumpForce, 0.0f);
             onGround = false;
+
+            animator.Play("Jump", 0);
         }
     }
 
@@ -74,6 +80,8 @@ public class PlayerController : MonoBehaviour {
         // If were not on the ground and the collider is a slope, we've hit the ground
         if (!onGround && other.transform.tag == "Slope") {
             onGround = true;
+
+            animator.Play("Moving");
         }
     }
 }
