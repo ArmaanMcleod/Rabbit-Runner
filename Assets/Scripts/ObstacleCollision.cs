@@ -32,7 +32,7 @@ public class ObstacleCollision : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Player") {
             Explode();
-            other.gameObject.GetComponent<PlayerHealth>().UpdateHealth(defaultDamage);
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(defaultDamage);
             this.gameObject.SetActive(false);
         }
     }

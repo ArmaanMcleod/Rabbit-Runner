@@ -1709,6 +1709,7 @@ GameObject:
   - component: {fileID: 1076137288}
   - component: {fileID: 1076137289}
   - component: {fileID: 1076137290}
+  - component: {fileID: 1076137291}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1883,6 +1884,18 @@ MonoBehaviour:
   activeChunks: 6
   numberOfChunks: 7
   distanceRatio: 0.75
+--- !u!114 &1076137291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1076137280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44754513e5a1941e4933e7059a1f138b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibilityTime: 5
 --- !u!1001 &1107622460
 Prefab:
   m_ObjectHideFlags: 0

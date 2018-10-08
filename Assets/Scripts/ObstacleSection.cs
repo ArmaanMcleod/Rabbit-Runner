@@ -7,7 +7,7 @@ public class ObstacleSection {
     /// <summary>
     /// Number of obstacles per section.
     /// </summary>
-    private readonly int NUM_PER_SECTION = 8;
+    private readonly int NUM_PER_SECTION = 10;
 
     /// <summary>
     /// Number of each obstacle type held by this object
@@ -24,6 +24,9 @@ public class ObstacleSection {
     private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
     private readonly GameObject TURTLE_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
     private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
+
+    private readonly GameObject HEALTH_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/HealthItem");
+    private readonly GameObject INVINCIBILITY_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/InvincibilityItem");
 
     /// <summary>
     /// Position of this section's slope.
@@ -49,7 +52,12 @@ public class ObstacleSection {
     private List<GameObject> turtles = new List<GameObject>();
     private List<GameObject> birds = new List<GameObject>();
 
+    private GameObject healthItem;
+    private GameObject invincibilityItem;
+
+
     private List<GameObject> currentObstacles = new List<GameObject>();
+    private GameObject currentItem;
 
     public ObstacleSection(Vector3 position, float xLen, float zLen) {
         this.position = position;
@@ -60,6 +68,8 @@ public class ObstacleSection {
         InstantiateObstacles(conifers, CONIFER_PREFAB, NUM_CONIFERS);
         InstantiateObstacles(turtles, TURTLE_PREFAB, NUM_TURTLES);
         InstantiateObstacles(birds, BIRD_PREFAB, NUM_BIRDS);
+
+        InstantiateItems();
     }
 
     /// <summary>
@@ -70,6 +80,7 @@ public class ObstacleSection {
         Debug.Log("Updating coordinates");
         this.position = position;
         RandomiseObstacles();
+        RandomiseItem();
     }
 
     /// <summary>
@@ -87,21 +98,36 @@ public class ObstacleSection {
         int birdIndex = 0;
 
         for (int i = 0; i < NUM_PER_SECTION; i++) {
-            float randomValue = UnityEngine.Random.Range(0, 1);
+            float randomValue = UnityEngine.Random.Range(1, 100);
 
-            if (randomValue < 0.05 && birdIndex < NUM_BIRDS) {
+            if (randomValue < 5 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle(birds[birdIndex], 10);
                 birdIndex++;
-            } else if (randomValue < 0.1 && turtleIndex < NUM_TURTLES) {
+            } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {
                 ActivateObstacle(turtles[turtleIndex], 0);
                 turtleIndex++;
-            } else if (randomValue < 0.3 && coniferIndex < NUM_CONIFERS) {
+            } else if (randomValue < 40 && coniferIndex < NUM_CONIFERS) {
                 ActivateObstacle(conifers[coniferIndex], 0);
                 coniferIndex++;
             } else {
                 ActivateObstacle(rocks[rockIndex], 0);
                 rockIndex++;
             }
+        }
+    }
+
+    private void RandomiseItem() {
+        if (currentItem != null) {
+            currentItem.SetActive(false);
+        }
+
+        UnityEngine.Random.InitState(DateTime.Now.Millisecond);
+        bool willSpawnItem = UnityEngine.Random.Range(1, 10) > 7.5;
+        if (willSpawnItem) {
+            float val = UnityEngine.Random.Range(1, 10);
+            currentItem = val < 5 ? invincibilityItem : healthItem;
+            RandomisePosition(currentItem, UnityEngine.Random.Range(0, 2.5f));
+            currentItem.SetActive(true);
         }
     }
 
@@ -125,14 +151,22 @@ public class ObstacleSection {
         // The maximum and minimum possible X and Z positions of the obstacle
         float maxZPos = position.z + (zLen / 2);
         float minZPos = position.z - (zLen / 2);
-        float maxXPos = position.x + (xLen / 2) - 1;
-        float minXPos = position.x - (xLen / 2) + 1;
+        float maxXPos = position.x + (xLen / 2) - 5;
+        float minXPos = position.x - (xLen / 2) + 5;
 
         float newX = UnityEngine.Random.Range(minXPos, maxXPos);
         float newZ = UnityEngine.Random.Range(minZPos, maxZPos);
         float newYRot = UnityEngine.Random.Range(0, 360);
         obstacle.transform.position = new Vector3(newX, yPos, newZ);
         obstacle.transform.rotation = Quaternion.Euler(new Vector3(0, newYRot, 0));
+    }
+
+    private void InstantiateItems() {
+        invincibilityItem = UnityEngine.Object.Instantiate(INVINCIBILITY_ITEM_PREFAB);
+        invincibilityItem.SetActive(false);
+
+        healthItem = UnityEngine.Object.Instantiate(HEALTH_ITEM_PREFAB);
+        healthItem.SetActive(false);
     }
 
     /// <summary>
