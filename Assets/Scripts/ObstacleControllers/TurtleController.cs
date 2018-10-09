@@ -15,11 +15,23 @@ public class TurtleController : MonoBehaviour {
 
     Quaternion desiredRot;
 
+    // Game controller
+    private MainGameController gameController;
+
+    // Use this for initialization
+    void Start() {
+        GameObject gameControllerObj = GameObject.FindGameObjectWithTag("GameController");
+        gameController = gameControllerObj.GetComponent<MainGameController>();
+    }
+
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
     void Update() {
+        if(gameController.isGameOver() || gameController.isPaused()){
+            return;
+        }
 
         // Smooth rotation
         if(turning){
@@ -34,8 +46,13 @@ public class TurtleController : MonoBehaviour {
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
+    /// <summary>
+    /// If the turtle collides with anything other than the player, set it to rotate it's
+    /// position randomly so it doesn't stay stuck there
+    /// </summary>
+    /// <param name="col">The Collision data associated with this collision event.</param>
     void OnCollisionEnter(Collision col){
-        if(col.gameObject.tag!="Player"){
+        if(col.gameObject.tag != "Player"){
             float turningAngle = UnityEngine.Random.Range(20, 340);
             turning = true;
             desiredRot = Quaternion.Euler(transform.localRotation.x, turningAngle, transform.localRotation.z);
