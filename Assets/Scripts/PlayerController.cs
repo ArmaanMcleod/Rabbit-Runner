@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    // Player animations
     private Animator animator;
 
     // The main game controller
@@ -47,17 +48,8 @@ public class PlayerController : MonoBehaviour {
     /// Called on Rigid body collsion
     /// </summary>
     private void FixedUpdate() {
-        // Apply force forward and move left and right
-        float horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
-        Vector3 movement = new Vector3(horizontalMovement, 0.0f, forwardSpeed);
-        rb.AddForce(movement);
-    }
 
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    private void Update() {
-        // Stops updating if game is paused or if game is over
+         // Stops updating if game is paused or if game is over
         if (gameController.isGameOver() || gameController.isPaused()) {
             return;
         }
@@ -67,8 +59,12 @@ public class PlayerController : MonoBehaviour {
             rb.AddForce(0.0f, jumpForce, 0.0f);
             onGround = false;
 
-            animator.Play("Jump", 0);
+            animator.Play("Jump");
         }
+        // Apply force forward and move left and right
+        float horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
+        Vector3 movement = new Vector3(horizontalMovement, 0.0f, forwardSpeed);
+        rb.AddForce(movement);
     }
 
     /// <summary>
