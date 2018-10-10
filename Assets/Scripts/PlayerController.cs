@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour {
     // Detects if player is grounded
     private bool onGround;
 
+    private bool jump;
+
+    private float horizontalMovement;
+
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour {
         //sphereCollider.radius = radius;
 
         onGround = true;
+        jump = false;
 
         // Set game controller
         gameController = gameControllerObj.GetComponent<MainGameController>();
@@ -48,23 +53,48 @@ public class PlayerController : MonoBehaviour {
     /// Called on Rigid body collsion
     /// </summary>
     private void FixedUpdate() {
-
          // Stops updating if game is paused or if game is over
         if (gameController.isGameOver() || gameController.isPaused()) {
             return;
         }
 
         // Handle jumping
-        if (Input.GetKeyDown("space") && onGround) {
-            rb.AddForce(0.0f, jumpForce, 0.0f);
-            onGround = false;
+        if(jump){
+            rb.AddForce(0.0f, jumpForce, 0.0f, ForceMode.Impulse);
+            jump = false;
+        }
 
+        // Set Y velocity
+        // If player isn't on the ground, let the forces and gravity applied when jumping
+        // determine the Y velocity
+        float movementY = 0.0f;
+        if(!onGround){
+            movementY = rb.velocity.y;
+        }
+
+        // Move left and right
+        Vector3 movement = new Vector3(horizontalMovement, movementY, forwardSpeed);
+        rb.velocity = movement;
+    }
+
+    /// <summary>
+    /// Updates once per frame to check inputs
+    /// </summary>
+    private void Update(){
+        // Stops updating if game is paused or if game is over
+        if (gameController.isGameOver() || gameController.isPaused()) {
+            return;
+        }
+
+        // Check if player is to jump
+        if (Input.GetKeyDown("space") && onGround) {
+            onGround = false;
+            jump = true;
             animator.Play("Jump");
         }
-        // Apply force forward and move left and right
-        float horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
-        Vector3 movement = new Vector3(horizontalMovement, 0.0f, forwardSpeed);
-        rb.AddForce(movement);
+
+        // Check if player is to move
+        horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
     }
 
     /// <summary>
