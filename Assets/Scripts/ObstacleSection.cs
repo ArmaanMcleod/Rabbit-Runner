@@ -13,14 +13,14 @@ public class ObstacleSection {
     /// Number of each obstacle type held by this object
     /// </summary>
     private readonly int NUM_BIRDS = 1;
-    private readonly int NUM_CONIFERS = 3;
+    private readonly int NUM_CONIFERS = 2;
     private readonly int NUM_ROCKS = 10;
     private readonly int NUM_TURTLES = 2;
 
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
-    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
+    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Tree_Dead_02");
     private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
     private readonly GameObject TURTLE_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
     private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
@@ -100,7 +100,7 @@ public class ObstacleSection {
         for (int i = 0; i < NUM_PER_SECTION; i++) {
             float randomValue = UnityEngine.Random.Range(1, 100);
 
-            if (randomValue < 5 && birdIndex < NUM_BIRDS) {
+            if (randomValue < 2 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle(birds[birdIndex], 10);
                 birdIndex++;
             } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {
