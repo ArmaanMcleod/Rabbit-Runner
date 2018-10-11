@@ -20,7 +20,7 @@ public class ObstacleSection {
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
-    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Tree_Dead_02");
+    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
     private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
     private readonly GameObject TURTLE_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
     private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Bird1");

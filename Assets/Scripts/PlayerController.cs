@@ -26,8 +26,10 @@ public class PlayerController : MonoBehaviour {
     // Detects if player is grounded
     private bool onGround;
 
+    // If the player can jump
     private bool jump;
 
+    // The players left-right movement
     private float horizontalMovement;
 
     /// <summary>
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour {
             animator.Play("Jump");
         }
 
-        // Check if player is to move
+        // Get player's horizontal movement
         horizontalMovement = Input.GetAxis("Horizontal") * sideSpeed;
     }
 

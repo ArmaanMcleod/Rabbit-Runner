@@ -63,7 +63,7 @@ public class MainGameController : MonoBehaviour {
 	/// <summary>
 	/// Pauses the game
 	/// </summary>
-	void PauseGame(){
+	public void PauseGame(){
 		Time.timeScale=0;
 		pauseCanvas.SetActive(true);
 		paused = true;
