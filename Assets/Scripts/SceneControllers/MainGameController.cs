@@ -58,6 +58,11 @@ public class MainGameController : MonoBehaviour {
 				PauseGame();
 			}
 		}
+
+		// Exit to main menu
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			ExitToMenu();
+		}
 	}
 	
 	/// <summary>

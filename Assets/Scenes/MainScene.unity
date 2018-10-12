@@ -2369,17 +2369,17 @@ Prefab:
     - target: {fileID: 114849271053739200, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
       propertyPath: sideSpeed
-      value: 4
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 114849271053739200, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
       propertyPath: jumpForce
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 54770124988696616, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
       propertyPath: m_Drag
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54770124988696616, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
@@ -2393,11 +2393,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4417330512631264, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4417330512631264, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
       propertyPath: m_LocalPosition.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417330512631264, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
