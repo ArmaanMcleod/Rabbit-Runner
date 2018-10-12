@@ -100,8 +100,8 @@ public class ObstacleSection {
         for (int i = 0; i < NUM_PER_SECTION; i++) {
             float randomValue = UnityEngine.Random.Range(1, 100);
 
-            if (randomValue < 2 && birdIndex < NUM_BIRDS) {
-                ActivateObstacle(birds[birdIndex], 10);
+            if (randomValue < 10 && birdIndex < NUM_BIRDS) {
+                ActivateObstacle(birds[birdIndex], 15);
                 birdIndex++;
             } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {
                 ActivateObstacle(turtles[turtleIndex], 0);
