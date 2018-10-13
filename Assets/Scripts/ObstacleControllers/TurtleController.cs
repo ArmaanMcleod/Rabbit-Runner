@@ -26,6 +26,7 @@ public class TurtleController : MonoBehaviour {
         GameObject gameControllerObj = GameObject.FindGameObjectWithTag ("GameController");
         gameController = gameControllerObj.GetComponent<MainGameController> ();
 
+        // Get mine prefab and make it a child object
         GameObject minePrefab = Resources.Load<GameObject> ("Prefabs/Mine");
         mine = Instantiate (minePrefab, transform.position, transform.rotation);
         mine.transform.parent = transform;
@@ -39,6 +40,7 @@ public class TurtleController : MonoBehaviour {
             return;
         }
 
+        // Position mine above turtle
         Vector3 currentPosition = transform.position;
         currentPosition.y += mineHeight;
         mine.transform.position = currentPosition;
