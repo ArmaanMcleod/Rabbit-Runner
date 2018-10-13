@@ -9,6 +9,8 @@ public class PlayerHealth : MonoBehaviour {
     public GameObject gameControllerObj;
     private MainGameController gameController;
 
+    private readonly float healthFeedbackTime = 0.5f;
+
     // Slider Health Bar
     public Slider healthSlider;
 
@@ -18,7 +20,7 @@ public class PlayerHealth : MonoBehaviour {
     // Player's health values
     public int maxHealth;
     private int currentHealth;
-    
+
     // Levels of health which changes colour of health bar
     private int mediumHealth;
     private int lowHealth;
@@ -35,7 +37,9 @@ public class PlayerHealth : MonoBehaviour {
 
     private bool damageTimerOn = false;
 
-    Renderer playerRenderer;
+    private bool healTimerOn = false;
+
+    private Renderer playerRenderer;
 
 
     /// <summary>
@@ -64,10 +68,22 @@ public class PlayerHealth : MonoBehaviour {
     /// Update is called once per frame
     /// Counts down the amount of time the player has left in the damage material colour
     /// </summary>
-    private void Update(){
-        if(damageTimerOn){
+    private void Update() {
+        if (healTimerOn) {
             timer += Time.deltaTime;
-            if(timer >= damgeFeedbackTime){
+            if (timer >= healthFeedbackTime) {
+                playerRenderer.material.color = Color.white;
+                healTimerOn = false;
+                timer = 0;
+                if (invincible) {
+                    playerRenderer.material.color = invincibilityColor;
+                }
+            }
+        }
+
+        if (damageTimerOn) {
+            timer += Time.deltaTime;
+            if (timer >= damgeFeedbackTime) {
                 playerRenderer.material.color = Color.white;
                 damageTimerOn = false;
                 timer = 0;
@@ -97,6 +113,7 @@ public class PlayerHealth : MonoBehaviour {
         playerRenderer.material.color = damageColor;
         damageTimerOn = true;
         timer = 0;
+        healTimerOn = false;
     }
 
     public void ReceiveHealing(int healing) {
@@ -107,6 +124,8 @@ public class PlayerHealth : MonoBehaviour {
             currentHealth = maxHealth;
         }
 
+        playerRenderer.material.color = Color.green;
+        healTimerOn = true;
         UpdateHealthSlider();
     }
 
