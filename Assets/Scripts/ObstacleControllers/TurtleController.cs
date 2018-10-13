@@ -13,6 +13,8 @@ public class TurtleController : MonoBehaviour {
 
     private readonly float MIN_DIFF = 0.01f;
 
+    private readonly float mineHeight = 0.6f;
+
     private Quaternion desiredRot;
 
     // Game controller
@@ -33,12 +35,13 @@ public class TurtleController : MonoBehaviour {
     /// Update is called once per frame
     /// </summary>
     void Update () {
-
         if (gameController.isGameOver () || gameController.isPaused ()) {
             return;
         }
 
-        mine.transform.position = new Vector3 (transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        Vector3 currentPosition = transform.position;
+        currentPosition.y += mineHeight;
+        mine.transform.position = currentPosition;
 
         // Smooth rotation
         if (turning) {
