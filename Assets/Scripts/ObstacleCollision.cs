@@ -16,9 +16,9 @@ public class ObstacleCollision : MonoBehaviour {
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
-    private void Awake() {
+    private void Awake () {
         // Load in the explosion prefab from resources.
-        explosionPrefab = Resources.Load<GameObject>("Prefabs/Explosion");
+        explosionPrefab = Resources.Load<GameObject> ("Prefabs/Explosion");
     }
 
     /// <summary>
@@ -29,26 +29,26 @@ public class ObstacleCollision : MonoBehaviour {
     /// damage to the player.
     /// </summary>
     /// <param name="other">The Collision data associated with this collision.</param>
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter (Collision other) {
         if (other.gameObject.tag == "Player") {
-            Explode();
-            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(defaultDamage);
-            this.gameObject.SetActive(false);
+            Explode ();
+            other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
+            this.gameObject.SetActive (false);
         }
     }
 
     /// <summary>
     /// Explode is called when a particle system explosion needs to played on the scene.
     /// </summary>
-    private void Explode() {
+    private void Explode () {
         // Instantiate a new explosion prefab
-        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        GameObject explosion = Instantiate (explosionPrefab, transform.position, Quaternion.identity);
 
         // Play the the explosion
-        ParticleSystem particleSystem = explosion.GetComponent<ParticleSystem>();
-        particleSystem.Play();
+        ParticleSystem particleSystem = explosion.GetComponent<ParticleSystem> ();
+        particleSystem.Play ();
 
         // Were done with the explosion, get rid of it
-        Destroy(explosion, burstTime);
+        Destroy (explosion, burstTime);
     }
 }

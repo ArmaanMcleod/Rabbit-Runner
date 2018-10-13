@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23961202485575926}
   - component: {fileID: 135350199482347898}
   - component: {fileID: 114255778182396094}
+  - component: {fileID: 122257767969084774}
   m_Layer: 0
   m_Name: HealthItem
   m_TagString: Untagged
@@ -97,6 +98,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthHealed: 25
+--- !u!122 &122257767969084774
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962971334968268}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294929967
+  m_Size: 2
 --- !u!135 &135350199482347898
 SphereCollider:
   m_ObjectHideFlags: 1
