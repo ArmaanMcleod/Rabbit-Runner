@@ -13,9 +13,6 @@ public class ObstacleCollision : MonoBehaviour {
     // Default damage for player on startup
     public int defaultDamage;
 
-    // Force to push objects to the side
-    public float forcePush = 500f;
-
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
@@ -33,26 +30,10 @@ public class ObstacleCollision : MonoBehaviour {
     /// </summary>
     /// <param name="other">The Collision data associated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
-        if (other.gameObject.tag == "Player") {
+        if (other.gameObject.transform.tag == "Player") {
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
-
-            if (gameObject.transform.tag == "Rock") {
-                Rigidbody rb = gameObject.GetComponent<Rigidbody> ();
-                rb.velocity = Vector3.zero;
-
-                float randomRange = Random.Range (0.0f, 1.0f);
-
-                // Randomly pushes objects left and right
-                if (randomRange > 0.5f) {
-                    rb.AddForce (forcePush * Vector3.right);
-                } else {
-                    rb.AddForce (forcePush * Vector3.left);
-                }
-
-            } else {
-                Explode ();
-                this.gameObject.SetActive (false);
-            }
+            Explode ();
+            this.gameObject.SetActive (false);
         }
     }
 

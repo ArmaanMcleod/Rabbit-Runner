@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 114461813766103842}
   - component: {fileID: 54477501281828922}
   - component: {fileID: 64642416773782600}
-  - component: {fileID: 114760807864316592}
+  - component: {fileID: 114221898122644462}
   m_Layer: 0
   m_Name: SCharacter_Turtle
   m_TagString: Turtle
@@ -1049,6 +1049,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114221898122644462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1580388819070796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burstTime: 1
+  defaultDamage: 5
 --- !u!114 &114461813766103842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1061,20 +1074,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
---- !u!114 &114760807864316592
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1580388819070796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burstTime: 1
-  defaultDamage: 10
-  forcePush: 500
 --- !u!137 &137114638286891076
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

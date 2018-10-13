@@ -37,8 +37,8 @@ GameObject:
   - component: {fileID: 33099690823292474}
   - component: {fileID: 23281631622293086}
   - component: {fileID: 64341973211934628}
-  - component: {fileID: 114931813741838204}
   - component: {fileID: 54066853828948192}
+  - component: {fileID: 114574545017796392}
   m_Layer: 0
   m_Name: Rock_Chunk_01 1
   m_TagString: Rock
@@ -129,7 +129,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &64341973211934628
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -144,7 +144,7 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300002, guid: 7dfc828ca778ec647ac245cb37cb44f3, type: 3}
---- !u!114 &114931813741838204
+--- !u!114 &114574545017796392
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -152,9 +152,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1664073779785792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
+  m_Script: {fileID: 11500000, guid: ab497f7f67218584ca7003aba579cc3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burstTime: 1
-  defaultDamage: 10
+  defaultDamage: 5
   forcePush: 500
