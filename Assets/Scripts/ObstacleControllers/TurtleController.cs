@@ -20,8 +20,12 @@ public class TurtleController : MonoBehaviour {
     // Game controller
     private MainGameController gameController;
 
+    // Mine game object to be added as child object
     private GameObject mine;
 
+    /// <summary>
+    /// Awake is used to initialize any variables or game state before the game starts.
+    /// </summary>
     private void Awake () {
         GameObject gameControllerObj = GameObject.FindGameObjectWithTag ("GameController");
         gameController = gameControllerObj.GetComponent<MainGameController> ();

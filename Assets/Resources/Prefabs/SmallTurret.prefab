@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineHeightOffset: 0.6
-  turretDamage: 1
+  turretDamage: 10
 --- !u!120 &120542605393260968
 LineRenderer:
   m_ObjectHideFlags: 1

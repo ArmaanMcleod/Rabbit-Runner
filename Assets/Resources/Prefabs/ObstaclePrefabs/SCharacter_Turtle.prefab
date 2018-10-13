@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   burstTime: 1
-  defaultDamage: 5
+  defaultDamage: 10
 --- !u!114 &114461813766103842
 MonoBehaviour:
   m_ObjectHideFlags: 1
