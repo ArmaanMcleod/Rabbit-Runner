@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 114760807864316592}
   m_Layer: 0
   m_Name: SCharacter_Turtle
-  m_TagString: Untagged
+  m_TagString: Turtle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1016,7 +1016,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &64642416773782600
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -1074,6 +1074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burstTime: 1
   defaultDamage: 10
+  forcePush: 500
 --- !u!137 &137114638286891076
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
