@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23298069926179540}
   - component: {fileID: 135558476505562284}
   - component: {fileID: 114611540691856774}
+  - component: {fileID: 122706926229859042}
   m_Layer: 0
   m_Name: InvincibilityItem
   m_TagString: Untagged
@@ -96,6 +97,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f0a6cae89d046a7b7a1c90a3e2aa47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!122 &122706926229859042
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1337333623938104}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4282117356
+  m_Size: 2
 --- !u!135 &135558476505562284
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -8,15 +8,10 @@ public class TurretController : MonoBehaviour {
 
     public float lineHeightOffset;
 
-    private Color lineColour = Color.red;
-
     private void Awake () {
         player = GameObject.FindGameObjectWithTag ("Player");
         lineRenderer = gameObject.GetComponent<LineRenderer> ();
         lineRenderer.enabled = false;
-        lineRenderer.material = new Material (Shader.Find ("Particles/Additive"));
-        lineRenderer.startColor = lineColour;
-        lineRenderer.endColor = lineColour;
     }
 
     /// <summary>
