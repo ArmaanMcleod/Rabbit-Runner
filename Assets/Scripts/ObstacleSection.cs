@@ -104,14 +104,12 @@ public class ObstacleSection {
         for (int i = 0; i < NUM_PER_SECTION; i++) {
             float randomValue = UnityEngine.Random.Range (1, 100);
 
-            if (randomValue < 5 && turretIndex < NUM_TURRETS) {
-                ActivateObstacle (turrets[turretIndex], 1);
-                turretIndex++;
-            }
-
             if (randomValue < 5 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle (birds[birdIndex], 15);
                 birdIndex++;
+            } else if (randomValue < 10 && turretIndex < NUM_TURRETS) {
+                ActivateObstacle (turrets[turretIndex], 1);
+                turretIndex++;
             } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {
                 ActivateObstacle (turtles[turtleIndex], 0);
                 turtleIndex++;
