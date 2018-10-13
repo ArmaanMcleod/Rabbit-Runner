@@ -29,6 +29,8 @@ public class PlayerHealth : MonoBehaviour {
     // Colour the player changes to after receiving damage
     private Color damageColor = new Color(1f, 0.5f, 0.5f, 1);
 
+    private readonly Color invincibilityColor = new Color(1, 1, 0.4f);
+
     private float timer = 0;
 
     private bool damageTimerOn = false;
@@ -131,7 +133,10 @@ public class PlayerHealth : MonoBehaviour {
         return invincible;
     }
 
-    public void SetInvincible(bool invincible) {
+    public void ChangeInvincibility(bool invincible) {
         this.invincible = invincible;
+        if (this.invincible) {
+            playerRenderer.material.color = invincibilityColor;
+        }
     }
 }
