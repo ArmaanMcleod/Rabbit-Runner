@@ -152,6 +152,11 @@ public class PlayerHealth : MonoBehaviour {
         return invincible;
     }
 
+    /// <summary>
+    /// Changes the invincibility status of the player.
+    /// </summary>
+    /// <param name="invincible">If set to <c>true</c> makes the player 
+    /// invincible, and changes the player's color.</param>
     public void ChangeInvincibility(bool invincible) {
         this.invincible = invincible;
         if (this.invincible) {
