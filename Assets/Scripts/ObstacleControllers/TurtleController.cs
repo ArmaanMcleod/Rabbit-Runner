@@ -18,19 +18,27 @@ public class TurtleController : MonoBehaviour {
     // Game controller
     private MainGameController gameController;
 
-    // Use this for initialization
-    void Start () {
+    private GameObject mine;
+
+    private void Awake () {
         GameObject gameControllerObj = GameObject.FindGameObjectWithTag ("GameController");
         gameController = gameControllerObj.GetComponent<MainGameController> ();
+
+        GameObject minePrefab = Resources.Load<GameObject> ("Prefabs/Mine");
+        mine = Instantiate (minePrefab, transform.position, transform.rotation);
+        mine.transform.parent = transform;
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
     void Update () {
+
         if (gameController.isGameOver () || gameController.isPaused ()) {
             return;
         }
+
+        mine.transform.position = new Vector3 (transform.position.x, transform.position.y + 0.5f, transform.position.z);
 
         // Smooth rotation
         if (turning) {
