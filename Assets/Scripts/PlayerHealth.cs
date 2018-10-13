@@ -9,6 +9,8 @@ public class PlayerHealth : MonoBehaviour {
     public GameObject gameControllerObj;
     private MainGameController gameController;
 
+    private readonly float healthFeedbackTime = 0.5f;
+
     // Slider Health Bar
     public Slider healthSlider;
 
@@ -18,7 +20,7 @@ public class PlayerHealth : MonoBehaviour {
     // Player's health values
     public int maxHealth;
     private int currentHealth;
-    
+
     // Levels of health which changes colour of health bar
     private int mediumHealth;
     private int lowHealth;
@@ -29,11 +31,15 @@ public class PlayerHealth : MonoBehaviour {
     // Colour the player changes to after receiving damage
     private Color damageColor = new Color(1f, 0.5f, 0.5f, 1);
 
+    private readonly Color invincibilityColor = new Color(1, 1, 0.4f);
+
     private float timer = 0;
 
     private bool damageTimerOn = false;
 
-    Renderer playerRenderer;
+    private bool healTimerOn = false;
+
+    private Renderer playerRenderer;
 
 
     /// <summary>
@@ -62,10 +68,22 @@ public class PlayerHealth : MonoBehaviour {
     /// Update is called once per frame
     /// Counts down the amount of time the player has left in the damage material colour
     /// </summary>
-    private void Update(){
-        if(damageTimerOn){
+    private void Update() {
+        if (healTimerOn) {
             timer += Time.deltaTime;
-            if(timer >= damgeFeedbackTime){
+            if (timer >= healthFeedbackTime) {
+                playerRenderer.material.color = Color.white;
+                healTimerOn = false;
+                timer = 0;
+                if (invincible) {
+                    playerRenderer.material.color = invincibilityColor;
+                }
+            }
+        }
+
+        if (damageTimerOn) {
+            timer += Time.deltaTime;
+            if (timer >= damgeFeedbackTime) {
                 playerRenderer.material.color = Color.white;
                 damageTimerOn = false;
                 timer = 0;
@@ -95,6 +113,7 @@ public class PlayerHealth : MonoBehaviour {
         playerRenderer.material.color = damageColor;
         damageTimerOn = true;
         timer = 0;
+        healTimerOn = false;
     }
 
     public void ReceiveHealing(int healing) {
@@ -105,6 +124,8 @@ public class PlayerHealth : MonoBehaviour {
             currentHealth = maxHealth;
         }
 
+        playerRenderer.material.color = Color.green;
+        healTimerOn = true;
         UpdateHealthSlider();
     }
 
@@ -131,7 +152,15 @@ public class PlayerHealth : MonoBehaviour {
         return invincible;
     }
 
-    public void SetInvincible(bool invincible) {
+    /// <summary>
+    /// Changes the invincibility status of the player.
+    /// </summary>
+    /// <param name="invincible">If set to <c>true</c> makes the player 
+    /// invincible, and changes the player's color.</param>
+    public void ChangeInvincibility(bool invincible) {
         this.invincible = invincible;
+        if (this.invincible) {
+            playerRenderer.material.color = invincibilityColor;
+        }
     }
 }

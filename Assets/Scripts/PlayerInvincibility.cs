@@ -8,11 +8,13 @@ public class PlayerInvincibility : MonoBehaviour {
 
     private PlayerHealth health;
     private float timer = 0;
+    private Renderer playerRenderer;
 
 	// Use this for initialization
 	void Start () {
         health = gameObject.GetComponent<PlayerHealth>();
-	}
+        playerRenderer = transform.GetChild(1).gameObject.GetComponent<Renderer>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,7 +24,8 @@ public class PlayerInvincibility : MonoBehaviour {
 
         timer += Time.deltaTime;
         if (timer > invincibilityTime) {
-            health.SetInvincible(false);
+            playerRenderer.material.color = Color.white;
+            health.ChangeInvincibility(false);
             timer = 0;
         }
 	}
