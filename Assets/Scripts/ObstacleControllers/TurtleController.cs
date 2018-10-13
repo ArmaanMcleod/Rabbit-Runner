@@ -10,35 +10,34 @@ public class TurtleController : MonoBehaviour {
     private float turningSpeed = 5;
 
     private bool turning = false;
-    
+
     private readonly float MIN_DIFF = 0.01f;
 
-    Quaternion desiredRot;
+    private Quaternion desiredRot;
 
     // Game controller
     private MainGameController gameController;
 
     // Use this for initialization
-    void Start() {
-        GameObject gameControllerObj = GameObject.FindGameObjectWithTag("GameController");
-        gameController = gameControllerObj.GetComponent<MainGameController>();
+    void Start () {
+        GameObject gameControllerObj = GameObject.FindGameObjectWithTag ("GameController");
+        gameController = gameControllerObj.GetComponent<MainGameController> ();
     }
-
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    void Update() {
-        if(gameController.isGameOver() || gameController.isPaused()){
+    void Update () {
+        if (gameController.isGameOver () || gameController.isPaused ()) {
             return;
         }
 
         // Smooth rotation
-        if(turning){
-            if(Mathf.Abs(transform.rotation.y - desiredRot.y) <= MIN_DIFF){
+        if (turning) {
+            if (Mathf.Abs (transform.rotation.y - desiredRot.y) <= MIN_DIFF) {
                 turning = false;
             } else {
-             transform.rotation = Quaternion.Lerp(transform.rotation, desiredRot, Time.deltaTime * turningSpeed);
+                transform.rotation = Quaternion.Lerp (transform.rotation, desiredRot, Time.deltaTime * turningSpeed);
             }
         }
 
@@ -51,11 +50,11 @@ public class TurtleController : MonoBehaviour {
     /// position randomly so it doesn't stay stuck there
     /// </summary>
     /// <param name="col">The Collision data associated with this collision event.</param>
-    void OnCollisionEnter(Collision col){
-        if(col.gameObject.tag != "Player"){
-            float turningAngle = UnityEngine.Random.Range(20, 340);
+    void OnCollisionEnter (Collision col) {
+        if (col.gameObject.tag != "Player") {
+            float turningAngle = UnityEngine.Random.Range (20, 340);
             turning = true;
-            desiredRot = Quaternion.Euler(transform.localRotation.x, turningAngle, transform.localRotation.z);
+            desiredRot = Quaternion.Euler (transform.localRotation.x, turningAngle, transform.localRotation.z);
         }
     }
 }
