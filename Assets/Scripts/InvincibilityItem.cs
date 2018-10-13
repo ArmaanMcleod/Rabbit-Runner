@@ -7,7 +7,7 @@ public class InvincibilityItem : MonoBehaviour {
     public void OnTriggerEnter(Collider other) {
         if (other.tag.Equals("Player")) {
             GameObject player = other.attachedRigidbody.gameObject;
-            player.GetComponent<PlayerHealth>().SetInvincible(true);
+            player.GetComponent<PlayerHealth>().ChangeInvincibility(true);
             gameObject.SetActive(false);
         }
     }
