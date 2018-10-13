@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretController : MonoBehaviour {
+    // Keep track of the player for lifetime of turret
     private GameObject player;
+
+    // Used to render the laser to the screen
     private LineRenderer lineRenderer;
 
+    // Tue offset height for line renderer
     public float lineHeightOffset;
 
+    // Turret damage
+    public int turretDamage;
+
+    // Trigger flag indiciating if the player is currenting being hit
+    private bool hitting = false;
+
+    /// <summary>
+    /// Awake is used to initialize any variables or game state before the game starts.
+    /// </summary>
     private void Awake () {
         player = GameObject.FindGameObjectWithTag ("Player");
         lineRenderer = gameObject.GetComponent<LineRenderer> ();
@@ -18,7 +31,11 @@ public class TurretController : MonoBehaviour {
     /// Update is called once per frame
     /// </summary>
     private void Update () {
+
+        // First fix the rotation of the turret to be facing player
         UpdateRotation ();
+
+        // Draw laser
         DrawLaser ();
     }
 
@@ -26,11 +43,25 @@ public class TurretController : MonoBehaviour {
     /// Draws laser to player
     /// </summary>
     private void DrawLaser () {
-        Vector3 newPosition = transform.position;
-        newPosition.y += lineHeightOffset;
 
-        lineRenderer.SetPosition (0, newPosition);
-        lineRenderer.SetPosition (1, player.transform.position);
+        // Update the start position height of laser
+        Vector3 startPosition = transform.position;
+        startPosition.y += lineHeightOffset;
+
+        Vector3 endPosition = player.transform.position;
+
+        // Draw the laser from start to end
+        lineRenderer.SetPosition (0, startPosition);
+        lineRenderer.SetPosition (1, endPosition);
+
+        // Check if the laser is hitting the player
+        RaycastHit hit;
+        if (Physics.Raycast (startPosition, endPosition - startPosition, out hit) && hitting) {
+            if (hit.transform.gameObject.tag == "Player") {
+                PlayerHealth playerHealth = hit.transform.GetComponent<PlayerHealth> ();
+                playerHealth.TakeDamage (turretDamage);
+            }
+        }
     }
 
     /// <summary>
@@ -50,6 +81,7 @@ public class TurretController : MonoBehaviour {
     private void OnTriggerEnter (Collider other) {
         if (other.gameObject.tag == "Player") {
             lineRenderer.enabled = true;
+            hitting = true;
         }
     }
 
@@ -60,6 +92,7 @@ public class TurretController : MonoBehaviour {
     private void OnTriggerExit (Collider other) {
         if (other.gameObject.tag == "Player") {
             lineRenderer.enabled = false;
+            hitting = false;
         }
     }
 }
