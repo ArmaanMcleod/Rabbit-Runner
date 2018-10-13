@@ -13,7 +13,7 @@ public class ObstacleSection {
     /// Number of each obstacle type held by this object
     /// </summary>
     private readonly int NUM_BIRDS = 1;
-    private readonly int NUM_CONIFERS = 3;
+    private readonly int NUM_CONIFERS = 2;
     private readonly int NUM_ROCKS = 10;
     private readonly int NUM_TURTLES = 2;
 
@@ -101,7 +101,7 @@ public class ObstacleSection {
             float randomValue = UnityEngine.Random.Range(1, 100);
 
             if (randomValue < 5 && birdIndex < NUM_BIRDS) {
-                ActivateObstacle(birds[birdIndex], 10);
+                ActivateObstacle(birds[birdIndex], 15);
                 birdIndex++;
             } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {
                 ActivateObstacle(turtles[turtleIndex], 0);

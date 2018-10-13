@@ -8,7 +8,7 @@ public class HealthItem : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other) {
         if (other.tag.Equals("Player")) {
-            GameObject player = other.gameObject;
+            GameObject player = other.attachedRigidbody.gameObject;
             player.GetComponent<PlayerHealth>().ReceiveHealing(healthHealed);
             gameObject.SetActive(false);
         }

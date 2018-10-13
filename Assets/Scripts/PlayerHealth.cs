@@ -17,11 +17,24 @@ public class PlayerHealth : MonoBehaviour {
 
     // Player's health values
     public int maxHealth;
-
     private int currentHealth;
-
+    
+    // Levels of health which changes colour of health bar
     private int mediumHealth;
     private int lowHealth;
+
+    // Amount of time the player's colour changes after receiving damage
+    private float damgeFeedbackTime = 0.5f;
+
+    // Colour the player changes to after receiving damage
+    private Color damageColor = new Color(1f, 0.5f, 0.5f, 1);
+
+    private float timer = 0;
+
+    private bool damageTimerOn = false;
+
+    Renderer playerRenderer;
+
 
     /// <summary>
     /// Whether the player is invincible.
@@ -41,6 +54,23 @@ public class PlayerHealth : MonoBehaviour {
 
         // Set game controller
         gameController = gameControllerObj.GetComponent<MainGameController>();
+
+        playerRenderer = transform.GetChild(1).gameObject.GetComponent<Renderer>();
+    }
+
+    /// <summary>
+    /// Update is called once per frame
+    /// Counts down the amount of time the player has left in the damage material colour
+    /// </summary>
+    private void Update(){
+        if(damageTimerOn){
+            timer += Time.deltaTime;
+            if(timer >= damgeFeedbackTime){
+                playerRenderer.material.color = Color.white;
+                damageTimerOn = false;
+                timer = 0;
+            }
+        }
     }
 
     /// <summary>
@@ -60,6 +90,11 @@ public class PlayerHealth : MonoBehaviour {
 
         // Update the health bar
         UpdateHealthSlider();
+
+        // Change material of player to signify taking damage
+        playerRenderer.material.color = damageColor;
+        damageTimerOn = true;
+        timer = 0;
     }
 
     public void ReceiveHealing(int healing) {

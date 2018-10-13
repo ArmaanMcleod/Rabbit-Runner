@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/// <summary>
+/// Controller for the birds which targets the player up to a certain distance from
+/// the player. Once the distance is reached, the x rotation of the bird is locked 
+/// giving the player a chance to dodge the bird by moving left or right on the x plane.
+/// The y and z rotations of the bird continue to track the player, resulting in the player
+/// being hit if an attempt to move is not made or is made too late.
+/// </summary>
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,12 +30,15 @@ public class BirdController : MonoBehaviour {
     /// Whether the bird is moving towards the player.
     /// </summary>
     private bool moving = false;
+    
+    // The x-coordinate the bird will move to once the aim is set
+    private float lockX;
 
     // The distance (away from the player) the enemy starts moving and tracking the player
-    public int distanceStartAttack;
+    public float distanceStartAttack;
 
     // The distance from the player the enemy sets its aim
-    public int distanceLockAttack;
+    public float distanceLockAttack;
 
     // Use this for initialization
     void Start() {
@@ -52,7 +63,13 @@ public class BirdController : MonoBehaviour {
         float distanceZPlayer = gameObject.transform.position.z - player.transform.position.z;
         if (distanceZPlayer < distanceStartAttack && distanceZPlayer > 0) {
             TrackPlayer();
-            locked |= distanceZPlayer < distanceLockAttack;
+            if (distanceZPlayer < distanceLockAttack){
+                if(!locked){
+                    lockX = player.transform.position.x;
+                }
+
+                locked = true;
+            }
         }
     }
 
@@ -60,12 +77,16 @@ public class BirdController : MonoBehaviour {
     /// Tracks the position of the player and moves towards it
     /// </summary>
     void TrackPlayer() {
+        Vector3 playerPos = player.transform.position;
+        Vector3 lookPos;
+
         if (locked) {
-            return;
+            lookPos = new Vector3(lockX , playerPos.y, playerPos.z);
+        } else {
+            lookPos = playerPos;
         }
 
-        Vector3 playerPos = player.transform.position;
-        transform.LookAt(playerPos);
+        transform.LookAt(lookPos);
         moving = true;
     }
 

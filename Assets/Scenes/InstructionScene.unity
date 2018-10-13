@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -283,8 +283,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Controls:
-
+  m_Text: 'Avoid Obstacles
 
     Left and right arrow keys to move left and right
 
@@ -293,9 +292,7 @@ MonoBehaviour:
     P to pause
 
 
-    - Explain Items
-
-    - Explain Damage'
+'
 --- !u!222 &462643711
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -58,12 +58,17 @@ public class MainGameController : MonoBehaviour {
 				PauseGame();
 			}
 		}
+
+		// Exit to main menu
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			ExitToMenu();
+		}
 	}
 	
 	/// <summary>
 	/// Pauses the game
 	/// </summary>
-	void PauseGame(){
+	public void PauseGame(){
 		Time.timeScale=0;
 		pauseCanvas.SetActive(true);
 		paused = true;
