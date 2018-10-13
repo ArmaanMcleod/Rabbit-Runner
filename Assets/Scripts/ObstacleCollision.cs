@@ -38,6 +38,7 @@ public class ObstacleCollision : MonoBehaviour {
 
             if (gameObject.transform.tag == "Rock") {
                 Rigidbody rb = gameObject.GetComponent<Rigidbody> ();
+                rb.velocity = Vector3.zero;
 
                 float randomRange = Random.Range (0.0f, 1.0f);
 

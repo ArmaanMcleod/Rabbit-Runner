@@ -12,6 +12,7 @@ TagManager:
   - RightCliff
   - Rock
   - Turtle
+  - Turret
   layers:
   - Default
   - TransparentFX
