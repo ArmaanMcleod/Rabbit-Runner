@@ -18,6 +18,10 @@ public class TurretController : MonoBehaviour {
     // Trigger flag indiciating if the player is currenting being hit
     private bool hitting = false;
 
+    // Registers first hit from laser
+    // Needed as game will be too hard if damage is taken on each laser hit
+    private bool firstHit = false;
+
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
@@ -56,10 +60,11 @@ public class TurretController : MonoBehaviour {
 
         // Check if the laser is hitting the player
         RaycastHit hit;
-        if (Physics.Raycast (startPosition, endPosition - startPosition, out hit) && hitting) {
+        if (Physics.Raycast (startPosition, endPosition - startPosition, out hit) && hitting && !firstHit) {
             if (hit.transform.gameObject.tag == "Player") {
                 PlayerHealth playerHealth = hit.transform.GetComponent<PlayerHealth> ();
                 playerHealth.TakeDamage (turretDamage);
+                firstHit = true;
             }
         }
     }
