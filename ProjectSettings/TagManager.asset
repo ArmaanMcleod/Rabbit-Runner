@@ -10,6 +10,7 @@ TagManager:
   - Cliff
   - LeftCliff
   - RightCliff
+  - Rock
   layers:
   - Default
   - TransparentFX

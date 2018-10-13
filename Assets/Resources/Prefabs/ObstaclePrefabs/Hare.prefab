@@ -1109,3 +1109,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burstTime: 1
   defaultDamage: 10
+  forcePush: 500
