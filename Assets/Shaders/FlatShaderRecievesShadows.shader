@@ -40,16 +40,15 @@ Shader "Unlit/FlatShaderReceivesShadows"
 			{
 				float4 pos : SV_POSITION;
 				float4 worldVertex : TEXCOORD0;
+				SHADOW_COORDS(1)
 			};
 
 			struct g2f
 			{
 				float4 pos : SV_POSITION;
-				float3 normal : TEXCOORD0;
-				SHADOW_COORDS(1)
+				fixed4 col : COLOR;
+				
 			};
-
-			
 			
 			v2g vert (vertIn v)
 			{
@@ -60,6 +59,8 @@ Shader "Unlit/FlatShaderReceivesShadows"
 
 				// Transform the vertex position into world coordinates
 				o.worldVertex = mul(unity_ObjectToWorld, v.vertex);
+
+				TRANSFER_SHADOW(o)
 
 				return o;
 			}
@@ -74,25 +75,12 @@ Shader "Unlit/FlatShaderReceivesShadows"
 				// Calculate the normal of the triangle created by the vertices 
 				float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
 
-				// Set the normal of all three vertices to the triangle normal
-				g2f o;
-				o.normal = triangleNormal;
-
-				for(int i = 0; i < 3; i++){
-					o.pos = input[i].pos;
-					TRANSFER_SHADOW(o)
-					stream.Append(o);
-				}
-			}
-			
-			fixed4 frag(g2f v) : SV_Target
-			{
 				// Calculate ambient lighting
 				fixed4 ambient = _BaseColor * UNITY_LIGHTMODEL_AMBIENT;
 
 				// Calculate diffuse lighting
 				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
-				float LdotN = max(0.0, dot(LightDir, v.normal));
+				float LdotN = max(0.0, dot(LightDir, triangleNormal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
 
 				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
@@ -100,7 +88,19 @@ Shader "Unlit/FlatShaderReceivesShadows"
 				
 				// Apply ambient and diffuse lighting
 				fixed4 col = diffuse * shadow + ambient;
-				return col;
+
+				// Set the colour and position of each vertex
+				g2f o;
+				for(int i = 0; i < 3; i++){
+					o.pos = input[i].pos;
+					o.col = col;
+					stream.Append(o);
+				}
+			}
+			
+			fixed4 frag(g2f v) : SV_Target
+			{
+				return v.col;
 			}
 			ENDCG
 		}
