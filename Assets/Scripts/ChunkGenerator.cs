@@ -152,7 +152,7 @@ public class ChunkGenerator : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gets current chunk game object player is on in world.
+    /// Gets current chunk game object player in world.
     /// </summary>
     /// <returns>The chunk player is on.</returns>
     private GameObject GetCurrentChunk () {
