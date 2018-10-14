@@ -161,7 +161,7 @@ public class ChunkGenerator : MonoBehaviour {
         foreach (GameObject chunk in chunks) {
 
             // If we are at the midpoint of chunk, were on this chunk
-            if (Vector3.Distance (transform.position, chunk.transform.position) <= (chunkLength / 2)) {
+            if (Vector3.Distance (transform.position, chunk.transform.position) <= chunkLength) {
                 newCurrentChunk = chunk;
                 break;
             }
