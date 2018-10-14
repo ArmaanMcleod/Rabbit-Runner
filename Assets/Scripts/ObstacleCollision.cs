@@ -5,21 +5,13 @@ using UnityEngine;
 public class ObstacleCollision : MonoBehaviour {
 
     // Particle system explosion prefab attached
-    private GameObject explosionPrefab;
+    public GameObject explosionPrefab;
 
     // Time in seconds of burst time
-    public int burstTime = 1;
+    public int burstTime;
 
     // Default damage for player on startup
     public int defaultDamage;
-
-    /// <summary>
-    /// Awake is used to initialize any variables or game state before the game starts.
-    /// </summary>
-    private void Awake () {
-        // Load in the explosion prefab from resources.
-        explosionPrefab = Resources.Load<GameObject> ("Prefabs/Explosion");
-    }
 
     /// <summary>
     /// OnCollisionEnter is called when this collider/rigidbody has begun

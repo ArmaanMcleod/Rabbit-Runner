@@ -1060,6 +1060,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a42eaa9ec8202343a43ec86dd9d6394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 1745464471188008, guid: bd5b739133566ca44ba0fbf71411ad48,
+    type: 2}
   burstTime: 1
   defaultDamage: 10
 --- !u!114 &114461813766103842
