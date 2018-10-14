@@ -30,7 +30,7 @@ public class ChunkGenerator : MonoBehaviour {
     // Current chunk state variables
     private GameObject currentChunk;
     private int currentChunkIndex;
-    private float currentChunkPosition = 0.0f;
+    private int currentChunkPosition = 0;
 
     private bool firstChunk = true;
     private bool secondChunk = true;
@@ -38,72 +38,72 @@ public class ChunkGenerator : MonoBehaviour {
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
-    private void Awake() {
+    private void Awake () {
 
         // Create chunk queue 
-        InitializeChunks();
+        InitializeChunks ();
 
         // Set the game controller
-        gameController = gameControllerObj.GetComponent<MainGameController>();
+        gameController = gameControllerObj.GetComponent<MainGameController> ();
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    private void Update() {
+    private void Update () {
         // Do not update if game is paused or over
-        if (gameController.isGameOver() || gameController.isPaused()) {
+        if (gameController.isGameOver () || gameController.isPaused ()) {
             return;
         }
 
         // Update current chunk and index
-        currentChunk = GetCurrentChunk();
-        currentChunkIndex = GetCurrentChunkIndex();
+        currentChunk = GetCurrentChunk ();
+        currentChunkIndex = GetCurrentChunkIndex ();
 
         // Activate new chunks
-        ActivateChunks();
+        ActivateChunks ();
 
         // Delete previous chunks
-        SweepPreviousChunks();
+        SweepPreviousChunks ();
     }
 
     /// <summary>
     /// Initialise chunk queue.
     /// </summary>
-    private void InitializeChunks() {
-        chunks = new Queue<GameObject>();
+    private void InitializeChunks () {
+        chunks = new Queue<GameObject> ();
 
         for (int i = 0; i < numberOfChunks; i++) {
-            GameObject chunk = Instantiate(chunkPrefab) as GameObject;
-            chunk.transform.position = CalculateNextChunkPosition();
+            GameObject chunk = Instantiate (chunkPrefab) as GameObject;
+            chunk.transform.position = CalculateNextChunkPosition ();
 
             // All chunks except first are activated
             if (i != 0) {
-                chunk.SetActive(false);
+                chunk.SetActive (false);
             }
 
-            chunks.Enqueue(chunk);
+            chunks.Enqueue (chunk);
         }
     }
 
     /// <summary>
     /// Activate chunks left in hierachy
     /// </summary>
-    private void ActivateChunks() {
+    private void ActivateChunks () {
         int threshold = currentChunkIndex + activeChunks;
 
         for (int i = currentChunkIndex; i < threshold; i++) {
-            int minimumIndex = Mathf.Clamp(i, 0, chunks.Count - 1);
-            GameObject chunk = chunks.ElementAt(minimumIndex);
+            int minimumIndex = Mathf.Clamp (i, 0, chunks.Count - 1);
+            GameObject chunk = chunks.ElementAt (minimumIndex);
 
             // If not activiated in hierachy, activate it
             if (!chunk.activeInHierarchy) {
-                chunk.SetActive(true);
+                chunk.SetActive (true);
 
                 // Only add obstacles on slopes
                 // Don't put any obstacles on the first or second slopes
-                if (chunk.tag.Equals("Slope") && !(firstChunk || secondChunk)) {
-                    chunk.GetComponent<ObstacleGenerator>().UpdateObstacles();
+                if (chunk.tag.Equals ("Slope") && !(firstChunk || secondChunk)) {
+                    chunk.GetComponent<ObstacleGenerator> ().UpdateObstacles ();
                 }
 
                 // Change the status of the first and second chunks
@@ -118,25 +118,25 @@ public class ChunkGenerator : MonoBehaviour {
     /// Calculates next chunk position.
     /// </summary>
     /// <returns>New chunk position in world</returns>
-    private Vector3 CalculateNextChunkPosition() {
+    private Vector3 CalculateNextChunkPosition () {
         Vector3 newPosition = chunkPrefab.transform.position;
         newPosition.z = currentChunkPosition;
-        currentChunkPosition += chunkLength;
+        currentChunkPosition += (int) chunkLength;
         return newPosition;
     }
 
     /// <summary>
     /// Sweeps aside chunks we have passed.
     /// </summary>
-    private void SweepPreviousChunks() {
+    private void SweepPreviousChunks () {
         // Sweep aside previous chunks were finished with
         if (currentChunkIndex > 0) {
-            Vector3 previousPosition = chunks.ElementAt(currentChunkIndex - 1).transform.position;
-            float distance = Vector3.Distance(transform.position, previousPosition);
+            Vector3 previousPosition = chunks.ElementAt (currentChunkIndex - 1).transform.position;
+            float distance = Vector3.Distance (transform.position, previousPosition);
 
             // If distance is greater, recycle chunk
             if (distance > (chunkLength * distanceRatio)) {
-                RecycleChunk();
+                RecycleChunk ();
             }
         }
     }
@@ -144,25 +144,24 @@ public class ChunkGenerator : MonoBehaviour {
     /// <summary>
     /// Recycle chunk to be used again.
     /// </summary>
-    private void RecycleChunk() {
-        GameObject chunk = chunks.Dequeue();
-        chunk.transform.position = CalculateNextChunkPosition();
-
-        chunk.SetActive(false);
-        chunks.Enqueue(chunk);
+    private void RecycleChunk () {
+        GameObject chunk = chunks.Dequeue ();
+        chunk.SetActive (false);
+        chunk.transform.position = CalculateNextChunkPosition ();
+        chunks.Enqueue (chunk);
     }
 
     /// <summary>
     /// Gets current chunk game object player is on in world.
     /// </summary>
     /// <returns>The chunk player is on.</returns>
-    private GameObject GetCurrentChunk() {
+    private GameObject GetCurrentChunk () {
         GameObject newCurrentChunk = null;
 
         foreach (GameObject chunk in chunks) {
 
             // If we are at the midpoint of chunk, were on this chunk
-            if (Vector3.Distance(transform.position, chunk.transform.position) <= (chunkLength / 2)) {
+            if (Vector3.Distance (transform.position, chunk.transform.position) <= (chunkLength / 2)) {
                 newCurrentChunk = chunk;
                 break;
             }
@@ -175,14 +174,14 @@ public class ChunkGenerator : MonoBehaviour {
     /// Gets index of current chunk in world
     /// </summary>
     /// <returns>The index of the current chunk</returns>
-    private int GetCurrentChunkIndex() {
+    private int GetCurrentChunkIndex () {
         int index = 0;
 
         for (int i = 0; i < chunks.Count; i++) {
-            GameObject chunk = chunks.ElementAt(i);
+            GameObject chunk = chunks.ElementAt (i);
 
             // If object is the same, this is the current chunk
-            if (chunk.Equals(currentChunk)) {
+            if (chunk.Equals (currentChunk)) {
                 index = i;
                 break;
             }

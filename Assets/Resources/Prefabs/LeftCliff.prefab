@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4696688490947758}
   - component: {fileID: 33047707178315410}
   - component: {fileID: 23594910741820242}
-  - component: {fileID: 64224339016727278}
   - component: {fileID: 65752074055332036}
   m_Layer: 0
   m_Name: LeftCliff
@@ -84,20 +83,6 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579828364654710}
-  m_Mesh: {fileID: 4300000, guid: 1e3f5eee0b7e2a54195a2a32bf7fcf20, type: 3}
---- !u!64 &64224339016727278
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1579828364654710}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 1e3f5eee0b7e2a54195a2a32bf7fcf20, type: 3}
 --- !u!65 &65752074055332036
 BoxCollider:
