@@ -50,15 +50,16 @@ Shader "Unlit/AlphaDistanceCam"
 			struct v2g
 			{
 				float4 pos : SV_POSITION;
-                float4 worldPos : TEXCOORD1;
+                float4 worldVertex : TEXCOORD1;
+                SHADOW_COORDS(1)
+
 			};
 
 			struct g2f
 			{
 				float4 pos : SV_POSITION;
-				float3 normal : TEXCOORD0;
-                float4 worldPos : TEXCOORD2;
-				SHADOW_COORDS(1)
+                float4 worldVertex : TEXCOORD2;
+                fixed4 col : COLOR;
 			};
 
             // Vertex Shader
@@ -69,7 +70,7 @@ Shader "Unlit/AlphaDistanceCam"
                 o.pos = UnityObjectToClipPos(v.vertex);
 
                  // Transform the vertex position into world coordinates
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.worldVertex = mul(unity_ObjectToWorld, v.vertex);
 
                 return o;
             }
@@ -78,33 +79,19 @@ Shader "Unlit/AlphaDistanceCam"
             [maxvertexcount(3)] 
 			void geom (triangle v2g input[3], inout TriangleStream<g2f> stream) {
 				// Get the positions of the vertices
-				float3 p0 = input[0].worldPos.xyz;
-				float3 p1 = input[1].worldPos.xyz;
-				float3 p2 = input[2].worldPos.xyz;
+				float3 p0 = input[0].worldVertex.xyz;
+				float3 p1 = input[1].worldVertex.xyz;
+				float3 p2 = input[2].worldVertex.xyz;
 
 				// Calculate the normal of the triangle created by the vertices 
 				float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
 
-				// Set the normal of all three vertices to the triangle normal
-				g2f o;
-				o.normal = triangleNormal;
-
-				for(int i = 0; i < 3; i++){
-					o.pos = input[i].pos;
-                    o.worldPos = input[i].worldPos;
-					TRANSFER_SHADOW(o)
-					stream.Append(o);
-				}
-			}
-
-            // Fragment Shader
-            fixed4 frag(g2f v) : SV_Target {
-                // Calculate ambient lighting
+				// Calculate ambient lighting
 				fixed4 ambient = _BaseColor * UNITY_LIGHTMODEL_AMBIENT;
 
 				// Calculate diffuse lighting
 				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
-				float LdotN = max(0.0, dot(LightDir, v.normal));
+				float LdotN = max(0.0, dot(LightDir, triangleNormal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
 
 				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
@@ -112,9 +99,23 @@ Shader "Unlit/AlphaDistanceCam"
 				
 				// Apply ambient and diffuse lighting
 				fixed4 col = diffuse * shadow + ambient;
+
+				// Set the colour and position of each vertex
+				g2f o;
+				for(int i = 0; i < 3; i++){
+					o.pos = input[i].pos;
+					o.col = col;
+                    o.worldVertex = input[i].worldVertex;
+					stream.Append(o);
+				}
+			}
+
+            // Fragment Shader
+            fixed4 frag(g2f v) : SV_Target {
+                fixed4 col = v.col;
                 
                 // Calculate alpha value based on distance from camera
-                float dist = distance(v.worldPos, _WorldSpaceCameraPos);
+                float dist = distance(v.worldVertex, _WorldSpaceCameraPos);
                 float alpha = (dist - _DistTransparent) / (_DistStartTransparent - _DistTransparent);
                 
                 // Clamps the alpha value between 0 and 1
