@@ -28,11 +28,11 @@ public class ObstacleCollision : MonoBehaviour {
     /// If the other rigidbody is the player, this object explodes and applies
     /// damage to the player.
     /// </summary>
-    /// <param name="other">The Collision data associated with this collision.</param>
+    /// <param name="other">The Collision data asociated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
-        if (other.gameObject.tag == "Player") {
-            Explode ();
+        if (other.gameObject.transform.tag == "Player") {
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
+            Explode ();
             this.gameObject.SetActive (false);
         }
     }

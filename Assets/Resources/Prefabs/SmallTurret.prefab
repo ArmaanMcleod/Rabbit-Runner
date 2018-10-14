@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 54199907062794068}
   m_Layer: 0
   m_Name: SmallTurret
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineHeightOffset: 0.6
-  turretDamage: 1
+  turretDamage: 10
 --- !u!120 &120542605393260968
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -338,7 +338,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 300
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137807985005897282
 SkinnedMeshRenderer:
