@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleCollision : MonoBehaviour {
+public class ExplosionController : MonoBehaviour {
 
     // Particle system explosion prefab attached
     public GameObject explosionPrefab;
