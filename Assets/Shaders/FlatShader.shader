@@ -43,7 +43,7 @@ Shader "Unlit/FlatShader"
 			struct g2f
 			{
 				float4 pos : SV_POSITION;
-				float3 normal : TEXCOORD0;
+				fixed4 col : COLOR;
 			};
 
 			
@@ -73,29 +73,29 @@ Shader "Unlit/FlatShader"
 				// Calculate the normal of the triangle created by the vertices 
 				float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
 
-				// Set the normal of all three vertices to the triangle normal
-				g2f o;
-				o.normal = triangleNormal;
+				// Calculate ambient lighting
+				fixed4 ambient = _BaseColor * UNITY_LIGHTMODEL_AMBIENT;
 
+				// Calculate diffuse lighting
+				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
+				float LdotN = max(0.0, dot(LightDir, triangleNormal));
+				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
+				
+				// Apply ambient and diffuse lighting
+				fixed4 col = diffuse + ambient;
+
+				// Set the colour and position of each vertex
+				g2f o;
 				for(int i = 0; i < 3; i++){
 					o.pos = input[i].pos;
+					o.col = col;
 					stream.Append(o);
 				}
 			}
 			
 			fixed4 frag(g2f v) : SV_Target
 			{
-				// Calculate ambient lighting
-				fixed4 ambient = _BaseColor * UNITY_LIGHTMODEL_AMBIENT;
-
-				// Calculate diffuse lighting
-				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
-				float LdotN = max(0.0, dot(LightDir, v.normal));
-				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
-				
-				// Apply ambient and diffuse lighting
-				fixed4 col = diffuse + ambient;
-				return col;
+				return v.col;
 			}
 			ENDCG
 		}
