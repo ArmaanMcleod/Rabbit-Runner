@@ -142,4 +142,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDamage: 10
   treeAngle: 90
-  speed: 0.8
+  rotationSpeed: 0.8

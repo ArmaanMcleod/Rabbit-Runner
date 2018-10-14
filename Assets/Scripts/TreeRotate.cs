@@ -9,9 +9,10 @@ public class TreeRotate : MonoBehaviour {
     // Default damage for player on startup
     public int defaultDamage;
 
+    // The tree angle to go downwards
     public float treeAngle;
 
-    public float speed;
+    public float rotationSpeed;
 
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
@@ -31,8 +32,13 @@ public class TreeRotate : MonoBehaviour {
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
+
+            // Disable collider so player can go through
+            // Otherwise player will halt 
             treeCollider.enabled = false;
-            StartCoroutine (RotateTree (Vector3.forward * treeAngle, speed));
+
+            // Start a seperate routine for rotating the tree forwards
+            StartCoroutine (RotateTree (Vector3.forward * treeAngle, rotationSpeed));
         }
     }
 
@@ -46,11 +52,13 @@ public class TreeRotate : MonoBehaviour {
         Quaternion rotation = transform.rotation;
         Quaternion newAngle = Quaternion.Euler (transform.eulerAngles + angle);
 
+        // Rotate the tree incrementally 
         for (float t = 0f; t < 1.0f; t += Time.deltaTime / time) {
             transform.rotation = Quaternion.Slerp (rotation, newAngle, t);
             yield return null;
         }
 
+        // When were finished, disbale the tree
         this.gameObject.SetActive (false);
     }
 
