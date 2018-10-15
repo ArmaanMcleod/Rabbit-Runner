@@ -23,8 +23,9 @@ Shader "Unlit/AlphaDistanceCam"
     }
     SubShader
     {
-        Tags {"Queue"="Transparent" "RenderType"="Transparent" "LightMode"="ForwardBase"}
+        Tags {"Queue"="AlphaTest" "RenderType"="Transparent" "LightMode"="ForwardBase"}
         Blend SrcAlpha OneMinusSrcAlpha
+        LOD 100
  
         Pass
         {
@@ -51,7 +52,6 @@ Shader "Unlit/AlphaDistanceCam"
 			{
 				float4 pos : SV_POSITION;
                 float4 worldVertex : TEXCOORD1;
-                SHADOW_COORDS(1)
 
 			};
 
@@ -59,7 +59,10 @@ Shader "Unlit/AlphaDistanceCam"
 			{
 				float4 pos : SV_POSITION;
                 float4 worldVertex : TEXCOORD2;
-                fixed4 col : COLOR;
+                fixed4 dif : TEXCOORD3;
+                fixed4 amb : TEXCOORD4;
+                SHADOW_COORDS(1)
+
 			};
 
             // Vertex Shader
@@ -93,26 +96,26 @@ Shader "Unlit/AlphaDistanceCam"
 				float3 LightDir = normalize(_WorldSpaceLightPos0.xyz);
 				float LdotN = max(0.0, dot(LightDir, triangleNormal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
-
-				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
-                fixed shadow = SHADOW_ATTENUATION(v);
 				
-				// Apply ambient and diffuse lighting
-				fixed4 col = diffuse * shadow + ambient;
-
 				// Set the colour and position of each vertex
 				g2f o;
 				for(int i = 0; i < 3; i++){
 					o.pos = input[i].pos;
-					o.col = col;
                     o.worldVertex = input[i].worldVertex;
+					o.amb = ambient;
+					o.dif = diffuse;
 					stream.Append(o);
+					//TRANSFER_SHADOW(o)
 				}
 			}
 
             // Fragment Shader
             fixed4 frag(g2f v) : SV_Target {
-                fixed4 col = v.col;
+                // compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
+				fixed shadow = SHADOW_ATTENUATION(v);
+
+				// Apply ambient and diffuse lighting and shadows
+				fixed4 col = v.dif * shadow + v.amb;
                 
                 // Calculate alpha value based on distance from camera
                 float dist = distance(v.worldVertex, _WorldSpaceCameraPos);

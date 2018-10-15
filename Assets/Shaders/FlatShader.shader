@@ -15,6 +15,7 @@ Shader "Unlit/FlatShader"
 	{
 		Tags { "RenderType"="Opaque" "LightMode"="ForwardBase" }
 		LOD 100
+		Cull Off
 
 		Pass
 		{
