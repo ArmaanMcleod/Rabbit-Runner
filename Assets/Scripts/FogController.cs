@@ -6,37 +6,29 @@ public class FogController : MonoBehaviour {
     // Standard assets dust storm attached
     public GameObject dustStormPrefab;
 
-    // Time to play dust store particle system
-    public float stormTime;
+    private ParticleSystem particles;
+
+    public float distance;
+
+    private float middle = 10.0f;
 
     /// <summary>
-    /// Update is called once per frame
+    /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
-    private void Update () {
-
-        // Find furthest slope and play dust storm
-        GameObject furthest = FindFurthestSlope ();
-        GameObject dustStorm = Instantiate (dustStormPrefab, furthest.transform.position, furthest.transform.rotation);
-        Destroy (dustStorm, stormTime);
+    private void Awake () {
+        GameObject dustStorm = Instantiate (dustStormPrefab);
+        particles = dustStorm.GetComponent<ParticleSystem> ();
     }
 
     /// <summary>
-    /// Returns slope with maximum z distance.
+    /// Update is called once per frame.
     /// </summary>
-    /// <returns>The furthest slope from current position</returns>
-    private GameObject FindFurthestSlope () {
-        GameObject furthestSlope = null;
-        float maxLength = float.MinValue;
+    private void Update () {
+        Vector3 newPostion = transform.position;
+        newPostion.x = middle;
+        newPostion.z += distance;
 
-        foreach (GameObject slope in GameObject.FindGameObjectsWithTag ("Slope")) {
-            float currentLength = slope.transform.position.z;
-
-            if (currentLength > maxLength && slope.activeInHierarchy) {
-                maxLength = currentLength;
-                furthestSlope = slope;
-            }
-        }
-
-        return furthestSlope;
+        particles.transform.position = newPostion;
+        particles.Play ();
     }
 }
