@@ -36,10 +36,6 @@ public class ExplosionController : MonoBehaviour {
         // Instantiate a new explosion prefab
         GameObject explosion = Instantiate (explosionPrefab, transform.position, Quaternion.identity);
 
-        // Play the the explosion
-        ParticleSystem particleSystem = explosion.GetComponent<ParticleSystem> ();
-        particleSystem.Play ();
-
         // Were done with the explosion, get rid of it
         Destroy (explosion, burstTime);
     }
