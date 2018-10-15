@@ -32,6 +32,5 @@ public class FogController : MonoBehaviour {
         newPostion.z += distance;
 
         particles.transform.position = newPostion;
-        particles.Play ();
     }
 }
