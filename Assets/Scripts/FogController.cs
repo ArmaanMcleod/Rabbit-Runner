@@ -6,11 +6,14 @@ public class FogController : MonoBehaviour {
     // Standard assets dust storm attached
     public GameObject dustStormPrefab;
 
+    // Particle system to play fog
     private ParticleSystem particles;
 
+    // Distance from player
     public float distance;
 
-    private float middle = 10.0f;
+    // Middle of slope
+    public float middle;
 
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
