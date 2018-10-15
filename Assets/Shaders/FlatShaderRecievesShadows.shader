@@ -47,7 +47,7 @@ Shader "Unlit/FlatShaderReceivesShadows"
 				float4 pos : SV_POSITION;
 				fixed4 dif : TEXCOORD1;
 				fixed4 amb : TEXCOORD2;
-				SHADOW_COORDS(1)
+				SHADOW_COORDS(3)
 
 			};
 			
@@ -90,8 +90,9 @@ Shader "Unlit/FlatShaderReceivesShadows"
 					o.pos = input[i].pos;
 					o.amb = ambient;
 					o.dif = diffuse;
-					stream.Append(o);
 					TRANSFER_SHADOW(o)
+					stream.Append(o);
+					
 				}
 			}
 			
