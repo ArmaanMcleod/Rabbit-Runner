@@ -59,6 +59,7 @@ public class TurretController : MonoBehaviour {
         lineRenderer.SetPosition (1, endPosition);
 
         // Check if the laser is hitting the player
+        // Only want to take damage once to not make game too difficult
         RaycastHit hit;
         if (Physics.Raycast (startPosition, endPosition - startPosition, out hit) && hitting && !firstHit) {
             if (hit.transform.gameObject.tag == "Player") {

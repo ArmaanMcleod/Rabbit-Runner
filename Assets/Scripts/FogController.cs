@@ -7,7 +7,8 @@ public class FogController : MonoBehaviour {
     public GameObject dustStormPrefab;
     public GameObject lightningPrefab;
 
-    // Particle system to play fog
+    // Particle systems to play fog
+    // Also include lightning in fog
     private ParticleSystem dustParticles;
     private ParticleSystem lightningParticles;
 
@@ -21,9 +22,12 @@ public class FogController : MonoBehaviour {
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
     private void Awake () {
+
+        // Create duststorm prefab
         GameObject dustStorm = Instantiate (dustStormPrefab);
         dustParticles = dustStorm.GetComponent<ParticleSystem> ();
 
+        // Create lightning prefab
         GameObject lightning = Instantiate (lightningPrefab);
         lightningParticles = lightning.GetComponent<ParticleSystem> ();
     }
