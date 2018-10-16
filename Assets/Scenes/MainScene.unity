@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4368019, g: 0.48443234, b: 0.5646864, a: 1}
+  m_IndirectSpecularColor: {r: 0.43680242, g: 0.484433, b: 0.56468785, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2380,6 +2380,11 @@ Prefab:
       propertyPath: middle
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114940718487523854, guid: f65dd21103107fc46aacd8314244e61e,
+        type: 2}
+      propertyPath: lightningPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 39e775af8f082f94aa4174a339d00e2f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
   m_IsPrefabParent: 0

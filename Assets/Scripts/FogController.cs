@@ -5,9 +5,11 @@ using UnityEngine;
 public class FogController : MonoBehaviour {
     // Standard assets dust storm attached
     public GameObject dustStormPrefab;
+    public GameObject lightningPrefab;
 
     // Particle system to play fog
-    private ParticleSystem particles;
+    private ParticleSystem dustParticles;
+    private ParticleSystem lightningParticles;
 
     // Distance from player
     public float distance;
@@ -20,17 +22,26 @@ public class FogController : MonoBehaviour {
     /// </summary>
     private void Awake () {
         GameObject dustStorm = Instantiate (dustStormPrefab);
-        particles = dustStorm.GetComponent<ParticleSystem> ();
+        dustParticles = dustStorm.GetComponent<ParticleSystem> ();
+
+        GameObject lightning = Instantiate (lightningPrefab);
+        lightningParticles = lightning.GetComponent<ParticleSystem> ();
     }
 
     /// <summary>
     /// Update is called once per frame.
     /// </summary>
     private void Update () {
+        drawParticles (dustParticles);
+        drawParticles (lightningParticles);
+    }
+
+    private void drawParticles (ParticleSystem particles) {
         Vector3 newPostion = transform.position;
         newPostion.x = middle;
         newPostion.z += distance;
 
         particles.transform.position = newPostion;
     }
+
 }
