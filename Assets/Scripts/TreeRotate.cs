@@ -12,6 +12,7 @@ public class TreeRotate : MonoBehaviour {
     // The tree angle to go downwards
     public float treeAngle;
 
+    // Speed of tree rotation
     public float rotationSpeed;
 
     /// <summary>

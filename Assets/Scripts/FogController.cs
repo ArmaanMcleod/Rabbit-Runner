@@ -36,6 +36,10 @@ public class FogController : MonoBehaviour {
         drawParticles (lightningParticles);
     }
 
+    /// <summary>
+    /// Renders particles further away from player.
+    /// </summary>
+    /// <param name="particles"></param>
     private void drawParticles (ParticleSystem particles) {
         Vector3 newPostion = transform.position;
         newPostion.x = middle;
