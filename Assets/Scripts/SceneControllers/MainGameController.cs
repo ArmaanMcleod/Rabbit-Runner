@@ -19,6 +19,9 @@ public class MainGameController : MonoBehaviour {
 
 	// Text which displays the high score on the game over screen
 	public Text endHighScoreText;
+
+	//Text which notifies player of new high score
+	public Text newHighScoreText;
 	
 	// String name of the main game scene
 	public string mainGameScene;
@@ -39,6 +42,7 @@ public class MainGameController : MonoBehaviour {
 		paused = false;
 
 		scoreData = gameObject.GetComponent<ScoreData>();
+		newHighScoreText.enabled = false;
 	}
 	
 	/// <summary>
@@ -109,7 +113,10 @@ public class MainGameController : MonoBehaviour {
 
 		// Render the scores
 		endScoreText.text = "Score: " + score.ToString();
-		endHighScoreText.text = "High Score: " + highscore.ToString();
+		endHighScoreText.text = "Best Score: " + highscore.ToString();
+		if(score == highscore){
+			newHighScoreText.enabled = true;
+		}
 
 	}
 
