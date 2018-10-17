@@ -30,7 +30,7 @@ public class ChunkGenerator : MonoBehaviour {
     // Current chunk state variables
     private GameObject currentChunk;
     private int currentChunkIndex;
-    private int currentChunkPosition = 0;
+    private float currentChunkPosition = 0.0f;
 
     private bool firstChunk = true;
     private bool secondChunk = true;
@@ -39,7 +39,6 @@ public class ChunkGenerator : MonoBehaviour {
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
     private void Awake () {
-
         // Create chunk queue 
         InitializeChunks ();
 
@@ -57,8 +56,7 @@ public class ChunkGenerator : MonoBehaviour {
         }
 
         // Update current chunk and index
-        currentChunk = GetCurrentChunk ();
-        currentChunkIndex = GetCurrentChunkIndex ();
+        GetCurrentChunk ();
 
         // Activate new chunks
         ActivateChunks ();
@@ -121,7 +119,7 @@ public class ChunkGenerator : MonoBehaviour {
     private Vector3 CalculateNextChunkPosition () {
         Vector3 newPosition = chunkPrefab.transform.position;
         newPosition.z = currentChunkPosition;
-        currentChunkPosition += (int) chunkLength;
+        currentChunkPosition += chunkLength;
         return newPosition;
     }
 
@@ -152,41 +150,19 @@ public class ChunkGenerator : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gets current chunk game object player in world.
+    /// Gets current chunk and index.
     /// </summary>
-    /// <returns>The chunk player is on.</returns>
-    private GameObject GetCurrentChunk () {
-        GameObject newCurrentChunk = null;
-
-        foreach (GameObject chunk in chunks) {
-
-            // If we are at the midpoint of chunk, were on this chunk
-            if (Vector3.Distance (transform.position, chunk.transform.position) <= chunkLength) {
-                newCurrentChunk = chunk;
-                break;
-            }
-        }
-
-        return newCurrentChunk;
-    }
-
-    /// <summary>
-    /// Gets index of current chunk in world
-    /// </summary>
-    /// <returns>The index of the current chunk</returns>
-    private int GetCurrentChunkIndex () {
-        int index = 0;
+    private void GetCurrentChunk () {
 
         for (int i = 0; i < chunks.Count; i++) {
             GameObject chunk = chunks.ElementAt (i);
 
-            // If object is the same, this is the current chunk
-            if (chunk.Equals (currentChunk)) {
-                index = i;
+            // If we are at the midpoint of chunk, were on this chunk
+            if (Vector3.Distance (transform.position, chunk.transform.position) <= chunkLength) {
+                currentChunk = chunk;
+                currentChunkIndex = i;
                 break;
             }
         }
-
-        return index;
     }
 }
