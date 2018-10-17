@@ -28,7 +28,6 @@ public class ChunkGenerator : MonoBehaviour {
     private Queue<GameObject> chunks;
 
     // Current chunk state variables
-    private GameObject currentChunk;
     private int currentChunkIndex;
     private float currentChunkPosition = 0.0f;
 
@@ -55,8 +54,7 @@ public class ChunkGenerator : MonoBehaviour {
             return;
         }
 
-        // Update current chunk and index
-        GetCurrentChunk ();
+        currentChunkIndex = GetCurrentChunkIndex ();
 
         // Activate new chunks
         ActivateChunks ();
@@ -152,17 +150,17 @@ public class ChunkGenerator : MonoBehaviour {
     /// <summary>
     /// Gets current chunk and index.
     /// </summary>
-    private void GetCurrentChunk () {
+    private int GetCurrentChunkIndex () {
 
         for (int i = 0; i < chunks.Count; i++) {
             GameObject chunk = chunks.ElementAt (i);
 
             // If we are at the midpoint of chunk, were on this chunk
             if (Vector3.Distance (transform.position, chunk.transform.position) <= chunkLength) {
-                currentChunk = chunk;
-                currentChunkIndex = i;
-                break;
+                return i;
             }
         }
+
+        return 0;
     }
 }
