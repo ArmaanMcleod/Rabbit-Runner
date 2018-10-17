@@ -13,6 +13,9 @@ public class MainGameController : MonoBehaviour {
 
 	// Canvas which displays the game over screen
 	public GameObject gameOverCanvas;
+
+	// Canvas which displays instructions
+	public GameObject instructionCanvas;
 	
 	// Text which displays the final score on the game over screen
 	public Text endScoreText;
@@ -132,6 +135,23 @@ public class MainGameController : MonoBehaviour {
 	/// </summary>
 	public void ExitToMenu(){
 		SceneManager.LoadScene(mainMenuScene);
+	}
+
+	/// <summary>
+	/// Opens instructions
+	/// </summary>
+	public void OpenInstructions(){
+		instructionCanvas.SetActive(true);
+		PauseGame();
+		pauseCanvas.SetActive(false);
+	}
+
+	/// <summary>
+	/// Close instructions
+	/// </summary>
+	public void CloseInstructions(){
+		instructionCanvas.SetActive(false);
+		UnPauseGame();
 	}
 
 	/// <summary>
