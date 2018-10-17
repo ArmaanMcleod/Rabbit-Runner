@@ -2859,11 +2859,16 @@ Prefab:
       propertyPath: distance
       value: 70
       objectReference: {fileID: 0}
-    - target: {fileID: 114849271053739200, guid: f65dd21103107fc46aacd8314244e61e,
+    - target: {fileID: 114940718487523854, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
-      propertyPath: sideSpeed
-      value: 3
+      propertyPath: middle
+      value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114940718487523854, guid: f65dd21103107fc46aacd8314244e61e,
+        type: 2}
+      propertyPath: lightningPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 39e775af8f082f94aa4174a339d00e2f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
   m_IsPrefabParent: 0
