@@ -33,7 +33,7 @@ public class MenuController : MonoBehaviour {
 		scoreData = gameObject.GetComponent<ScoreData>();
 
 		int highScore = scoreData.getHighScore();
-		highScoreText.text = "High Score: " + highScore.ToString();
+		highScoreText.text = "Best Score: " + highScore.ToString();
 	}
 
 
