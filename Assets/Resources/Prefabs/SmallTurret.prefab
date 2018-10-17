@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4036457688102770}
   - component: {fileID: 137807985005897282}
+  - component: {fileID: 114404068199453678}
   m_Layer: 0
   m_Name: Gun_1
   m_TagString: Untagged
@@ -236,6 +237,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineHeightOffset: 0.6
   turretDamage: 10
+--- !u!114 &114404068199453678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1380671269257648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78cb5ab61c8500749bfe62c0cf9216b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  segments: 360
+  lineWidth: 0.2
+  radius: 500
+  height: 120
 --- !u!120 &120542605393260968
 LineRenderer:
   m_ObjectHideFlags: 1
