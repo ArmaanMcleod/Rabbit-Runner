@@ -178,6 +178,9 @@ public class MainGameController : MonoBehaviour {
 		UnPauseGame();
 	}
 
+	/// <summary>
+	/// Opens the quit confirmation dialogue
+	/// </summary>
 	public void QuitConfirm(){
 		quitConfirmCanvas.SetActive(true);
 		if(!paused){
