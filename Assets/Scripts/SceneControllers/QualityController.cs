@@ -15,13 +15,16 @@ public class QualityController : MonoBehaviour {
 	public Slider slider;
 
 	/// <summary>
-	/// Sets the quality of the game
+	/// Sets the quality settings of the game
 	/// </summary>
 	void Start () {
 		setSliderValue();
 		
 	}
 
+	/// <summary>
+	/// Sets the slider's current value to the player's preferences or default value
+	/// </summary>
 	public void setSliderValue(){
 		slider.value = PlayerPrefs.GetInt(QUALITY_KEY, DEFAULT_QUALITY);
 	}
