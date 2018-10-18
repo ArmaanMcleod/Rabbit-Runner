@@ -16,6 +16,9 @@ public class MainGameController : MonoBehaviour {
 
 	// Canvas which displays instructions
 	public GameObject instructionCanvas;
+
+	// Canvas which has confirmation dialog for quitting
+	public GameObject quitConfirmCanvas;
 	
 	// Text which displays the final score on the game over screen
 	public Text endScoreText;
@@ -36,6 +39,8 @@ public class MainGameController : MonoBehaviour {
 	private bool gameOver;
 	private bool paused;
 
+	private const string INSTRUCTIONS_KEY = "SkipInstructions";
+
 	/// <summary>
 	/// Initialises the normal game state
 	/// </summary>
@@ -46,6 +51,12 @@ public class MainGameController : MonoBehaviour {
 
 		scoreData = gameObject.GetComponent<ScoreData>();
 		newHighScoreText.enabled = false;
+
+		//instructionCanvas.SetActive(true);
+		if(PlayerPrefs.GetInt(INSTRUCTIONS_KEY) != 1){
+				OpenInstructions();
+				PlayerPrefs.SetInt(INSTRUCTIONS_KEY, 1);
+		}
 	}
 	
 	/// <summary>
@@ -60,34 +71,42 @@ public class MainGameController : MonoBehaviour {
 		// Pause or Unpause game if the key P is pressed
 		if(Input.GetKeyDown(KeyCode.P)){
 			if(pauseCanvas.activeSelf){
-				UnPauseGame();
+				ClosePauseCanvas();
 			}else{
-				PauseGame();
+				OpenPauseCanvas();
 			}
 		}
 
 		// Exit to main menu
 		if(Input.GetKeyDown(KeyCode.Escape)){
-			ExitToMenu();
+			QuitConfirm();
 		}
 	}
 	
 	/// <summary>
 	/// Pauses the game
 	/// </summary>
-	public void PauseGame(){
+	private void PauseGame(){
 		Time.timeScale=0;
-		pauseCanvas.SetActive(true);
 		paused = true;
 	}
 
 	/// <summary>
 	/// Unpauses the game
 	/// </summary>
-	public void UnPauseGame(){
+	private void UnPauseGame(){
 		Time.timeScale=1;
-		pauseCanvas.SetActive(false);
 		paused = false;
+	}
+
+	public void OpenPauseCanvas(){
+		PauseGame();
+		pauseCanvas.SetActive(true);
+	}
+
+	public void ClosePauseCanvas(){
+		UnPauseGame();
+		pauseCanvas.SetActive(false);
 	}
 
 	/// <summary>
@@ -142,16 +161,28 @@ public class MainGameController : MonoBehaviour {
 	/// </summary>
 	public void OpenInstructions(){
 		instructionCanvas.SetActive(true);
-		PauseGame();
-		pauseCanvas.SetActive(false);
+		if(!paused){
+			PauseGame();
+		}
 	}
 
 	/// <summary>
-	/// Close instructions
+	/// Close the canvas
 	/// </summary>
-	public void CloseInstructions(){
-		instructionCanvas.SetActive(false);
+	public void Continue(GameObject canvas){
+		canvas.SetActive(false);
+		if(pauseCanvas.activeSelf || instructionCanvas.activeSelf || gameOverCanvas.activeSelf){
+			return;
+		}
+
 		UnPauseGame();
+	}
+
+	public void QuitConfirm(){
+		quitConfirmCanvas.SetActive(true);
+		if(!paused){
+			PauseGame();
+		}
 	}
 
 	/// <summary>
