@@ -6,6 +6,9 @@ public class TreeRotate : MonoBehaviour {
     // Tree collider attached
     private Collider treeCollider;
 
+    // Audio source for the tree collision
+    private AudioSource audioSource;
+
     // Default damage for player on startup
     public int defaultDamage;
 
@@ -20,6 +23,7 @@ public class TreeRotate : MonoBehaviour {
     /// </summary>
     private void Awake () {
         treeCollider = gameObject.GetComponent<Collider> ();
+        audioSource = gameObject.GetComponent<AudioSource> ();
     }
 
     /// <summary>
@@ -32,6 +36,8 @@ public class TreeRotate : MonoBehaviour {
     /// <param name="other">The Collision data asociated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
+            audioSource.Play ();
+
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
 
             // Disable collider so player can go through
