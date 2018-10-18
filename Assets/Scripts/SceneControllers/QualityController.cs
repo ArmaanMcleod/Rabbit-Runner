@@ -24,7 +24,7 @@ public class QualityController : MonoBehaviour {
 				QualitySettings.SetQualityLevel (2, true);
 				break;
 			case 2:
-				QualitySettings.SetQualityLevel (3, true);
+				QualitySettings.SetQualityLevel (4, true);
 				break;
 			case 3:
 				QualitySettings.SetQualityLevel (5, true);

@@ -15,5 +15,6 @@ public class RotateSkybox : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		skybox.material.SetFloat("_Rotation", Time.time * speed);
+		Debug.Log(skybox.material.GetFloat("_Rotation"));
 	}
 }

@@ -153,6 +153,7 @@ public class MainGameController : MonoBehaviour {
 	/// Switches to the main menu scene and exits the game
 	/// </summary>
 	public void ExitToMenu(){
+		UnPauseGame();
 		SceneManager.LoadScene(mainMenuScene);
 	}
 
