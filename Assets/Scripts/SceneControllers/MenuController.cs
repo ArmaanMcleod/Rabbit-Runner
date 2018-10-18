@@ -18,10 +18,13 @@ public class MenuController : MonoBehaviour {
 	// Text object which renders the high score on the canvas
 	public Text highScoreText;
 
+	// Canvas which displays the settings
 	public GameObject settingsCanvas;
 
+	// Canvas which displays how to play instructions
 	public GameObject instructionsCanvas;
-
+	
+	// Canvas which displays the main menu
 	public GameObject menuCanvas;
 
 	
@@ -54,6 +57,9 @@ public class MenuController : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Close settings
+	/// </summary>
 	public void closeSettings(){
 		settingsCanvas.SetActive(false);
 	}
@@ -75,13 +81,10 @@ public class MenuController : MonoBehaviour {
 
 	}
 
-
-
 	/// <summary>
 	/// Exits the application
 	/// </summary>
 	public void Exit(){
-		PlayerPrefs.DeleteAll();
 		Application.Quit();
 	}
 }

@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateSkybox : MonoBehaviour {
+	// speed that the skybox is to be rotated
 	public float speed;
-
 	private Skybox skybox;
 
-	// Use this for initialization
+	/// <summary>
+	/// Initialisation
+	/// </summary>
 	void Start () {
 		skybox =  GetComponent<Skybox>();
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// Updates the rotation of the skybox
+	/// </summary>
 	void Update () {
 		skybox.material.SetFloat("_Rotation", Time.time * speed);
-		Debug.Log(skybox.material.GetFloat("_Rotation"));
 	}
 }

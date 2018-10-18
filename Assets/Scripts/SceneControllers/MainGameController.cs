@@ -52,7 +52,7 @@ public class MainGameController : MonoBehaviour {
 		scoreData = gameObject.GetComponent<ScoreData>();
 		newHighScoreText.enabled = false;
 
-		
+		// Only open the how to play instructions for a first time player
 		if(PlayerPrefs.GetInt(INSTRUCTIONS_KEY) != 1){
 				OpenInstructions();
 				PlayerPrefs.SetInt(INSTRUCTIONS_KEY, 1);
@@ -99,11 +99,17 @@ public class MainGameController : MonoBehaviour {
 		paused = false;
 	}
 
+	/// <summary>
+	/// Brings up the pause menu
+	/// </summary>
 	public void OpenPauseCanvas(){
 		PauseGame();
 		pauseCanvas.SetActive(true);
 	}
 
+	/// <summary>
+	/// Closes the pause menu
+	/// </summary>
 	public void ClosePauseCanvas(){
 		UnPauseGame();
 		pauseCanvas.SetActive(false);
@@ -172,6 +178,8 @@ public class MainGameController : MonoBehaviour {
 	/// </summary>
 	public void Continue(GameObject canvas){
 		canvas.SetActive(false);
+
+		// DOn't unpause the game if there is still a canvas active underneath
 		if(pauseCanvas.activeSelf || instructionCanvas.activeSelf || gameOverCanvas.activeSelf){
 			return;
 		}
