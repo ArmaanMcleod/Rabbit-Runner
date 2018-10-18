@@ -17,33 +17,27 @@
         #pragma surface surf Lambert
             
         struct Input {
-            
             float4 color : Color;
             float2 uv_MainTex;
             float2 uv_BumpMap;
             float3 viewDir;
-            
         };
         
-        float4 _ColorTint;
-        sampler2D _MainTex;
-        sampler2D _BumpMap;
-        float4 _RimColor;
-        float _RimPower;
+        uniform float4 _ColorTint;
+        uniform sampler2D _MainTex;
+        uniform sampler2D _BumpMap;
+        uniform float4 _RimColor;
+        uniform float _RimPower;
         
-        void surf(Input IN, inout SurfaceOutput o)
-        {
-            
-            
+        void surf(Input IN, inout SurfaceOutput o) {
             IN.color = _ColorTint;
             o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb * IN.color;
             o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
             
             half rim = 1.0 - saturate(dot(normalize(IN.viewDir), o.Normal));
             o.Emission = _RimColor.rgb * pow(rim, _RimPower);
-            
-            
         }
+        
         ENDCG
     }
     FallBack "Diffuse"
