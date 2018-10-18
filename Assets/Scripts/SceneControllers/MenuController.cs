@@ -24,6 +24,8 @@ public class MenuController : MonoBehaviour {
 
 	public GameObject menuCanvas;
 
+	
+
 
 	/// <summary>
 	/// Switches to the main game scene to start a new game
@@ -67,11 +69,12 @@ public class MenuController : MonoBehaviour {
 	/// <summary>
 	/// Switches back to the main menu canvas
 	/// </summary>
-	public void GoBack(){
-		instructionsCanvas.SetActive(false);
+	public void GoBack(GameObject canvas){
+		canvas.SetActive(false);
 		menuCanvas.SetActive(true);
 
 	}
+
 
 
 	/// <summary>

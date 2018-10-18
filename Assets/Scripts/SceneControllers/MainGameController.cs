@@ -52,7 +52,7 @@ public class MainGameController : MonoBehaviour {
 		scoreData = gameObject.GetComponent<ScoreData>();
 		newHighScoreText.enabled = false;
 
-		//instructionCanvas.SetActive(true);
+		
 		if(PlayerPrefs.GetInt(INSTRUCTIONS_KEY) != 1){
 				OpenInstructions();
 				PlayerPrefs.SetInt(INSTRUCTIONS_KEY, 1);
