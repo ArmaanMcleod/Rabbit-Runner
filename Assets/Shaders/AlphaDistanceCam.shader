@@ -1,5 +1,5 @@
 ﻿// Flat Shader which works for a single directional light source
-// Casts and receives shadows
+// Casts shadows only
 // Transparency changes as object moves closer to camera 
 // The rate of transparency change is set by the properties of the shader 
 // ---------------------------------------------------------------------------------------------------------
@@ -23,10 +23,10 @@ Shader "Unlit/AlphaDistanceCam"
     }
     SubShader
     {
-        Tags {"Queue"="AlphaTest" "RenderType"="TransparentCutout" "LightMode"="ForwardBase"}
+        Tags {"Queue"="Transparent" "RenderType"="Transparent" "LightMode"="ForwardBase"}
         Blend SrcAlpha OneMinusSrcAlpha
         LOD 100
-        //ZWrite On
+        ZWrite On
  
         Pass
         {
@@ -61,9 +61,7 @@ Shader "Unlit/AlphaDistanceCam"
 			{
 				float4 pos : SV_POSITION;
                 float4 worldVertex : TEXCOORD2;
-                fixed4 amb : TEXCOORD3;
-                fixed4 dif : TEXCOORD4;
-                SHADOW_COORDS(5)
+                fixed4 col : COLOR;
 			};
 
             // Vertex Shader
@@ -98,30 +96,27 @@ Shader "Unlit/AlphaDistanceCam"
 				float LdotN = max(0.0, dot(LightDir, triangleNormal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
 
+                // Apply ambient and diffuse lighting and shadows
+				fixed4 col = ambient  + diffuse;
+
 				// Set the colour and position of each vertex
 				g2f o;
 				for(int i = 0; i < 3; i++){
 					o.pos = input[i].pos;
-					o.amb = ambient;
-					o.dif = diffuse;
+					o.col = col;
                     o.worldVertex = input[i].worldVertex;
-                    TRANSFER_SHADOW(o)
 					stream.Append(o);
 				}
 			}
 
             // Fragment Shader
             fixed4 frag(g2f v) : SV_Target {
+                fixed4 col = v.col;
                 
                 // Calculate alpha value based on distance from camera
                 float dist = distance(v.worldVertex, _WorldSpaceCameraPos);
                 float alpha = (dist - _DistTransparent) / (_DistStartTransparent - _DistTransparent);
-                
-                // compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
-                fixed shadow = SHADOW_ATTENUATION(v);
 
-                // Apply ambient and diffuse lighting and shadows
-				fixed4 col = v.dif * shadow + v.amb;
 
                 // Clamps the alpha value between 0 and 1
                 col.a = saturate(alpha);
