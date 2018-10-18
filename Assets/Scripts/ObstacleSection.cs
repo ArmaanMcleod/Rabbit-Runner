@@ -76,6 +76,14 @@ public class ObstacleSection {
     }
 
     /// <summary>
+    /// Deactivates the obstacles.
+    /// </summary>
+    public void DeactivateObstacles() {
+        currentObstacles.ForEach(obj => obj.SetActive(false));
+        currentObstacles.Clear();
+    }
+
+    /// <summary>
     /// Updates the coordinates of this section and randomises the obstacle locations.
     /// </summary>
     /// <param name="position">The new position for this section of obstacles.</param>
@@ -90,9 +98,7 @@ public class ObstacleSection {
     /// Randomises the obstacles locations and make-up of 
     /// </summary>
     private void RandomiseObstacles() {
-        // Clear the last set of obstacles
-        currentObstacles.ForEach(obj => obj.SetActive(false));
-        currentObstacles.Clear();
+        DeactivateObstacles();
 
         // Pick some random obstacles
         int rockIndex = 0;
@@ -117,17 +123,24 @@ public class ObstacleSection {
                 ActivateObstacle(conifers[coniferIndex], 0);
                 coniferIndex++;
             } else {
-                ActivateObstacle(rocks[rockIndex], 0);
+                ActivateObstacle(rocks[rockIndex], 0.5f);
                 rockIndex++;
             }
         }
     }
 
+    /// <summary>
+    /// Rotates an obstacle.
+    /// </summary>
+    /// <param name="obstacle">The obstacle to rotate.</param>
     private void RotateObstacle(GameObject obstacle) {
         float newYRot = UnityEngine.Random.Range(0, 360);
         obstacle.transform.rotation = Quaternion.Euler(new Vector3(0, newYRot, 0));
     }
 
+    /// <summary>
+    /// Randombly chooses whether to spawn an item and what that item will be.
+    /// </summary>
     private void RandomiseItem() {
         if (currentItem != null) {
             currentItem.SetActive(false);
@@ -172,6 +185,9 @@ public class ObstacleSection {
         obstacle.transform.position = new Vector3(newX, yPos, newZ);
     }
 
+    /// <summary>
+    /// Instantiates the items.
+    /// </summary>
     private void InstantiateItems() {
         invincibilityItem = UnityEngine.Object.Instantiate(INVINCIBILITY_ITEM_PREFAB);
         invincibilityItem.SetActive(false);
