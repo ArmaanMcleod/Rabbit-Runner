@@ -23,10 +23,8 @@ public class ExplosionController : MonoBehaviour {
     /// <param name="other">The Collision data asociated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
-            if (gameObject.transform.tag == "Turtle") {
-                AudioSource audioSource = explosionPrefab.GetComponent<AudioSource> ();
-                audioSource.Play ();
-            }
+            AudioSource audioSource = explosionPrefab.GetComponent<AudioSource> ();
+            audioSource.Play ();
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
             Explode ();
             this.gameObject.SetActive (false);
