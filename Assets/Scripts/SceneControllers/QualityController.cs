@@ -27,6 +27,7 @@ public class QualityController : MonoBehaviour {
 	/// </summary>
 	public void setSliderValue(){
 		slider.value = PlayerPrefs.GetInt(QUALITY_KEY, DEFAULT_QUALITY);
+		ChangeQuality();
 	}
 	
 	/// <summary>
