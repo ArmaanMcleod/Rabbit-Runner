@@ -2385,6 +2385,11 @@ Prefab:
       propertyPath: lightningPrefab
       value: 
       objectReference: {fileID: 100000, guid: 39e775af8f082f94aa4174a339d00e2f, type: 2}
+    - target: {fileID: 114940718487523854, guid: f65dd21103107fc46aacd8314244e61e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f65dd21103107fc46aacd8314244e61e, type: 2}
   m_IsPrefabParent: 0

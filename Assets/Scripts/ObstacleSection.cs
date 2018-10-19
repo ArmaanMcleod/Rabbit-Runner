@@ -28,7 +28,7 @@ public class ObstacleSection {
     private readonly GameObject TURRET_PREFAB = Resources.Load<GameObject>("Prefabs/SmallTurret");
 
     private readonly GameObject HEALTH_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/ItemPrefabs/aid_box");
-    private readonly GameObject INVINCIBILITY_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/InvincibilityItem");
+    private readonly GameObject INVINCIBILITY_ITEM_PREFAB = Resources.Load<GameObject>("Prefabs/ItemPrefabs/Shield");
 
     /// <summary>
     /// Position of this section's slope.
@@ -88,7 +88,6 @@ public class ObstacleSection {
     /// </summary>
     /// <param name="position">The new position for this section of obstacles.</param>
     public void UpdateCoordinates(Vector3 position) {
-        Debug.Log("Updating coordinates");
         this.position = position;
         RandomiseObstacles();
         RandomiseItem();
@@ -139,7 +138,7 @@ public class ObstacleSection {
     }
 
     /// <summary>
-    /// Randombly chooses whether to spawn an item and what that item will be.
+    /// Randomly chooses whether to spawn an item and what that item will be.
     /// </summary>
     private void RandomiseItem() {
         if (currentItem != null) {
@@ -148,7 +147,7 @@ public class ObstacleSection {
 
         UnityEngine.Random.InitState(DateTime.Now.Millisecond);
         bool willSpawnItem = UnityEngine.Random.Range(1, 10) > 7.5;
-        if (true) {
+        if (willSpawnItem) {
             float val = UnityEngine.Random.Range(1, 10);
             currentItem = val < 5 ? invincibilityItem : healthItem;
             RandomisePosition(currentItem, UnityEngine.Random.Range(0, 2f));
