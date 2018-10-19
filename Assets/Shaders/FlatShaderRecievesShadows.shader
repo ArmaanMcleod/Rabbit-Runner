@@ -84,7 +84,7 @@ Shader "Unlit/FlatShaderReceivesShadows"
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
 
 				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
-                fixed shadow = SHADOW_ATTENUATION(v);
+                fixed shadow = SHADOW_ATTENUATION();
 				
 				// Apply ambient and diffuse lighting
 				fixed4 col = diffuse * shadow + ambient;
