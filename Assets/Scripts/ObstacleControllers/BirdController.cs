@@ -30,7 +30,7 @@ public class BirdController : MonoBehaviour {
     /// Whether the bird is moving towards the player.
     /// </summary>
     private bool moving = false;
-    
+
     // The x-coordinate the bird will move to once the aim is set
     private float lockX;
 
@@ -40,31 +40,45 @@ public class BirdController : MonoBehaviour {
     // The distance from the player the enemy sets its aim
     public float distanceLockAttack;
 
-    // Use this for initialization
-    void Start() {
-        player = GameObject.FindGameObjectWithTag("Player");
-        GameObject gameControllerObj = GameObject.FindGameObjectWithTag("GameController");
-        gameController = gameControllerObj.GetComponent<MainGameController>();
+    // Sound effect attached
+    private AudioSource audioSource;
+
+    // Indicates if first bird call was made
+    private bool firstCall = false;
+
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
+    private void Start () {
+        player = GameObject.FindGameObjectWithTag ("Player");
+        GameObject gameControllerObj = GameObject.FindGameObjectWithTag ("GameController");
+        gameController = gameControllerObj.GetComponent<MainGameController> ();
+        audioSource = gameObject.GetComponent<AudioSource> ();
     }
 
     /// <summary>
     /// Update is called once per frame
     /// </summary>
-    void Update() {
-        if (gameController.isGameOver() || gameController.isPaused()) {
+    private void Update () {
+        if (gameController.isGameOver () || gameController.isPaused ()) {
             return;
         }
 
         if (moving) {
             transform.position += transform.forward * speed * Time.deltaTime;
+
+            if (!firstCall) {
+                audioSource.Play ();
+                firstCall = true;
+            }
         }
 
         // Calculate the distance from the player in the z-axis
         float distanceZPlayer = gameObject.transform.position.z - player.transform.position.z;
         if (distanceZPlayer < distanceStartAttack && distanceZPlayer > 0) {
-            TrackPlayer();
-            if (distanceZPlayer < distanceLockAttack){
-                if(!locked){
+            TrackPlayer ();
+            if (distanceZPlayer < distanceLockAttack) {
+                if (!locked) {
                     lockX = player.transform.position.x;
                 }
 
@@ -76,17 +90,17 @@ public class BirdController : MonoBehaviour {
     /// <summary>
     /// Tracks the position of the player and moves towards it
     /// </summary>
-    void TrackPlayer() {
+    private void TrackPlayer () {
         Vector3 playerPos = player.transform.position;
         Vector3 lookPos;
 
         if (locked) {
-            lookPos = new Vector3(lockX , playerPos.y, playerPos.z);
+            lookPos = new Vector3 (lockX, playerPos.y, playerPos.z);
         } else {
             lookPos = playerPos;
         }
 
-        transform.LookAt(lookPos);
+        transform.LookAt (lookPos);
         moving = true;
     }
 
@@ -95,9 +109,9 @@ public class BirdController : MonoBehaviour {
     /// moving status.
     /// </summary>
     /// <param name="collision">The object it is colliding with.</param>
-    private void OnCollisionEnter(Collision collision) {
+    private void OnCollisionEnter (Collision collision) {
         string collisionTag = collision.gameObject.tag;
-        if (collisionTag.Equals("Player") || collisionTag.Equals("Slope")) {
+        if (collisionTag.Equals ("Player") || collisionTag.Equals ("Slope")) {
             locked = false;
             moving = false;
         }

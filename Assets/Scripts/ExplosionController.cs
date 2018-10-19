@@ -24,7 +24,10 @@ public class ExplosionController : MonoBehaviour {
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
             AudioSource audioSource = explosionPrefab.GetComponent<AudioSource> ();
-            audioSource.Play ();
+
+            if (audioSource != null) {
+                audioSource.Play ();
+            }
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
             Explode ();
             this.gameObject.SetActive (false);
