@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class ObstacleSection {
 
-    /// <summary>
-    /// Number of obstacles per section.
-    /// </summary>
-    private readonly int NUM_PER_SECTION = 10;
+    private static readonly int MAX_OBSTACLES = 18;
 
     /// <summary>
     /// Number of each obstacle type held by this object
     /// </summary>
     private readonly int NUM_BIRDS = 1;
     private readonly int NUM_CONIFERS = 2;
-    private readonly int NUM_ROCKS = 10;
+    private readonly int NUM_ROCKS = 18;
     private readonly int NUM_TURTLES = 2;
     private readonly int NUM_TURRETS = 1;
 
@@ -34,6 +31,11 @@ public class ObstacleSection {
     /// Position of this section's slope.
     /// </summary>
     private Vector3 position;
+
+    /// <summary>
+    /// Number of obstacles per section.
+    /// </summary>
+    private int numPerSection = 6;
 
     /// <summary>
     /// The length of the x dimension of the slope.
@@ -89,6 +91,12 @@ public class ObstacleSection {
     /// <param name="position">The new position for this section of obstacles.</param>
     public void UpdateCoordinates(Vector3 position) {
         this.position = position;
+
+        // Increase the number of obstacles whenever this is recycled, up to a max
+        if (numPerSection < MAX_OBSTACLES) {
+            numPerSection += 2;
+        }
+
         RandomiseObstacles();
         RandomiseItem();
     }
@@ -106,13 +114,13 @@ public class ObstacleSection {
         int birdIndex = 0;
         int turretIndex = 0;
 
-        for (int i = 0; i < NUM_PER_SECTION; i++) {
+        for (int i = 0; i < numPerSection; i++) {
             float randomValue = UnityEngine.Random.Range(1, 100);
 
             if (randomValue < 5 && birdIndex < NUM_BIRDS) {
                 ActivateObstacle(birds[birdIndex], 15);
                 birdIndex++;
-            } else if (randomValue < 10 && turretIndex < NUM_TURRETS) {
+            } else if (randomValue < 8 && turretIndex < NUM_TURRETS) {
                 ActivateObstacle(turrets[turretIndex], 1);
                 turretIndex++;
             } else if (randomValue < 15 && turtleIndex < NUM_TURTLES) {

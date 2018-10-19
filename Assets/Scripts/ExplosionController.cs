@@ -13,6 +13,16 @@ public class ExplosionController : MonoBehaviour {
     // Default damage for player on startup
     public int defaultDamage;
 
+    // The audio source attached to the explosion
+    private AudioSource audioSource;
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    private void Awake () {
+        audioSource = explosionPrefab.GetComponent<AudioSource> ();
+    }
+
     /// <summary>
     /// OnCollisionEnter is called when this collider/rigidbody has begun
     /// touching another rigidbody/collider.
@@ -23,8 +33,12 @@ public class ExplosionController : MonoBehaviour {
     /// <param name="other">The Collision data asociated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
-            AudioSource audioSource = explosionPrefab.GetComponent<AudioSource> ();
-            audioSource.Play ();
+
+            // Only play audio if actvie and enabled in hierachy
+            if (audioSource.isActiveAndEnabled) {
+                audioSource.Play ();
+            }
+
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
             Explode ();
             this.gameObject.SetActive (false);
