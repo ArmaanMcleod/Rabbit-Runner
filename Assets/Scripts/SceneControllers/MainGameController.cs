@@ -13,12 +13,21 @@ public class MainGameController : MonoBehaviour {
 
 	// Canvas which displays the game over screen
 	public GameObject gameOverCanvas;
+
+	// Canvas which displays instructions
+	public GameObject instructionCanvas;
+
+	// Canvas which has confirmation dialog for quitting
+	public GameObject quitConfirmCanvas;
 	
 	// Text which displays the final score on the game over screen
 	public Text endScoreText;
 
 	// Text which displays the high score on the game over screen
 	public Text endHighScoreText;
+
+	//Text which notifies player of new high score
+	public Text newHighScoreText;
 	
 	// String name of the main game scene
 	public string mainGameScene;
@@ -30,6 +39,8 @@ public class MainGameController : MonoBehaviour {
 	private bool gameOver;
 	private bool paused;
 
+	private const string INSTRUCTIONS_KEY = "SkipInstructions";
+
 	/// <summary>
 	/// Initialises the normal game state
 	/// </summary>
@@ -39,6 +50,13 @@ public class MainGameController : MonoBehaviour {
 		paused = false;
 
 		scoreData = gameObject.GetComponent<ScoreData>();
+		newHighScoreText.enabled = false;
+
+		// Only open the how to play instructions for a first time player
+		if(PlayerPrefs.GetInt(INSTRUCTIONS_KEY) != 1){
+				OpenInstructions();
+				PlayerPrefs.SetInt(INSTRUCTIONS_KEY, 1);
+		}
 	}
 	
 	/// <summary>
@@ -53,34 +71,48 @@ public class MainGameController : MonoBehaviour {
 		// Pause or Unpause game if the key P is pressed
 		if(Input.GetKeyDown(KeyCode.P)){
 			if(pauseCanvas.activeSelf){
-				UnPauseGame();
+				ClosePauseCanvas();
 			}else{
-				PauseGame();
+				OpenPauseCanvas();
 			}
 		}
 
 		// Exit to main menu
 		if(Input.GetKeyDown(KeyCode.Escape)){
-			ExitToMenu();
+			QuitConfirm();
 		}
 	}
 	
 	/// <summary>
 	/// Pauses the game
 	/// </summary>
-	public void PauseGame(){
+	private void PauseGame(){
 		Time.timeScale=0;
-		pauseCanvas.SetActive(true);
 		paused = true;
 	}
 
 	/// <summary>
 	/// Unpauses the game
 	/// </summary>
-	public void UnPauseGame(){
+	private void UnPauseGame(){
 		Time.timeScale=1;
-		pauseCanvas.SetActive(false);
 		paused = false;
+	}
+
+	/// <summary>
+	/// Brings up the pause menu
+	/// </summary>
+	public void OpenPauseCanvas(){
+		PauseGame();
+		pauseCanvas.SetActive(true);
+	}
+
+	/// <summary>
+	/// Closes the pause menu
+	/// </summary>
+	public void ClosePauseCanvas(){
+		UnPauseGame();
+		pauseCanvas.SetActive(false);
 	}
 
 	/// <summary>
@@ -109,7 +141,10 @@ public class MainGameController : MonoBehaviour {
 
 		// Render the scores
 		endScoreText.text = "Score: " + score.ToString();
-		endHighScoreText.text = "High Score: " + highscore.ToString();
+		endHighScoreText.text = "Best Score: " + highscore.ToString();
+		if(score == highscore){
+			newHighScoreText.enabled = true;
+		}
 
 	}
 
@@ -124,7 +159,42 @@ public class MainGameController : MonoBehaviour {
 	/// Switches to the main menu scene and exits the game
 	/// </summary>
 	public void ExitToMenu(){
+		UnPauseGame();
 		SceneManager.LoadScene(mainMenuScene);
+	}
+
+	/// <summary>
+	/// Opens instructions
+	/// </summary>
+	public void OpenInstructions(){
+		instructionCanvas.SetActive(true);
+		if(!paused){
+			PauseGame();
+		}
+	}
+
+	/// <summary>
+	/// Close the canvas
+	/// </summary>
+	public void Continue(GameObject canvas){
+		canvas.SetActive(false);
+
+		// DOn't unpause the game if there is still a canvas active underneath
+		if(pauseCanvas.activeSelf || instructionCanvas.activeSelf || gameOverCanvas.activeSelf){
+			return;
+		}
+
+		UnPauseGame();
+	}
+
+	/// <summary>
+	/// Opens the quit confirmation dialogue
+	/// </summary>
+	public void QuitConfirm(){
+		quitConfirmCanvas.SetActive(true);
+		if(!paused){
+			PauseGame();
+		}
 	}
 
 	/// <summary>
