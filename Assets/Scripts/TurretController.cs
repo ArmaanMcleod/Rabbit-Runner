@@ -22,6 +22,9 @@ public class TurretController : MonoBehaviour {
     // Needed as game will be too hard if damage is taken on each laser hit
     private bool firstHit = false;
 
+    // The audio source attached
+    private AudioSource audioSource;
+
     /// <summary>
     /// Awake is used to initialize any variables or game state before the game starts.
     /// </summary>
@@ -29,6 +32,7 @@ public class TurretController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag ("Player");
         lineRenderer = gameObject.GetComponent<LineRenderer> ();
         lineRenderer.enabled = false;
+        audioSource = gameObject.GetComponent<AudioSource> ();
     }
 
     /// <summary>
@@ -86,6 +90,7 @@ public class TurretController : MonoBehaviour {
     /// <param name="other">The other Collider involved in this collision.</param>
     private void OnTriggerEnter (Collider other) {
         if (other.gameObject.tag == "Player") {
+            audioSource.Play ();
             lineRenderer.enabled = true;
             hitting = true;
         }
