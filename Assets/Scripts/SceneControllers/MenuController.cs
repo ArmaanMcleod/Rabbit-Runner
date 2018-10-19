@@ -18,6 +18,17 @@ public class MenuController : MonoBehaviour {
 	// Text object which renders the high score on the canvas
 	public Text highScoreText;
 
+	// Canvas which displays the settings
+	public GameObject settingsCanvas;
+
+	// Canvas which displays how to play instructions
+	public GameObject instructionsCanvas;
+	
+	// Canvas which displays the main menu
+	public GameObject menuCanvas;
+
+	
+
 
 	/// <summary>
 	/// Switches to the main game scene to start a new game
@@ -33,18 +44,43 @@ public class MenuController : MonoBehaviour {
 		scoreData = gameObject.GetComponent<ScoreData>();
 
 		int highScore = scoreData.getHighScore();
-		highScoreText.text = "High Score: " + highScore.ToString();
+		highScoreText.text = "Best Score: " + highScore.ToString();
 	}
 
+
+	/// <summary>
+	/// Opens settings
+	/// </summary>
+	public void OpenSettings(){
+		settingsCanvas.SetActive(true);
+		menuCanvas.SetActive(false);
+
+	}
+
+	/// <summary>
+	/// Close settings
+	/// </summary>
+	public void closeSettings(){
+		settingsCanvas.SetActive(false);
+	}
 
 	/// <summary>
 	/// Switches to the instructions scene
 	/// </summary>
 	public void OpenInstructions(){
-		SceneManager.LoadScene(instructionsScene);
+		instructionsCanvas.SetActive(true);
+		menuCanvas.SetActive(false);
 	}
 
-	
+	/// <summary>
+	/// Switches back to the main menu canvas
+	/// </summary>
+	public void GoBack(GameObject canvas){
+		canvas.SetActive(false);
+		menuCanvas.SetActive(true);
+
+	}
+
 	/// <summary>
 	/// Exits the application
 	/// </summary>
