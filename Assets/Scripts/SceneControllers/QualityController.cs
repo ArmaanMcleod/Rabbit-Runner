@@ -11,6 +11,13 @@ public class QualityController : MonoBehaviour {
 	// Default quality index (highest quality)
 	private const int DEFAULT_QUALITY = 5;
 
+	private const int LOW_QUALITY = 2;
+
+	private const int MED_QUALITY = 4;
+	private const int HIGH_QUALITY = 5;
+
+
+
 	// The slider which allows user to change quality
 	public Slider slider;
 
@@ -19,6 +26,7 @@ public class QualityController : MonoBehaviour {
 	/// </summary>
 	void Start () {
 		setSliderValue();
+		ChangeQuality();
 		
 	}
 
@@ -26,8 +34,23 @@ public class QualityController : MonoBehaviour {
 	/// Sets the slider's current value to the player's preferences or default value
 	/// </summary>
 	public void setSliderValue(){
-		slider.value = PlayerPrefs.GetInt(QUALITY_KEY, DEFAULT_QUALITY);
-		ChangeQuality();
+		int value = PlayerPrefs.GetInt(QUALITY_KEY, DEFAULT_QUALITY);
+
+		switch(value){
+			case LOW_QUALITY:
+				slider.value = 1;
+				break;
+			case MED_QUALITY:
+				slider.value = 2;
+				break;
+			case HIGH_QUALITY:
+				slider.value = 3;
+				break;
+		}
+		
+		PlayerPrefs.SetInt(QUALITY_KEY, value);
+		
+	
 	}
 	
 	/// <summary>
@@ -37,13 +60,13 @@ public class QualityController : MonoBehaviour {
 		int quality = Mathf.RoundToInt(slider.value);
 		switch(quality){
 			case 1:
-				QualitySettings.SetQualityLevel (2, true);
+				QualitySettings.SetQualityLevel (LOW_QUALITY, true);
 				break;
 			case 2:
-				QualitySettings.SetQualityLevel (4, true);
+				QualitySettings.SetQualityLevel (MED_QUALITY, true);
 				break;
 			case 3:
-				QualitySettings.SetQualityLevel (5, true);
+				QualitySettings.SetQualityLevel (HIGH_QUALITY, true);
 				break;
 		}
 		
