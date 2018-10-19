@@ -1,5 +1,5 @@
 ﻿// Flat Shader which works for a single directional light source
-// Casts and receives shadows
+// Casts shadows only
 // Transparency changes as object moves closer to camera 
 // The rate of transparency change is set by the properties of the shader 
 // ---------------------------------------------------------------------------------------------------------
@@ -25,6 +25,8 @@ Shader "Unlit/AlphaDistanceCam"
     {
         Tags {"Queue"="Transparent" "RenderType"="Transparent" "LightMode"="ForwardBase"}
         Blend SrcAlpha OneMinusSrcAlpha
+        LOD 100
+        ZWrite On
  
         Pass
         {
@@ -51,7 +53,7 @@ Shader "Unlit/AlphaDistanceCam"
 			{
 				float4 pos : SV_POSITION;
                 float4 worldVertex : TEXCOORD1;
-                SHADOW_COORDS(1)
+                
 
 			};
 
@@ -94,11 +96,8 @@ Shader "Unlit/AlphaDistanceCam"
 				float LdotN = max(0.0, dot(LightDir, triangleNormal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
 
-				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
-                fixed shadow = SHADOW_ATTENUATION(v);
-				
-				// Apply ambient and diffuse lighting
-				fixed4 col = diffuse * shadow + ambient;
+                // Apply ambient and diffuse lighting and shadows
+				fixed4 col = ambient  + diffuse;
 
 				// Set the colour and position of each vertex
 				g2f o;
@@ -117,7 +116,8 @@ Shader "Unlit/AlphaDistanceCam"
                 // Calculate alpha value based on distance from camera
                 float dist = distance(v.worldVertex, _WorldSpaceCameraPos);
                 float alpha = (dist - _DistTransparent) / (_DistStartTransparent - _DistTransparent);
-                
+
+
                 // Clamps the alpha value between 0 and 1
                 col.a = saturate(alpha);
                 return col;
