@@ -32,6 +32,7 @@ public class ObstaclePush : MonoBehaviour {
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
             audioSource.Play ();
+
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
             rb.velocity = Vector3.zero;
 

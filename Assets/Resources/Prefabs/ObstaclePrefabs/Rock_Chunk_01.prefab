@@ -154,7 +154,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0325ceaba189e49499c87793a68e0f34, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8ded81ae23ba1fd4f8866d4fed86566a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -253,3 +253,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDamage: 5
   forcePush: 500
+  playTime: 1
