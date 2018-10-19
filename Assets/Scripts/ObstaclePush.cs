@@ -13,11 +13,15 @@ public class ObstaclePush : MonoBehaviour {
     // Force to push objects to the side
     public float forcePush;
 
+    // Attach audio source
+    private AudioSource audioSource;
+
     /// <summary>
     /// Use this for initialization
     /// </summary>
     private void Start () {
         rb = gameObject.GetComponent<Rigidbody> ();
+        audioSource = gameObject.GetComponent<AudioSource> ();
     }
 
     /// <summary>
@@ -27,6 +31,8 @@ public class ObstaclePush : MonoBehaviour {
     /// <param name="other">The Collision data associated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
+            audioSource.Play ();
+
             other.gameObject.GetComponent<PlayerHealth> ().TakeDamage (defaultDamage);
             rb.velocity = Vector3.zero;
 
