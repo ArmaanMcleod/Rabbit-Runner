@@ -40,14 +40,15 @@ Shader "Unlit/FlatShaderReceivesShadows"
 			{
 				float4 pos : SV_POSITION;
 				float4 worldVertex : TEXCOORD0;
-				SHADOW_COORDS(1)
 			};
 
 			struct g2f
 			{
 				float4 pos : SV_POSITION;
-				fixed4 col : COLOR;
-				
+				fixed4 dif : TEXCOORD1;
+				fixed4 amb : TEXCOORD2;
+				SHADOW_COORDS(3)
+
 			};
 			
 			v2g vert (vertIn v)
@@ -60,7 +61,7 @@ Shader "Unlit/FlatShaderReceivesShadows"
 				// Transform the vertex position into world coordinates
 				o.worldVertex = mul(unity_ObjectToWorld, v.vertex);
 
-				TRANSFER_SHADOW(o)
+				
 
 				return o;
 			}
@@ -83,24 +84,25 @@ Shader "Unlit/FlatShaderReceivesShadows"
 				float LdotN = max(0.0, dot(LightDir, triangleNormal));
 				fixed4 diffuse = _BaseColor * LdotN * _LightColor0;
 
-				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
-                fixed shadow = SHADOW_ATTENUATION();
-				
-				// Apply ambient and diffuse lighting
-				fixed4 col = diffuse * shadow + ambient;
-
 				// Set the colour and position of each vertex
 				g2f o;
 				for(int i = 0; i < 3; i++){
 					o.pos = input[i].pos;
-					o.col = col;
+					o.amb = ambient;
+					o.dif = diffuse;
+					TRANSFER_SHADOW(o)
 					stream.Append(o);
+					
 				}
 			}
 			
 			fixed4 frag(g2f v) : SV_Target
 			{
-				return v.col;
+				// compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
+				fixed shadow = SHADOW_ATTENUATION(v);
+
+				// Apply ambient and diffuse lighting and shadows
+				return v.dif * shadow + v.amb;
 			}
 			ENDCG
 		}
