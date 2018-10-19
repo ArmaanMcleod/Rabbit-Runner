@@ -13,6 +13,7 @@ public class ExplosionController : MonoBehaviour {
     // Default damage for player on startup
     public int defaultDamage;
 
+    // The audio source attached to the explosion
     private AudioSource audioSource;
 
     /// <summary>
@@ -32,6 +33,8 @@ public class ExplosionController : MonoBehaviour {
     /// <param name="other">The Collision data asociated with this collision.</param>
     private void OnCollisionEnter (Collision other) {
         if (other.gameObject.transform.tag == "Player") {
+
+            // Only play audio if actvie and enabled in hierachy
             if (audioSource.isActiveAndEnabled) {
                 audioSource.Play ();
             }
