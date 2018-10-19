@@ -8,15 +8,18 @@ public class SoundController : MonoBehaviour {
 	// 1 = sound is on, 0 = sound is off
 	private int sound;
 
+	// Key used to access the sound settings in player prefs
 	private const string SOUND_KEY = "sound"; 
 
+	//the button that shows up when the sound is on
 	public GameObject soundOnButton;
-	
+
+	//the button that shows up when the sound is on
 	public GameObject soundOffButton;
 
-
-
-	// Use this for initialization
+	/// <summary>
+	/// Initialise the sound settings based on player preferences or default sound value (which is on)
+	/// </summary>
 	void Start () {
 		sound = PlayerPrefs.GetInt(SOUND_KEY, 1);
 
@@ -27,8 +30,9 @@ public class SoundController : MonoBehaviour {
 		}
 	}
 	
-
-
+	/// <summary>
+	/// Mute the sound and save the settings
+	/// </summary>
 	public void mute(){
 		AudioListener.pause = true;
 		soundOffButton.SetActive(true);
@@ -37,6 +41,9 @@ public class SoundController : MonoBehaviour {
 		PlayerPrefs.SetInt(SOUND_KEY, sound);
 	}
 
+	/// <summary>
+	/// Unmute the sound and save the settings
+	/// </summary>
 	public void unmute(){
 		AudioListener.pause = false;
 		soundOffButton.SetActive(false);
