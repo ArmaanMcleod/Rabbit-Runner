@@ -3359,7 +3359,7 @@ Prefab:
     - target: {fileID: 114940718487523854, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
       propertyPath: distance
-      value: 70
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 114940718487523854, guid: f65dd21103107fc46aacd8314244e61e,
         type: 2}
