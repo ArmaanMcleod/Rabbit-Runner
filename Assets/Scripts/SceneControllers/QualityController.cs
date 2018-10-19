@@ -9,12 +9,12 @@ public class QualityController : MonoBehaviour {
 	private const string QUALITY_KEY = "quality";
 
 	// Default quality index (highest quality)
-	private const int DEFAULT_QUALITY = 5;
+	private const int DEFAULT_QUALITY = 3;
 
 	private const int LOW_QUALITY = 2;
 
-	private const int MED_QUALITY = 4;
-	private const int HIGH_QUALITY = 5;
+	private const int MED_QUALITY = 3;
+	private const int HIGH_QUALITY = 4;
 
 
 
@@ -61,16 +61,20 @@ public class QualityController : MonoBehaviour {
 		switch(quality){
 			case 1:
 				QualitySettings.SetQualityLevel (LOW_QUALITY, true);
+				PlayerPrefs.SetInt(QUALITY_KEY, LOW_QUALITY);
 				break;
 			case 2:
 				QualitySettings.SetQualityLevel (MED_QUALITY, true);
+				PlayerPrefs.SetInt(QUALITY_KEY, MED_QUALITY);
+
 				break;
 			case 3:
 				QualitySettings.SetQualityLevel (HIGH_QUALITY, true);
+				PlayerPrefs.SetInt(QUALITY_KEY, HIGH_QUALITY);
 				break;
 		}
 		
-		PlayerPrefs.SetInt(QUALITY_KEY, quality);
+		
 	}
 
 	
