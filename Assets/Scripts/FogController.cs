@@ -47,6 +47,7 @@ public class FogController : MonoBehaviour {
     private void drawParticles (ParticleSystem particles) {
         Vector3 newPostion = transform.position;
         newPostion.x = middle;
+        newPostion.y = middle;
         newPostion.z += distance;
 
         particles.transform.position = newPostion;
