@@ -23,7 +23,6 @@ public class TurretController : MonoBehaviour {
     private bool firstHit = false;
 
     // The audio source attached
-
     private AudioSource audioSource;
 
     /// <summary>
