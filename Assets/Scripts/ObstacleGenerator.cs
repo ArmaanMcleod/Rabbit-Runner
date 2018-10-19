@@ -23,4 +23,8 @@ public class ObstacleGenerator : MonoBehaviour {
         Vector3 position = gameObject.transform.position;
         this.obstacleSection.UpdateCoordinates(position);
     }
+
+    public void DeactivateObstacles() {
+        obstacleSection.DeactivateObstacles();
+    }
 }
