@@ -12,17 +12,19 @@ public class ObstacleSection {
     private readonly int NUM_BIRDS = 1;
     private readonly int NUM_CONIFERS = 2;
     private readonly int NUM_ROCKS = 18;
+    private readonly int NUM_ROCKS_2 = 9;
     private readonly int NUM_TURTLES = 2;
     private readonly int NUM_TURRETS = 1;
 
     /// <summary>
     /// References to the cube and cylinder prefabs.
     /// </summary>
-    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
-    private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
-    private readonly GameObject TURTLE_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
-    private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject> ("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
-    private readonly GameObject TURRET_PREFAB = Resources.Load<GameObject> ("Prefabs/SmallTurret");
+    private readonly GameObject CONIFER_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Tree_Conifer_01");
+    private readonly GameObject ROCK_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Rock_Chunk_01");
+    private readonly GameObject ROCK_PREFAB_2 = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/Rock_Medium_02");
+    private readonly GameObject TURTLE_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Turtle");
+    private readonly GameObject BIRD_PREFAB = Resources.Load<GameObject>("Prefabs/ObstaclePrefabs/SCharacter_Bird1");
+    private readonly GameObject TURRET_PREFAB = Resources.Load<GameObject>("Prefabs/SmallTurret");
 
     private readonly GameObject HEALTH_ITEM_PREFAB = Resources.Load<GameObject> ("Prefabs/ItemPrefabs/aid_box");
     private readonly GameObject INVINCIBILITY_ITEM_PREFAB = Resources.Load<GameObject> ("Prefabs/ItemPrefabs/Shield");
@@ -51,11 +53,12 @@ public class ObstacleSection {
     /// These two fields hold references to the obstacles so that they can be
     /// recycled.
     /// </summary>
-    private List<GameObject> rocks = new List<GameObject> ();
-    private List<GameObject> conifers = new List<GameObject> ();
-    private List<GameObject> turtles = new List<GameObject> ();
-    private List<GameObject> birds = new List<GameObject> ();
-    private List<GameObject> turrets = new List<GameObject> ();
+    private List<GameObject> rocks = new List<GameObject>();
+    private List<GameObject> rocks2 = new List<GameObject>();
+    private List<GameObject> conifers = new List<GameObject>();
+    private List<GameObject> turtles = new List<GameObject>();
+    private List<GameObject> birds = new List<GameObject>();
+    private List<GameObject> turrets = new List<GameObject>();
 
     private GameObject healthItem;
     private GameObject invincibilityItem;
@@ -68,11 +71,12 @@ public class ObstacleSection {
         this.xLen = xLen;
         this.zLen = zLen;
 
-        InstantiateObstacles (rocks, ROCK_PREFAB, NUM_ROCKS);
-        InstantiateObstacles (conifers, CONIFER_PREFAB, NUM_CONIFERS);
-        InstantiateObstacles (turtles, TURTLE_PREFAB, NUM_TURTLES);
-        InstantiateObstacles (birds, BIRD_PREFAB, NUM_BIRDS);
-        InstantiateObstacles (turrets, TURRET_PREFAB, NUM_TURRETS);
+        InstantiateObstacles(rocks, ROCK_PREFAB, NUM_ROCKS);
+        InstantiateObstacles(rocks2, ROCK_PREFAB_2, NUM_ROCKS_2);
+        InstantiateObstacles(conifers, CONIFER_PREFAB, NUM_CONIFERS);
+        InstantiateObstacles(turtles, TURTLE_PREFAB, NUM_TURTLES);
+        InstantiateObstacles(birds, BIRD_PREFAB, NUM_BIRDS);
+        InstantiateObstacles(turrets, TURRET_PREFAB, NUM_TURRETS);
 
         InstantiateItems ();
     }
@@ -109,6 +113,7 @@ public class ObstacleSection {
 
         // Pick some random obstacles
         int rockIndex = 0;
+        int rock2Index = 0;
         int coniferIndex = 0;
         int turtleIndex = 0;
         int birdIndex = 0;
@@ -131,8 +136,14 @@ public class ObstacleSection {
                 ActivateObstacle (conifers[coniferIndex], 0);
                 coniferIndex++;
             } else {
-                ActivateObstacle (rocks[rockIndex], 0.5f);
-                rockIndex++;
+                if(randomValue % 2 == 0 && rock2Index < NUM_ROCKS_2){
+                    ActivateObstacle(rocks2[rock2Index], 0.5f);
+                    rock2Index++;
+                }else{
+                    ActivateObstacle(rocks[rockIndex], 0.5f);
+                    rockIndex++;
+                }
+                
             }
         }
     }

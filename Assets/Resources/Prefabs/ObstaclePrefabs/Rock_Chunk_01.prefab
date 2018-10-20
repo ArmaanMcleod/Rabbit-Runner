@@ -253,4 +253,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDamage: 5
   forcePush: 500
-  playTime: 1
