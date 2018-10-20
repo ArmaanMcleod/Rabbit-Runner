@@ -104,6 +104,9 @@ public class BirdController : MonoBehaviour {
         moving = true;
     }
 
+    /// <summary>
+    /// Resets bird call
+    /// </summary>
     public void ResetCall () {
         firstCall = false;
     }
