@@ -104,6 +104,10 @@ public class BirdController : MonoBehaviour {
         moving = true;
     }
 
+    public void ResetCall () {
+        firstCall = false;
+    }
+
     /// <summary>
     /// When the bird collides with either the player or a slope, resets its
     /// moving status.
