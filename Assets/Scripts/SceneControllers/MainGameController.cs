@@ -30,7 +30,8 @@ public class MainGameController : MonoBehaviour {
     public Text newHighScoreText;
 
     // Audio source for player death
-    private AudioSource audioSource;
+    private AudioSource[] audioSource;
+    private AudioSource death;
 
     // String name of the main game scene
     public string mainGameScene;
@@ -55,7 +56,8 @@ public class MainGameController : MonoBehaviour {
         scoreData = gameObject.GetComponent<ScoreData> ();
         newHighScoreText.enabled = false;
 
-        audioSource = gameObject.GetComponent<AudioSource> ();
+        audioSource = gameObject.GetComponents<AudioSource> ();
+        death = audioSource[0];
 
         // Only open the how to play instructions for a first time player
         if (PlayerPrefs.GetInt (INSTRUCTIONS_KEY) != 1) {
@@ -127,7 +129,7 @@ public class MainGameController : MonoBehaviour {
     /// <param name="currentHealth"></param>
     public void CheckGameOver (int currentHealth) {
         if (currentHealth <= 0) {
-            audioSource.Play ();
+            death.Play ();
             gameOver = true;
             Time.timeScale = 0;
             setGameOverScreen ();
